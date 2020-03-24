@@ -5,6 +5,7 @@ import android.graphics.Point;
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiObjectNotFoundException;
+import androidx.test.uiautomator.UiScrollable;
 
 import com.hnrmb.Config.Config;
 
@@ -172,6 +173,20 @@ public class Operate {
             }
         } else {
             LogInfo.i(String.format("wrong cmd!,To:%s",type));
+        }
+    }
+
+    /**
+     * 滑动列表到底部
+     * @param list
+     * @param MaxSwipes 最大滑动次数（翻页）
+     */
+    public static void flingToListEnd(UiScrollable list,int MaxSwipes){
+        try {
+            list.scrollToEnd(MaxSwipes);
+        } catch (UiObjectNotFoundException e) {
+            e.printStackTrace();
+            FailedCase.InterruptProcess("UiObjectNotFoundException",DataInfo.getDayFormatForIMG());
         }
     }
 

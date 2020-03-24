@@ -145,16 +145,7 @@ public class UiObjectNew {
         /**
          * 定位元素，从列表中找到指定文本的元素对象
          */
-        UiScrollable list ;
-        if (ListViewType.equals(Config.TYPE_CLASS)){
-            list = new UiScrollable(new UiSelector().className(ListViewValue));
-        }else if(ListViewType.equals(Config.TYPE_ID)){
-            list = new UiScrollable(new UiSelector().resourceId(ListViewValue));
-        }else{
-            LogInfo.e(String.format("key error with type:%s",ListViewType));
-            FailedCase.InterruptProcess(String.format("key error with type:%s",ListViewType));
-            return null;
-        }
+        UiScrollable list =findListViewObject(ListViewType,ListViewValue);
 
         UiObject target=null;
         try {
@@ -170,6 +161,27 @@ public class UiObjectNew {
             FailedCase.InterruptProcess(String.format("elemet is not exists in time:%d",DInfo.getTIMEOUT()),DataInfo.getDayFormatForIMG());
             return null;
         }
+    }
+
+
+    /**
+     * 获取列表对象
+     * @param ListViewType
+     * @param ListViewValue
+     * @return
+     */
+    public UiScrollable findListViewObject(String ListViewType,String ListViewValue){
+        UiScrollable list ;
+        if (ListViewType.equals(Config.TYPE_CLASS)){
+            list = new UiScrollable(new UiSelector().className(ListViewValue));
+        }else if(ListViewType.equals(Config.TYPE_ID)){
+            list = new UiScrollable(new UiSelector().resourceId(ListViewValue));
+        }else{
+            LogInfo.e(String.format("key error with type:%s",ListViewType));
+            FailedCase.InterruptProcess(String.format("key error with type:%s",ListViewType));
+            return null;
+        }
+        return list;
     }
 
 }
