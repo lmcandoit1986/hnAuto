@@ -22,7 +22,6 @@ public class ExceptionForUIAuto extends Exception {
 
 
     public static void main(String[] args) throws ExceptionForUIAuto {
-        System.out.print("qwqfhqfihqofhi\n");
         throw new ExceptionForUIAuto("messageError","asdasfasf");
     }
 }
