@@ -21,7 +21,7 @@ public class Main {
     public static void intoModule(String ModuleName){
         LogInfo.i(String.format("into module %s",ModuleName));
         Operate.click(DeviceInfo.getInstance().getMydevice(), new UiObjectNew().findObjectNew(Config.TYPE_TEXT,ModuleName));
-        TimeAll.sleepTread(5000);
+        TimeAll.sleepTread(3000);
     }
 
 
