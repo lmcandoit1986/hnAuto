@@ -54,7 +54,7 @@ public class BaseCase extends BaseTests {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Main.intoModule("好物");
+        Main.intoModule(8);
     }
 
     @After

@@ -103,4 +103,18 @@ public class GoodsList {
         Operate.flingToListEnd(locationList(),20);
         findNoMore();
     }
+
+    /**
+     * 双列banner 第一个位置跳转
+     */
+    public static void banner2_1() {
+        Operate.click(new UiObjectNew().findObjectNew(Config.TYPE_ID,"com.hnrmb.salary:id/sdv_life_img_one"));
+    }
+
+    /**
+     * 双列banner 第二个位置跳转
+     */
+    public static void banner2_2() {
+        Operate.click(new UiObjectNew().findObjectNew(Config.TYPE_ID,"com.hnrmb.salary:id/sdv_life_img_two"));
+    }
 }

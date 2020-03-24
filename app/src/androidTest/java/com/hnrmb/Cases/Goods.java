@@ -36,6 +36,23 @@ public class Goods extends BaseCase{
     }
 
     @Test
+    public void banner1TrunCheck(){
+        CaseInfo.setCaseDesc("轮播banner跳转检测");
+    }
+
+    @Test
+    public void banner_2_1_TrunCheck(){
+        CaseInfo.setCaseDesc("双列banner第一个位置跳转检测");
+        GoodsList.banner2_1();
+    }
+
+    @Test
+    public void banner_2_2_TrunCheck(){
+        CaseInfo.setCaseDesc("双列banner第二个位置跳转检测");
+        GoodsList.banner2_2();
+    }
+
+    @Test
     public void checkGoodsDetailOnSale(){
         CaseInfo.setCaseDesc("验证在售商品详情页面");
         GoodsList.intentItemDetail(GoodsList.getGoodsOnSale());

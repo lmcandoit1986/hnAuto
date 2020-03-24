@@ -44,7 +44,6 @@ public class UiObjectNew {
             default:
                 FailedCase.InterruptProcess(String.format("Key Error with type:%s",Type),DataInfo.getDayFormatForIMG());
         }
-
         if (item.waitForExists(DInfo.getTIMEOUT())){
             return item;
         }else {
