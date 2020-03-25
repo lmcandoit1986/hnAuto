@@ -4,6 +4,8 @@ import androidx.test.runner.AndroidJUnit4;
 import androidx.test.uiautomator.Configurator;
 
 import com.hnrmb.Utils.DeviceInfo;
+import com.hnrmb.Utils.DeviceStatus;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
@@ -21,6 +23,7 @@ public class BaseTests {
         configurator = Configurator.getInstance();
         configurator.setWaitForIdleTimeout(1000);
         configurator.setWaitForSelectorTimeout(3000);
+        DeviceStatus.wakeUp(DInfo.getMydevice());
     }
 
 
