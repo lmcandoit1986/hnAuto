@@ -21,7 +21,7 @@ public class BaseCase extends BaseTests {
 
     @Before
     public void SetUp(){
-        new AppLaunch().StartApp(DInfo.getMydevice(),PackageName,Activity);
+        new AppLaunch().startApp(DInfo.getMydevice(),PackageName,Activity);
         new AppLaunch().initToastListener(DInfo.getInstrumentation());
         // 升级弹框关闭
         Operate.click(new UiObjectNew().findObjectNew(Config.TYPE_ID,"com.hnrmb.salary:id/linear_close",false),false);

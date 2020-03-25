@@ -12,7 +12,7 @@ import com.hnrmb.Config.Config;
 
 public class WatcherList {
 
-    public static void Update(final UiDevice device){
+    public static void update(final UiDevice device){
         device.registerWatcher("closeUpdate", new UiWatcher() {
             @Override
             public boolean checkForCondition() {

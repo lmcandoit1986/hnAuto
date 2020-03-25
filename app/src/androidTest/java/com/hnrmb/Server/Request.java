@@ -27,7 +27,7 @@ public class Request {
         HashMap<String, String> HeaderMap = new HashMap<String, String>();
         HeaderMap.put("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
         HeaderMap.put("User-Agent", "PAHealth/3.15.0 (iPhone; iOS 12.1.1; Scale/3.00)");
-        SetHeader(connection, HeaderMap);
+        setHeader(connection, HeaderMap);
 
         /**
          * 设置参数
@@ -44,8 +44,8 @@ public class Request {
         /**
          * 服务器请求
          */
-        OutStream(connection, Body);
-        String Res = InStream(connection);
+        outStream(connection, Body);
+        String Res = inStream(connection);
         LogInfo.i(Res);
 
         /**
@@ -60,7 +60,7 @@ public class Request {
 
     }
 
-    public static void SetHeader(HttpURLConnection connection, HashMap<String, String> obj) {
+    public static void setHeader(HttpURLConnection connection, HashMap<String, String> obj) {
         for (String Key : obj.keySet()) {
             LogInfo.i(String.format("change header ,key=%s,vaule=%s", Key, obj.get(Key)));
             connection.setRequestProperty(Key, obj.get(Key));
@@ -79,7 +79,7 @@ public class Request {
         return null;
     }
 
-    public static void OutStream(HttpURLConnection connection, String Body) {
+    public static void outStream(HttpURLConnection connection, String Body) {
         try {
             OutputStream os = connection.getOutputStream();
             OutputStreamWriter osw = new OutputStreamWriter(os);
@@ -94,7 +94,7 @@ public class Request {
         }
     }
 
-    public static String InStream(HttpURLConnection connection) {
+    public static String inStream(HttpURLConnection connection) {
         try {
             InputStream in = connection.getInputStream();
             InputStreamReader isr = new InputStreamReader(in, "UTF-8");

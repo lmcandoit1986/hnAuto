@@ -13,10 +13,10 @@ import com.hnrmb.Config.Config;
 
 public class UiObjectNew {
 
-    private DeviceInfo DInfo;
+    private DeviceInfo deviceInfo;
 
     public UiObjectNew(){
-        DInfo = DeviceInfo.getInstance();
+        deviceInfo = DeviceInfo.getInstance();
     }
 
     public UiObject findObjectNew(String Type, String Value){
@@ -31,25 +31,25 @@ public class UiObjectNew {
         UiObject item = null;
         switch (Type){
             case Config.TYPE_ID:
-                item = DInfo.getMydevice().findObject(new UiSelector().resourceId(Value));
+                item = deviceInfo.getMydevice().findObject(new UiSelector().resourceId(Value));
                 break;
             case Config.TYPE_CLASS:
-                item = DInfo.getMydevice().findObject(new UiSelector().className(Value));
+                item = deviceInfo.getMydevice().findObject(new UiSelector().className(Value));
                 break;
             case Config.TYPE_TEXT:
-                item = DInfo.getMydevice().findObject(new UiSelector().text(Value));
+                item = deviceInfo.getMydevice().findObject(new UiSelector().text(Value));
                 break;
             case Config.TYPE_DESC:
-                item = DInfo.getMydevice().findObject(new UiSelector().description(Value));
+                item = deviceInfo.getMydevice().findObject(new UiSelector().description(Value));
                 break;
             default:
                 FailedCase.InterruptProcess(String.format("Key Error with type:%s",Type),DataInfo.getDayFormatForIMG());
         }
         
-        if (item.waitForExists(DInfo.getTIMEOUT())){
+        if (item.waitForExists(deviceInfo.getTIMEOUT())){
             return item;
         }else {
-            FailedCase.InterruptProcess(String.format("elemet is not exists in time:%d",DInfo.getTIMEOUT()),DataInfo.getDayFormatForIMG());
+            FailedCase.InterruptProcess(String.format("elemet is not exists in time:%d",deviceInfo.getTIMEOUT()),DataInfo.getDayFormatForIMG());
             return null;
         }
     }
@@ -68,13 +68,13 @@ public class UiObjectNew {
         
         switch (Type){
             case "id":
-                return DInfo.getMydevice().findObject(new UiSelector().resourceId(Value));
+                return deviceInfo.getMydevice().findObject(new UiSelector().resourceId(Value));
             case "class":
-                return DInfo.getMydevice().findObject(new UiSelector().className(Value));
+                return deviceInfo.getMydevice().findObject(new UiSelector().className(Value));
             case "text":
-                return DInfo.getMydevice().findObject(new UiSelector().text(Value));
+                return deviceInfo.getMydevice().findObject(new UiSelector().text(Value));
             case "desc":
-                return DInfo.getMydevice().findObject(new UiSelector().description(Value));
+                return deviceInfo.getMydevice().findObject(new UiSelector().description(Value));
             default:
                 FailedCase.InterruptProcess(String.format("Key Error with type:%s",Type),DataInfo.getDayFormatForIMG());
                 return null;
@@ -94,25 +94,25 @@ public class UiObjectNew {
         UiObject item = null;
         switch (Type){
             case Config.TYPE_ID:
-                item = DInfo.getMydevice().findObject(new UiSelector().resourceId(Value).instance(instance));
+                item = deviceInfo.getMydevice().findObject(new UiSelector().resourceId(Value).instance(instance));
                 break;
             case Config.TYPE_CLASS:
-                item = DInfo.getMydevice().findObject(new UiSelector().className(Value).instance(instance));
+                item = deviceInfo.getMydevice().findObject(new UiSelector().className(Value).instance(instance));
                 break;
             case Config.TYPE_TEXT:
-                item = DInfo.getMydevice().findObject(new UiSelector().text(Value).instance(instance));
+                item = deviceInfo.getMydevice().findObject(new UiSelector().text(Value).instance(instance));
                 break;
             case Config.TYPE_DESC:
-                item = DInfo.getMydevice().findObject(new UiSelector().description(Value).instance(instance));
+                item = deviceInfo.getMydevice().findObject(new UiSelector().description(Value).instance(instance));
                 break;
             default:
                 FailedCase.InterruptProcess(String.format("Key Error with type:%s",Type),DataInfo.getDayFormatForIMG());
         }
         
-        if (item.waitForExists(DInfo.getTIMEOUT())){
+        if (item.waitForExists(deviceInfo.getTIMEOUT())){
             return item;
         }else {
-            FailedCase.InterruptProcess(String.format("elemet is not exists in time:%d",DInfo.getTIMEOUT()),DataInfo.getDayFormatForIMG());
+            FailedCase.InterruptProcess(String.format("elemet is not exists in time:%d",deviceInfo.getTIMEOUT()),DataInfo.getDayFormatForIMG());
             return null;
         }
     }
@@ -131,13 +131,13 @@ public class UiObjectNew {
         
         switch (Type){
             case "id":
-                return DInfo.getMydevice().findObject(new UiSelector().resourceId(Value).instance(instance));
+                return deviceInfo.getMydevice().findObject(new UiSelector().resourceId(Value).instance(instance));
             case "class":
-                return DInfo.getMydevice().findObject(new UiSelector().className(Value).instance(instance));
+                return deviceInfo.getMydevice().findObject(new UiSelector().className(Value).instance(instance));
             case "text":
-                return DInfo.getMydevice().findObject(new UiSelector().text(Value).instance(instance));
+                return deviceInfo.getMydevice().findObject(new UiSelector().text(Value).instance(instance));
             case "desc":
-                return DInfo.getMydevice().findObject(new UiSelector().description(Value).instance(instance));
+                return deviceInfo.getMydevice().findObject(new UiSelector().description(Value).instance(instance));
             default:
                 FailedCase.InterruptProcess(String.format("Key Error with type:%s",Type),DataInfo.getDayFormatForIMG());
                 return null;
@@ -159,10 +159,10 @@ public class UiObjectNew {
             FailedCase.InterruptProcess(String.format("UiObjectNotFoundException with value:%s",text));
         }
         
-        if (target.waitForExists(DInfo.getTIMEOUT())){
+        if (target.waitForExists(deviceInfo.getTIMEOUT())){
             return target;
         }else {
-            FailedCase.InterruptProcess(String.format("elemet is not exists in time:%d",DInfo.getTIMEOUT()),DataInfo.getDayFormatForIMG());
+            FailedCase.InterruptProcess(String.format("elemet is not exists in time:%d",deviceInfo.getTIMEOUT()),DataInfo.getDayFormatForIMG());
             return null;
         }
     }

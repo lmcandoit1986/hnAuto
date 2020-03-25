@@ -8,15 +8,15 @@ import android.os.Bundle;
 
 public class FailedCase {
 
-    public static void InterruptProcess(){
+    public static void interruptProcess(){
         throw new AssertionError();
     }
 
-    public static void InterruptProcess(String MSG){
+    public static void interruptProcess(String MSG){
         throw new AssertionError(MSG);
     }
 
-    public static void InterruptProcess(String MSG, String PicName){
+    public static void interruptProcess(String MSG, String PicName){
         new Pic().screenShotWithADB(PicName);
         /**
          * 失败截图信息输出到窗口

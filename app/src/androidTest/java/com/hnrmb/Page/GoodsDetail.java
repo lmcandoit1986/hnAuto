@@ -18,17 +18,17 @@ public class GoodsDetail {
             return new UiObjectNew().findObjectNew(Config.TYPE_ID,"com.hnrmb.salary:id/tv_buy").getText();
         } catch (UiObjectNotFoundException e) {
             e.printStackTrace();
-            FailedCase.InterruptProcess();
+            FailedCase.interruptProcess();
         }
         return null;
     }
 
     public static void AssertOnSale(){
-        if (!getBuyText().equals("立即购买")) FailedCase.InterruptProcess("match wrong status", DataInfo.getDayFormatForIMG());
+        if (!getBuyText().equals("立即购买")) FailedCase.interruptProcess("match wrong status", DataInfo.getDayFormatForIMG());
     }
 
     public static void AssertOffSale(){
-        if (!getBuyText().equals("已售罄")) FailedCase.InterruptProcess("match wrong status", DataInfo.getDayFormatForIMG());
+        if (!getBuyText().equals("已售罄")) FailedCase.interruptProcess("match wrong status", DataInfo.getDayFormatForIMG());
     }
 
 }

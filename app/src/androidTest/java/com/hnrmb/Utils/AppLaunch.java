@@ -26,7 +26,7 @@ public class AppLaunch {
     public AppLaunch(){
     }
 
-    public Boolean StartApp(UiDevice MDevice, String PackageName, String StartActivityName){
+    public Boolean startApp(UiDevice MDevice, String PackageName, String StartActivityName){
         LogInfo.i(String.format("Start App:%s",PackageName));
         /**
          * 优先使用
@@ -61,7 +61,7 @@ public class AppLaunch {
 
     }
 
-    private void Start_Intent(Context context, UiDevice MDevice, String PackageName){
+    private void startIntent(Context context, UiDevice MDevice, String PackageName){
         LogInfo.i("执行 Intent 命令启动 App");
         final Intent intent = context.getPackageManager().getLaunchIntentForPackage(PackageName);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

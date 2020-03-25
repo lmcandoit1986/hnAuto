@@ -17,7 +17,7 @@ public class BaseTests {
     public static Configurator configurator;
 
     @BeforeClass
-    public static void Setup(){
+    public static void setUp(){
         DInfo = DeviceInfo.getInstance();
         DInfo.setTIMEOUT(3000); // 设置全局隐式等待时间
         configurator = Configurator.getInstance();
@@ -28,7 +28,7 @@ public class BaseTests {
 
 
     @AfterClass
-    public static void TearDown(){
+    public static void tearDown(){
 
     }
 }

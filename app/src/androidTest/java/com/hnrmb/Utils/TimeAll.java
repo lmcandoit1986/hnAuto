@@ -8,8 +8,6 @@ import androidx.test.uiautomator.UiDevice;
 
 public class TimeAll {
 
-    private static final long waitForIdleTimeOut = 1000;//毫秒
-
     public static void sleepTread(long l){
         LogInfo.i("sleep "+l);
         try {
