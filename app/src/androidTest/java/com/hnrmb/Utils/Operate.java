@@ -28,13 +28,13 @@ public class Operate {
                 item.click();
                 return;
             }
-            FailedCase.InterruptProcess("element is not Enabled or clickable");
+            FailedCase.interruptProcess("element is not Enabled or clickable");
         } catch (UiObjectNotFoundException e) {
             e.printStackTrace();
-            FailedCase.InterruptProcess("UiObjectNotFoundException",DataInfo.getDayFormatForIMG());
+            FailedCase.interruptProcess("UiObjectNotFoundException",DataInfo.getDayFormatForIMG());
         }catch (NullPointerException e) {
             e.printStackTrace();
-            FailedCase.InterruptProcess("Click Failed with NullPointerException",DataInfo.getDayFormatForIMG());
+            FailedCase.interruptProcess("Click Failed with NullPointerException",DataInfo.getDayFormatForIMG());
         }
     }
 
@@ -50,13 +50,13 @@ public class Operate {
                 item.clickAndWaitForNewWindow(3000);
                 return;
             }
-            FailedCase.InterruptProcess("element is not Enabled or clickable");
+            FailedCase.interruptProcess("element is not Enabled or clickable");
         } catch (UiObjectNotFoundException e) {
             e.printStackTrace();
-            FailedCase.InterruptProcess("UiObjectNotFoundException",DataInfo.getDayFormatForIMG());
+            FailedCase.interruptProcess("UiObjectNotFoundException",DataInfo.getDayFormatForIMG());
         }catch (NullPointerException e) {
             e.printStackTrace();
-            FailedCase.InterruptProcess("Click Failed with NullPointerException",DataInfo.getDayFormatForIMG());
+            FailedCase.interruptProcess("Click Failed with NullPointerException",DataInfo.getDayFormatForIMG());
         }
     }
 
@@ -70,7 +70,7 @@ public class Operate {
             device.click(rect.centerX(),rect.centerY());//临时特殊处理，后续去掉
         } catch (UiObjectNotFoundException e) {
             e.printStackTrace();
-            FailedCase.InterruptProcess("UiObjectNotFoundException",DataInfo.getDayFormatForIMG());
+            FailedCase.interruptProcess("UiObjectNotFoundException",DataInfo.getDayFormatForIMG());
         }
     }
 
@@ -217,8 +217,23 @@ public class Operate {
             list.scrollToEnd(MaxSwipes);
         } catch (UiObjectNotFoundException e) {
             e.printStackTrace();
-            FailedCase.InterruptProcess("UiObjectNotFoundException",DataInfo.getDayFormatForIMG());
+            FailedCase.interruptProcess("UiObjectNotFoundException",DataInfo.getDayFormatForIMG());
         }
+    }
+
+    /**
+     * 获取对象的文本，无则返回null
+     * @param item
+     * @return
+     */
+    public static String getText(UiObject item){
+        String back = null;
+        try {
+            back = item.getText();
+        } catch (UiObjectNotFoundException e) {
+            e.printStackTrace();
+        }
+        return back;
     }
 
 

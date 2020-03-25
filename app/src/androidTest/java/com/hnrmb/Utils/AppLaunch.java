@@ -93,7 +93,7 @@ public class AppLaunch {
 
                 //如果不是下拉通知栏消息，则为其它通知信息，包括Toast
                 if (!(parcelable instanceof Notification)) {
-                    Config.ToastMMSG = (String) event.getText().get(0);
+                    Config.ToastMSG = (String) event.getText().get(0);
                 }else{
                     LogInfo.i(event.getText().get(0).toString());
                     String smstext = event.getText().get(0).toString();

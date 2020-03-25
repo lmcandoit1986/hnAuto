@@ -16,26 +16,28 @@ import org.junit.Before;
 
 public class BaseCase extends BaseTests {
 
-    public String PackageName = "com.hnrmb.salary";
-    public String Activity = ".module.login.launch.LaunchAct";
+    public String PackageName = "com.hnrmb.salary"; // 包名
+    public String Activity = ".module.login.launch.LaunchAct"; // 启动activity
+
+    public final String CLOSE_UPDATE_ID= "com.hnrmb.salary:id/linear_close";//升级弹框关闭按钮
 
     @Before
     public void SetUp(){
-        new AppLaunch().startApp(DInfo.getMydevice(),PackageName,Activity);
-        new AppLaunch().initToastListener(DInfo.getInstrumentation());
+        new AppLaunch().startApp(deviceInfo.getMydevice(),PackageName,Activity);
+        new AppLaunch().initToastListener(deviceInfo.getInstrumentation());
         // 升级弹框关闭
-        Operate.click(new UiObjectNew().findObjectNew(Config.TYPE_ID,"com.hnrmb.salary:id/linear_close",false),false);
+        Operate.click(new UiObjectNew().findObjectNew(Config.TYPE_ID,CLOSE_UPDATE_ID,false),false);
         TimeAll.sleepTread(2000);
         // 解锁
-        Operate.swipe(DInfo.getMydevice(), Unlock.getLockTrail(DInfo.getPhoneWidth(),DInfo.getPhoneHeight()),30);
+        Operate.swipe(deviceInfo.getMydevice(), Unlock.getLockTrail(deviceInfo.getPhoneWidth(),deviceInfo.getPhoneHeight()),30);
         // 注册监控
         // WatcherList.Update(DInfo.getMydevice());
         // 跳转到好物页面
-        Main.intoModule(8);
+        Main.actionIntoIV(8);
     }
 
     @After
     public void Teardown(){
-        new AppLaunch().quitApp(DInfo.getMydevice(),PackageName);
+        new AppLaunch().quitApp(deviceInfo.getMydevice(),PackageName);
     }
 }

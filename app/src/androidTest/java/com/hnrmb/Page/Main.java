@@ -1,15 +1,16 @@
 package com.hnrmb.Page;
 
-import android.graphics.Path;
-
 import com.hnrmb.Config.Config;
-import com.hnrmb.Utils.DeviceInfo;
-import com.hnrmb.Utils.LogInfo;
 import com.hnrmb.Utils.Operate;
-import com.hnrmb.Utils.TimeAll;
 import com.hnrmb.Utils.UiObjectNew;
 
-
+/**
+ * 主页面元素及操作封装
+ * 规范：
+ * 1、元素定位，以object开头
+ * 2、操作，以action开头
+ * 3、验证，以assert开头
+ */
 public class Main {
 
     // com.hnrmb.salary:id/tv_update
@@ -18,9 +19,10 @@ public class Main {
     // com.hnrmb.salary:id/sdv_life_img_one
     // com.hnrmb.salary:id/sdv_life_img_two
     // com.hnrmb.salary:id/xrecycler_home
+    public static final String ICON_ID = "com.hnrmb.salary:id/iv_icon";// 5列 推广入口
 
 
-    public static void intoModule(int instance){
+    public static void actionIntoIV(int instance){
         /**
          * 0 余额盈
          * 1 投资圈
@@ -33,8 +35,7 @@ public class Main {
          * 8 好物
          * 9
          */
-        LogInfo.i(String.format("into module"));
-        Operate.click(new UiObjectNew().findObjectNew(Config.TYPE_ID,"com.hnrmb.salary:id/iv_icon",instance));
+        Operate.click(new UiObjectNew().findObjectNew(Config.TYPE_ID,ICON_ID,instance));
     }
 
 
