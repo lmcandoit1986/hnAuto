@@ -49,22 +49,22 @@ public class GoodsList {
     }
 
     // 获取商品列表中的在售的商品信息
-    public static String getGoodsOnSale(){
+    public static JSONObject getGoodsOnSale(){
         for(int i=1;i<10;i++){
             JSONObject listJson = APIForUITest.goodsDetail(i);
             // 判断商品是否售罄
-            if(true) return "Name";
+            if(true) return null;
         }
         return null;
 
     }
 
     // 获取商品列表中售罄的商品信息
-    public static String getGoodsOffSale(){
+    public static JSONObject getGoodsOffSale(){
         for(int i=1;i<10;i++){
             JSONObject listJson = APIForUITest.goodsDetail(i);
             // 判断商品是否售罄
-            if(true) return "Name";
+            if(true) return null;
         }
         return null;
 

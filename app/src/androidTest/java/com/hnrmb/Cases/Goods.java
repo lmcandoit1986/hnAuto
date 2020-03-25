@@ -1,5 +1,6 @@
 package com.hnrmb.Cases;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hnrmb.Page.GoodsDetail;
 import com.hnrmb.Page.GoodsList;
 import com.hnrmb.Utils.CaseInfo;
@@ -53,15 +54,25 @@ public class Goods extends BaseCase{
     @Test
     public void checkGoodsDetailOnSale(){
         CaseInfo.setCaseDesc("验证在售商品详情页面");
-        GoodsList.actionItem(GoodsList.getGoodsOnSale());
+        JSONObject jsonObject = GoodsList.getGoodsOnSale();
+        GoodsList.actionItem(jsonObject.getString("name"));
         GoodsDetail.assertOnSale();
     }
 
     @Test
     public void checkGoodsDetailOnStock(){
         CaseInfo.setCaseDesc("验证售罄商品详情页面");
-        GoodsList.actionItem(GoodsList.getGoodsOffSale());
+        JSONObject jsonObject = GoodsList.getGoodsOffSale();
+        GoodsList.actionItem(jsonObject.getString("name"));
         GoodsDetail.assertOffSale();
+    }
+
+    @Test
+    public void checkGoodsDetail(){
+        CaseInfo.setCaseDesc("验证商品信息:名称，描述，价格");
+        JSONObject jsonObject = GoodsList.getGoodsOnSale();
+        GoodsList.actionItem(jsonObject.getString("name"));
+        GoodsDetail.assertItemInfo(jsonObject.getInteger("id"));
     }
 
 
