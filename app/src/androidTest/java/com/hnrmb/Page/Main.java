@@ -35,8 +35,6 @@ public class Main {
          */
         LogInfo.i(String.format("into module"));
         Operate.click(new UiObjectNew().findObjectNew(Config.TYPE_ID,"com.hnrmb.salary:id/iv_icon",instance));
-//        Operate.click(DeviceInfo.getInstance().getMydevice(), new UiObjectNew().findObjectNew(Config.TYPE_TEXT,ModuleName));
-        TimeAll.sleepTread(3000);
     }
 
 

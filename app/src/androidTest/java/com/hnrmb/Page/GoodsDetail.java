@@ -10,7 +10,8 @@ import com.hnrmb.Utils.UiObjectNew;
 
 public class GoodsDetail {
 
-    //com.hnrmb.salary:id/tv_buy
+    // com.hnrmb.salary:id/tv_buy
+    // android.webkit.WebView
 
     private static String getBuyText(){
         try {

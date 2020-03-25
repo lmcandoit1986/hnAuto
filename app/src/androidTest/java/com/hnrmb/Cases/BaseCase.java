@@ -5,7 +5,9 @@ import com.hnrmb.Config.Config;
 import com.hnrmb.Data.Unlock;
 import com.hnrmb.Page.Main;
 import com.hnrmb.Utils.AppLaunch;
+import com.hnrmb.Utils.LogInfo;
 import com.hnrmb.Utils.Operate;
+import com.hnrmb.Utils.TimeAll;
 import com.hnrmb.Utils.UiObjectNew;
 
 import org.junit.After;
@@ -22,11 +24,7 @@ public class BaseCase extends BaseTests {
         new AppLaunch().initToastListener(DInfo.getInstrumentation());
         // 如果有升级弹框，关闭
         Operate.click(new UiObjectNew().findObjectNew(Config.TYPE_ID,"com.hnrmb.salary:id/linear_close",false),false);
-        try {
-            Thread.sleep(1500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        TimeAll.sleepTread(2000);
         /**
          * 监听
         DInfo.getMydevice().registerWatcher("closeUpdate", new UiWatcher() {
@@ -49,11 +47,7 @@ public class BaseCase extends BaseTests {
 
         // 解锁
         Operate.swipe(DInfo.getMydevice(), Unlock.getLockTrail(DInfo.getPhoneWidth(),DInfo.getPhoneHeight()),30);
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        // 跳转到好物页面
         Main.intoModule(8);
     }
 

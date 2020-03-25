@@ -1,6 +1,7 @@
 package com.hnrmb.Utils;
 
 import android.graphics.Point;
+import android.graphics.Rect;
 
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
@@ -21,9 +22,32 @@ public class Operate {
          * 验证对象是否支持点击
          * 失败阻断用例执行
          */
+        
         try {
-            if(item.isEnabled()&&item.isClickable()){
+            if(item.isClickable()){
                 item.click();
+                return;
+            }
+            FailedCase.InterruptProcess("element is not Enabled or clickable");
+        } catch (UiObjectNotFoundException e) {
+            e.printStackTrace();
+            FailedCase.InterruptProcess("UiObjectNotFoundException",DataInfo.getDayFormatForIMG());
+        }catch (NullPointerException e) {
+            e.printStackTrace();
+            FailedCase.InterruptProcess("Click Failed with NullPointerException",DataInfo.getDayFormatForIMG());
+        }
+    }
+
+    public static void clickAndWaitForNewWindow(UiObject item){
+        /**
+         * 点击操作
+         * 验证对象是否支持点击
+         * 失败阻断用例执行
+         */
+        
+        try {
+            if(item.isClickable()){
+                item.clickAndWaitForNewWindow(3000);
                 return;
             }
             FailedCase.InterruptProcess("element is not Enabled or clickable");
@@ -40,8 +64,10 @@ public class Operate {
         /**
          * 点击操作，通过定位元素坐标点击，主要是覆盖元素不可点击的场景
          */
+        
         try {
-            device.click(object.getBounds().centerX(),object.getBounds().centerY()-70);//临时特殊处理，后续去掉
+            Rect rect = object.getVisibleBounds();
+            device.click(rect.centerX(),rect.centerY());//临时特殊处理，后续去掉
         } catch (UiObjectNotFoundException e) {
             e.printStackTrace();
             FailedCase.InterruptProcess("UiObjectNotFoundException",DataInfo.getDayFormatForIMG());
@@ -63,8 +89,9 @@ public class Operate {
             click(item);
             return;
         }
+        
         try {
-            if(item.isEnabled() && item.isClickable())item.click();
+            if(item.isClickable()) item.click();
         } catch (UiObjectNotFoundException e) {
             e.printStackTrace();
         }catch (NullPointerException e) {
@@ -76,6 +103,7 @@ public class Operate {
         /**
          * 手势操作，支持多点操作
          */
+        
         device.swipe(points,steps);
     }
 
@@ -84,6 +112,7 @@ public class Operate {
          * 指定方向滑动，上下左右
          * 只支持屏幕上下、左右中心滑动
          */
+        
         int PH =device.getDisplayHeight();
         int PW =device.getDisplayWidth();
 
@@ -133,6 +162,7 @@ public class Operate {
          * 支持设置在哪个点开始滑动
          * 未实现
          */
+        
         int PH =device.getDisplayHeight();
         int PW =device.getDisplayWidth();
 
@@ -182,6 +212,7 @@ public class Operate {
      * @param MaxSwipes 最大滑动次数（翻页）
      */
     public static void flingToListEnd(UiScrollable list,int MaxSwipes){
+        
         try {
             list.scrollToEnd(MaxSwipes);
         } catch (UiObjectNotFoundException e) {
@@ -189,5 +220,6 @@ public class Operate {
             FailedCase.InterruptProcess("UiObjectNotFoundException",DataInfo.getDayFormatForIMG());
         }
     }
+
 
 }

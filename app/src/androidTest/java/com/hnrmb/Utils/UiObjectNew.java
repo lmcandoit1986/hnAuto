@@ -27,6 +27,7 @@ public class UiObjectNew {
          * 验证超时
          * 失败阻断用例实现
          */
+        
         UiObject item = null;
         switch (Type){
             case Config.TYPE_ID:
@@ -44,6 +45,7 @@ public class UiObjectNew {
             default:
                 FailedCase.InterruptProcess(String.format("Key Error with type:%s",Type),DataInfo.getDayFormatForIMG());
         }
+        
         if (item.waitForExists(DInfo.getTIMEOUT())){
             return item;
         }else {
@@ -63,6 +65,7 @@ public class UiObjectNew {
         if (isAssertExists){
             return findObjectNew(Type,Value);
         }
+        
         switch (Type){
             case "id":
                 return DInfo.getMydevice().findObject(new UiSelector().resourceId(Value));
@@ -87,6 +90,7 @@ public class UiObjectNew {
          * 验证超时
          * 失败阻断用例实现
          */
+        
         UiObject item = null;
         switch (Type){
             case Config.TYPE_ID:
@@ -104,7 +108,7 @@ public class UiObjectNew {
             default:
                 FailedCase.InterruptProcess(String.format("Key Error with type:%s",Type),DataInfo.getDayFormatForIMG());
         }
-
+        
         if (item.waitForExists(DInfo.getTIMEOUT())){
             return item;
         }else {
@@ -124,6 +128,7 @@ public class UiObjectNew {
         if (isAssertExists){
             return findObjectNew(Type,Value,instance);
         }
+        
         switch (Type){
             case "id":
                 return DInfo.getMydevice().findObject(new UiSelector().resourceId(Value).instance(instance));
@@ -145,7 +150,7 @@ public class UiObjectNew {
          * 定位元素，从列表中找到指定文本的元素对象
          */
         UiScrollable list =findListViewObject(ListViewType,ListViewValue);
-
+        
         UiObject target=null;
         try {
             target = list.getChildByText(new UiSelector().className("android.widget.TextView"),text);
@@ -153,7 +158,7 @@ public class UiObjectNew {
             e.printStackTrace();
             FailedCase.InterruptProcess(String.format("UiObjectNotFoundException with value:%s",text));
         }
-
+        
         if (target.waitForExists(DInfo.getTIMEOUT())){
             return target;
         }else {
@@ -170,6 +175,7 @@ public class UiObjectNew {
      * @return
      */
     public UiScrollable findListViewObject(String ListViewType,String ListViewValue){
+        
         UiScrollable list ;
         if (ListViewType.equals(Config.TYPE_CLASS)){
             list = new UiScrollable(new UiSelector().className(ListViewValue));
@@ -182,5 +188,6 @@ public class UiObjectNew {
         }
         return list;
     }
+
 
 }
