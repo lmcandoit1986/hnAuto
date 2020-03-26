@@ -108,43 +108,35 @@ public class GoodsDetail {
     /**
      * 验证商品名称
      */
-    public static void assertName(String id){
-        if (!getObjectBuyText().equals(id)) FailedCase.interruptProcess("match wrong status", DataInfo.getDayFormatForIMG());
+    public static void assertName(int id){
+        JSONObject jsonObject = getItemData(id);
+        String Name = jsonObject.getJSONObject("data").getString("name");
+        if (!getObjectName().equals(Name)) FailedCase.interruptProcess("Name match wrong ,expect:"+Name, DataInfo.getDayFormatForIMG());
     }
 
     /**
      * 验证商品描述
      */
-    public static void assertDesc(String id){
-        if (!getObjectBuyText().equals(id)) FailedCase.interruptProcess("match wrong status", DataInfo.getDayFormatForIMG());
+    public static void assertDesc(int id){
+        JSONObject jsonObject = getItemData(id);
+        String Desc = jsonObject.getJSONObject("data").getString("introduction");
+        if (!getObjectDesc().equals(Desc)) FailedCase.interruptProcess("Desc match wrong ,expect:"+Desc, DataInfo.getDayFormatForIMG());
     }
 
     /**
      * 验证商品价格
      */
-    public static void assertPrice(String id){
-        if (!getObjectBuyText().equals(id)) FailedCase.interruptProcess("match wrong status", DataInfo.getDayFormatForIMG());
-    }
-
-    /**
-     * 验证商品信息
-     */
-    public static void assertItemInfo(int id){
+    public static void assertPrice(int id){
         JSONObject jsonObject = getItemData(id);
-        String Name = jsonObject.getJSONObject("data").getString("name");
-        String Desc = jsonObject.getJSONObject("data").getString("introduction");
-        float min = jsonObject.getJSONObject("data").getFloat("minPrice");
-        float max = jsonObject.getJSONObject("data").getFloat("maxPrice");
+        String min = String.valueOf(jsonObject.getJSONObject("data").get("minPrice"));
+        String max = String.valueOf(jsonObject.getJSONObject("data").get("maxPrice"));
         String Price = null;
-        if (min == max){
-            Price = String.format("¥ %f",min);
+        if (min.equals(max) ){
+            Price = String.format("¥ %s",min);
         }else{
-            Price = String.format("¥ %f - %f",min,max);
+            Price = String.format("¥ %s - %s",min,max);
         }
-        assertPrice(Price);
-        assertName(Name);
-        assertDesc(Desc);
-
+        if (!getObjectPrice().equals(Price)) FailedCase.interruptProcess("Price match wrong,expect :"+Price, DataInfo.getDayFormatForIMG());
     }
 
     // 点击购买按钮

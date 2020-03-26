@@ -24,6 +24,7 @@ public class Goods extends BaseCase{
     @Test
     public void checkNextPageItem(){
         CaseInfo.setCaseDesc("验证列表翻页加载");
+        GoodsList.actionScrollForward(5);
         GoodsList.assertListNextPageItem();
     }
 
@@ -68,11 +69,30 @@ public class Goods extends BaseCase{
     }
 
     @Test
-    public void checkGoodsDetail(){
-        CaseInfo.setCaseDesc("验证商品信息:名称，描述，价格");
+    public void checkGoodsDetailNameAndDesc(){
+        CaseInfo.setCaseDesc("验证商品信息:名称，描述");
         JSONObject jsonObject = GoodsList.getGoodsOnSale();
         GoodsList.actionItem(jsonObject.getString("name"));
-        GoodsDetail.assertItemInfo(jsonObject.getInteger("id"));
+        GoodsDetail.assertName(jsonObject.getInteger("id"));
+        GoodsDetail.assertDesc(jsonObject.getInteger("id"));
+    }
+
+    @Test
+    public void checkGoodsDetailPriceOne(){
+        CaseInfo.setCaseDesc("验证商品信息:价格一致");
+        JSONObject jsonObject = GoodsList.getGoodsMinIsEqualMax();
+        GoodsList.actionItem(jsonObject.getString("name"));
+        GoodsDetail.assertPrice(jsonObject.getInteger("id"));
+
+    }
+
+    @Test
+    public void checkGoodsDetailPriceTwo(){
+        CaseInfo.setCaseDesc("验证商品信息:有价格区间");
+        JSONObject jsonObject = GoodsList.getGoodsMinIsNotEqualMax();
+        GoodsList.actionItem(jsonObject.getString("name"));
+        GoodsDetail.assertPrice(jsonObject.getInteger("id"));
+
     }
 
 

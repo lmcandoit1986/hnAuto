@@ -43,13 +43,13 @@ public class UiObjectNew {
                 item = deviceInfo.getMydevice().findObject(new UiSelector().description(Value));
                 break;
             default:
-                FailedCase.InterruptProcess(String.format("Key Error with type:%s",Type),DataInfo.getDayFormatForIMG());
+                FailedCase.interruptProcess(String.format("Key Error with type:%s",Type),DataInfo.getDayFormatForIMG());
         }
         
         if (item.waitForExists(deviceInfo.getTIMEOUT())){
             return item;
         }else {
-            FailedCase.InterruptProcess(String.format("elemet is not exists in time:%d",deviceInfo.getTIMEOUT()),DataInfo.getDayFormatForIMG());
+            FailedCase.interruptProcess(String.format("elemet is not exists in time:%d",deviceInfo.getTIMEOUT()),DataInfo.getDayFormatForIMG());
             return null;
         }
     }
@@ -76,7 +76,7 @@ public class UiObjectNew {
             case "desc":
                 return deviceInfo.getMydevice().findObject(new UiSelector().description(Value));
             default:
-                FailedCase.InterruptProcess(String.format("Key Error with type:%s",Type),DataInfo.getDayFormatForIMG());
+                FailedCase.interruptProcess(String.format("Key Error with type:%s",Type),DataInfo.getDayFormatForIMG());
                 return null;
         }
 
@@ -106,13 +106,13 @@ public class UiObjectNew {
                 item = deviceInfo.getMydevice().findObject(new UiSelector().description(Value).instance(instance));
                 break;
             default:
-                FailedCase.InterruptProcess(String.format("Key Error with type:%s",Type),DataInfo.getDayFormatForIMG());
+                FailedCase.interruptProcess(String.format("Key Error with type:%s",Type),DataInfo.getDayFormatForIMG());
         }
         
         if (item.waitForExists(deviceInfo.getTIMEOUT())){
             return item;
         }else {
-            FailedCase.InterruptProcess(String.format("elemet is not exists in time:%d",deviceInfo.getTIMEOUT()),DataInfo.getDayFormatForIMG());
+            FailedCase.interruptProcess(String.format("elemet is not exists in time:%d",deviceInfo.getTIMEOUT()),DataInfo.getDayFormatForIMG());
             return null;
         }
     }
@@ -139,7 +139,7 @@ public class UiObjectNew {
             case "desc":
                 return deviceInfo.getMydevice().findObject(new UiSelector().description(Value).instance(instance));
             default:
-                FailedCase.InterruptProcess(String.format("Key Error with type:%s",Type),DataInfo.getDayFormatForIMG());
+                FailedCase.interruptProcess(String.format("Key Error with type:%s",Type),DataInfo.getDayFormatForIMG());
                 return null;
         }
 
@@ -156,13 +156,42 @@ public class UiObjectNew {
             target = list.getChildByText(new UiSelector().className("android.widget.TextView"),text);
         } catch (UiObjectNotFoundException e) {
             e.printStackTrace();
-            FailedCase.InterruptProcess(String.format("UiObjectNotFoundException with value:%s",text));
+            FailedCase.interruptProcess(String.format("UiObjectNotFoundException with value:%s",text));
         }
         
         if (target.waitForExists(deviceInfo.getTIMEOUT())){
             return target;
         }else {
-            FailedCase.InterruptProcess(String.format("elemet is not exists in time:%d",deviceInfo.getTIMEOUT()),DataInfo.getDayFormatForIMG());
+            FailedCase.interruptProcess(String.format("elemet is not exists in time:%d",deviceInfo.getTIMEOUT()),DataInfo.getDayFormatForIMG());
+            return null;
+        }
+    }
+
+    public UiObject findObjectInListView(String ListViewType, String ListViewValue, String childType,String childValue,String text){
+        /**
+         * 定位元素，从列表中找到指定文本的元素对象
+         */
+        UiScrollable list =findListViewObject(ListViewType,ListViewValue);
+
+        UiObject target=null;
+        try {
+            if (childType.equals(Config.TYPE_ID)){
+                target = list.getChildByText(new UiSelector().resourceId(childValue),text);
+            }else if(childType.equals(Config.TYPE_CLASS)){
+                target = list.getChildByText(new UiSelector().className(childValue),text);
+            }else{
+                target = list.getChildByText(new UiSelector().className(childValue),text);
+            }
+
+        } catch (UiObjectNotFoundException e) {
+            e.printStackTrace();
+            FailedCase.interruptProcess(String.format("UiObjectNotFoundException with value:%s",text));
+        }
+
+        if (target.waitForExists(deviceInfo.getTIMEOUT())){
+            return target;
+        }else {
+            FailedCase.interruptProcess(String.format("elemet is not exists in time:%d",deviceInfo.getTIMEOUT()),DataInfo.getDayFormatForIMG());
             return null;
         }
     }
@@ -183,7 +212,7 @@ public class UiObjectNew {
             list = new UiScrollable(new UiSelector().resourceId(ListViewValue));
         }else{
             LogInfo.e(String.format("key error with type:%s",ListViewType));
-            FailedCase.InterruptProcess(String.format("key error with type:%s",ListViewType));
+            FailedCase.interruptProcess(String.format("key error with type:%s",ListViewType));
             return null;
         }
         return list;

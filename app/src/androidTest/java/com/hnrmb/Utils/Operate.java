@@ -28,7 +28,7 @@ public class Operate {
                 item.click();
                 return;
             }
-            FailedCase.interruptProcess("element is not Enabled or clickable");
+            item.click();
         } catch (UiObjectNotFoundException e) {
             e.printStackTrace();
             FailedCase.interruptProcess("UiObjectNotFoundException",DataInfo.getDayFormatForIMG());
@@ -50,7 +50,7 @@ public class Operate {
                 item.clickAndWaitForNewWindow(3000);
                 return;
             }
-            FailedCase.interruptProcess("element is not Enabled or clickable");
+            item.clickAndWaitForNewWindow(3000);
         } catch (UiObjectNotFoundException e) {
             e.printStackTrace();
             FailedCase.interruptProcess("UiObjectNotFoundException",DataInfo.getDayFormatForIMG());
@@ -92,6 +92,7 @@ public class Operate {
         
         try {
             if(item.isClickable()) item.click();
+            item.click();
         } catch (UiObjectNotFoundException e) {
             e.printStackTrace();
         }catch (NullPointerException e) {
@@ -207,14 +208,76 @@ public class Operate {
     }
 
     /**
-     * 滑动列表到底部
+     * 滑动列表到底部,当出现预期的元素时停止
+     * @param list
+     * @param MaxSwipes 最大滑动次数（翻页）
+     */
+    public static void flingForwardUtilExpectUI(UiScrollable list,int MaxSwipes,String ExpectObType,String ExpectObValue){
+        
+        try {
+            int i=0;
+            while (i<MaxSwipes){
+                i++;
+                LogInfo.i("page:"+i);
+                list.flingForward();
+                if(i%3==0){
+                    if (new UiObjectNew().findObjectNew(ExpectObType,ExpectObValue,false).exists()){
+                        return;
+                    }
+                }
+
+            }
+
+        } catch (UiObjectNotFoundException e) {
+            e.printStackTrace();
+            FailedCase.interruptProcess("UiObjectNotFoundException",DataInfo.getDayFormatForIMG());
+        }
+    }
+
+    /**
+     * 滑动列表到底部,适合有翻页加载的场景
      * @param list
      * @param MaxSwipes 最大滑动次数（翻页）
      */
     public static void flingToListEnd(UiScrollable list,int MaxSwipes){
-        
+
         try {
-            list.scrollToEnd(MaxSwipes);
+            int i=0;
+            while (i<MaxSwipes){
+                i++;
+                list.flingForward();
+            }
+
+        } catch (UiObjectNotFoundException e) {
+            e.printStackTrace();
+            FailedCase.interruptProcess("UiObjectNotFoundException",DataInfo.getDayFormatForIMG());
+        }
+    }
+
+    /**
+     * 滑动列表到底部。适合没有翻页加载的场景
+     * @param list
+     * @param MaxSwipes 最大滑动次数（翻页）
+     */
+    public static void flingToListEndNoNextPage(UiScrollable list,int MaxSwipes){
+
+        try {
+            list.flingToEnd(MaxSwipes);
+        } catch (UiObjectNotFoundException e) {
+            e.printStackTrace();
+            FailedCase.interruptProcess("UiObjectNotFoundException",DataInfo.getDayFormatForIMG());
+        }
+    }
+
+    /**
+     * 滑动列表到顶部
+     * @param list
+     * @param MaxSwipes 最大滑动次数（翻页）
+     */
+    public static void flingToListBeginning(UiScrollable list,int MaxSwipes){
+
+        try {
+            list.flingToBeginning(MaxSwipes);
         } catch (UiObjectNotFoundException e) {
             e.printStackTrace();
             FailedCase.interruptProcess("UiObjectNotFoundException",DataInfo.getDayFormatForIMG());

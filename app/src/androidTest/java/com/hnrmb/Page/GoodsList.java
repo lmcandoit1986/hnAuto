@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.hnrmb.Config.Config;
 import com.hnrmb.Server.APIForUITest;
 import com.hnrmb.Utils.DeviceInfo;
+import com.hnrmb.Utils.FailedCase;
 import com.hnrmb.Utils.Operate;
 import com.hnrmb.Utils.UiObjectNew;
 
@@ -23,6 +24,8 @@ public class GoodsList {
     public static final String LIST_VIEW_ID = "com.hnrmb.salary:id/xrecycler_home"; // 好物列表整体
     public static final String BANNER_1_ID = "com.hnrmb.salary:id/sdv_life_img_one"; // 双列 Banner 1位置
     public static final String BANNER_2_ID = "com.hnrmb.salary:id/sdv_life_img_two"; // 双列 Banner 2位置
+    public static final String NAME_ID = "com.hnrmb.salary:id/tv_name";
+//    "com.hnrmb.salary:id/tv_cost"
 
     /**
      * 定位列表中的商品，通过文本定位
@@ -51,10 +54,16 @@ public class GoodsList {
     // 获取商品列表中的在售的商品信息
     public static JSONObject getGoodsOnSale(){
         for(int i=1;i<10;i++){
-            JSONObject listJson = APIForUITest.goodsDetail(i);
-            // 判断商品是否售罄
-            if(true) return null;
+            JSONObject listJson = APIForUITest.goodsList(i);
+            // 判断商品是否在售
+            for(int j=0;j<(listJson.getJSONArray("data")).size();j++){
+                JSONObject good = listJson.getJSONArray("data").getJSONObject(j);
+                if (good.getInteger("specialDisplay")==1){
+                    return good;
+                }
+            }
         }
+        FailedCase.interruptProcess("no good on sale");
         return null;
 
     }
@@ -62,13 +71,54 @@ public class GoodsList {
     // 获取商品列表中售罄的商品信息
     public static JSONObject getGoodsOffSale(){
         for(int i=1;i<10;i++){
-            JSONObject listJson = APIForUITest.goodsDetail(i);
+            JSONObject listJson = APIForUITest.goodsList(i);
             // 判断商品是否售罄
-            if(true) return null;
+            for(int j=0;j<(listJson.getJSONArray("data")).size();j++){
+                JSONObject good = listJson.getJSONArray("data").getJSONObject(j);
+                if (good.getInteger("specialDisplay")==2){
+                    return good;
+                }
+            }
         }
+        FailedCase.interruptProcess("no good off sale");
         return null;
 
     }
+
+    // 获取商品列表有价格区间的商品
+    public static JSONObject getGoodsMinIsNotEqualMax(){
+        for(int i=1;i<10;i++){
+            JSONObject listJson = APIForUITest.goodsList(i);
+            // 判断商品Min 和 Max 价格是否一致
+            for(int j=0;j<(listJson.getJSONArray("data")).size();j++){
+                JSONObject good = listJson.getJSONArray("data").getJSONObject(j);
+                if (!good.get("minPrice").equals(good.get("maxPrice"))){
+                    return good;
+                }
+            }
+        }
+        FailedCase.interruptProcess("no good mix != max price");
+        return null;
+
+    }
+
+    // 获取商品列表中只有唯一价格的商品信息
+    public static JSONObject getGoodsMinIsEqualMax(){
+        for(int i=1;i<10;i++){
+            JSONObject listJson = APIForUITest.goodsList(i);
+            // 判断商品Min 和 Max 价格是否一致
+            for(int j=0;j<(listJson.getJSONArray("data")).size();j++){
+                JSONObject good = listJson.getJSONArray("data").getJSONObject(j);
+                if (good.get("minPrice").equals(good.get("maxPrice"))){
+                    return good;
+                }
+            }
+        }
+        FailedCase.interruptProcess("no good mix = max price");
+        return null;
+
+    }
+
 
     /**
      * 列表点击商品跳转到商品详情
@@ -98,6 +148,11 @@ public class GoodsList {
     public static void assertListItem() {
         JSONObject listJson = APIForUITest.goodsList(1);
         // 校验列表商品名称、价格
+        for(int j=0;j<(listJson.getJSONArray("data")).size();j++){
+            JSONObject good = listJson.getJSONArray("data").getJSONObject(j);
+            String Name = good.getString("name");
+            objectItemInList(Name);
+        }
 
     }
 
@@ -106,7 +161,11 @@ public class GoodsList {
      */
     public static void assertListNextPageItem() {
         JSONObject listJson = APIForUITest.goodsList(2);
-        // 校验第二页的数据是否存在
+        // 校验第二页的数据是否存在,只检查其中一个数据
+        JSONObject good = listJson.getJSONArray("data").getJSONObject(1);
+        String Name = good.getString("name");
+        objectItemInList(Name);
+        return;
     }
 
     /**
@@ -120,7 +179,14 @@ public class GoodsList {
      * 滑动列表到底部
      */
     public static void actionScrollToListBottom() {
-        Operate.flingToListEnd(objectList(),20);
+        Operate.flingForwardUtilExpectUI(objectList(),20,Config.TYPE_TEXT,"美好生活 云成相伴");
+    }
+
+    /**
+     * 滑动列表
+     */
+    public static void actionScrollForward(int maxSwipes) {
+        Operate.flingToListEnd(objectList(),maxSwipes);
     }
 
     /**
