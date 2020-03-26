@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 
 public class APIForUITest {
 
+    public static final String COOKIE = "XDevice=cbea71d8638e0cf4eb1352e34828093e; XToken=669a133d-1f6e-4b3b-9cfc-89c6c461b6a9; SESSION=669a133d-1f6e-4b3b-9cfc-89c6c461b6a9; gaOpenId=GA201909261721261038397092; _UNAME=%E4%B8%80%E9%9B%B6%E4%BA%8C";
+
     /**
      * 列表请求
      * @param pageNum
@@ -39,7 +41,7 @@ public class APIForUITest {
         // JSONObject body = new JSONObject();
         // body.put("key","vaule");
         // return Request.requestPost(Url,body.toString());
-        return Request.requestGet(Url);
+        return Request.requestGet(Url,COOKIE);
     }
 
     /**
@@ -92,7 +94,7 @@ public class APIForUITest {
 //        body.put("key","vaule");
 
 //        return Request.requestPost(Url,body.toString());
-        return Request.requestGet(Url);
+        return Request.requestGet(Url,COOKIE);
     }
 
 
@@ -101,13 +103,62 @@ public class APIForUITest {
      * @return
      */
     public static JSONObject GoodsBanner(){
+        /**
+         * {
+         * 	"data": {
+         * 		"imageFirstAds": [{
+         * 			"image": "https://qnstaticbeta.ycfin.com.cn/15717286886861F2.png",
+         * 			"action": "url",
+         * 			"id": 1,
+         * 			"text": "更新位置 1 的 Banner",
+         * 			"value": "https://www.bjycjf.com/static/app-webview/dist/page/life/project.html?id=16",
+         * 			"md5": "EC380480AF2951B66507574BAF2875B1"
+         *                }, {
+         * 			"image": "https://qnstaticbeta.ycfin.com.cn/15717287397202F2.png",
+         * 			"action": "embed",
+         * 			"id": 2,
+         * 			"text": "新增位置 2 的 Banner",
+         * 			"value": "hnczb://native?url=l_d&id=91",
+         * 			"md5": "56CC08979F1C992EC51597A3F6731C84"
+         *        }],
+         * 		"imageSecondAds": [],
+         * 		"bannerAds": [{
+         * 			"image": "https://qnstaticbeta.ycfin.com.cn/1571649165360Banner1.png",
+         * 			"action": "url",
+         * 			"end": 1918718371000,
+         * 			"id": 1,
+         * 			"text": "新增位置 1 的 Banner",
+         * 			"begin": 1568970808000,
+         * 			"value": "https://www.bjycjf.com/static/app-webview/dist/page/life/project.html?id=17",
+         * 			"md5": "464929EB9E1A77BC3DAA0212A8F00915"
+         *        }, {
+         * 			"image": "https://qnstaticbeta.ycfin.com.cn/1571649241527Banner2.png",
+         * 			"action": "url",
+         * 			"end": 1918718371000,
+         * 			"id": 2,
+         * 			"text": "新增位置 2 的 Banner",
+         * 			"begin": 1571649290000,
+         * 			"value": "https://www.bjycjf.com/static/app-webview/dist/page/life/project.html?id=3",
+         * 			"md5": "42BF81AF8D4C06A3886B674E9AD79B31"
+         *        }, {
+         * 			"image": "https://qnstaticbeta.ycfin.com.cn/1571649402381Banner3.png",
+         * 			"action": "embed",
+         * 			"end": 1918718371000,
+         * 			"id": 3,
+         * 			"text": "新增位置 3 的 Banner",
+         * 			"begin": 1571563046000,
+         * 			"value": "hnczb://native?url=l_d&id=108",
+         * 			"md5": "3389E242D8353DDB1F144A83D634B1E7"
+         *        }]* 	}
+         * }
+         */
         String Url = "https://www.bjycjf.com/api2/goods/operation";
         // 业务参数
 //        JSONObject body = new JSONObject();
 //        body.put("key","vaule");
 //
 //        return Request.requestPost(Url,body.toString());
-        return Request.requestGet(Url);
+        return Request.requestGet(Url,COOKIE);
     }
 
 }

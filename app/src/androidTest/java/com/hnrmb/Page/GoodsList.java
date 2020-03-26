@@ -3,11 +3,13 @@ package com.hnrmb.Page;
 import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiScrollable;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.hnrmb.Config.Config;
 import com.hnrmb.Server.APIForUITest;
 import com.hnrmb.Utils.DeviceInfo;
 import com.hnrmb.Utils.FailedCase;
+import com.hnrmb.Utils.LogInfo;
 import com.hnrmb.Utils.Operate;
 import com.hnrmb.Utils.UiObjectNew;
 
@@ -177,6 +179,21 @@ public class GoodsList {
     }
 
     /**
+     * banner
+     */
+    public static JSONObject getBannerJsonData(int id){
+        JSONObject all = APIForUITest.GoodsBanner();
+        JSONArray ja = all.getJSONObject("data").getJSONArray("imageFirstAds");
+        for (int i=0;i<ja.size();i++){
+            JSONObject item = ja.getJSONObject(i);
+            if (item.getInteger("id")==id){
+                return item;
+            }
+        }
+        return null;
+    }
+
+    /**
      * 验证列表已无更多数据
      */
     public static void assertNoMore(){
@@ -216,5 +233,17 @@ public class GoodsList {
      */
     public static void actionBanner2_2() {
         Operate.click(new UiObjectNew().findObjectNew(Config.TYPE_ID,BANNER_2_ID));
+    }
+
+    /**
+     * 验证banner跳转
+     * @return
+     */
+    public static void assertBannerTurn(JSONObject item){
+        if(item.getString("value").startsWith("hnczb:")){
+            GoodsDetail.objectBuy();
+        }else if (item.getString("value").startsWith("https")){
+            Webview.assertIsWeb();
+        }
     }
 }

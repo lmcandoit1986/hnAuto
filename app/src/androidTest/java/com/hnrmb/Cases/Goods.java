@@ -7,6 +7,7 @@ import com.hnrmb.Config.Config;
 import com.hnrmb.Page.GoodsDetail;
 import com.hnrmb.Page.GoodsList;
 import com.hnrmb.Utils.CaseInfo;
+import com.hnrmb.Utils.LogInfo;
 import com.hnrmb.Utils.Operate;
 import com.hnrmb.Utils.UiObjectNew;
 
@@ -50,13 +51,18 @@ public class Goods extends BaseCase{
     @Test
     public void banner_2_1_TrunCheck(){
         CaseInfo.setCaseDesc("双列banner第一个位置跳转检测");
+        JSONObject JS = GoodsList.getBannerJsonData(1);
+        LogInfo.i(JS.toString());
         GoodsList.actionBanner2_1();
+        GoodsList.assertBannerTurn(JS);
     }
 
     @Test
     public void banner_2_2_TrunCheck(){
         CaseInfo.setCaseDesc("双列banner第二个位置跳转检测");
+        JSONObject JS = GoodsList.getBannerJsonData(2);
         GoodsList.actionBanner2_2();
+        GoodsList.assertBannerTurn(JS);
     }
 
     @Test

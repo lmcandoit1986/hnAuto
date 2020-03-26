@@ -119,7 +119,7 @@ public class Request {
         return null;
     }
 
-    public static JSONObject requestGet(String Url){
+    public static JSONObject requestGet(String Url,String COOKIE){
         HttpURLConnection connection = connect(Url);
 
         /**
@@ -127,7 +127,7 @@ public class Request {
          */
         HashMap<String, String> HeaderMap = new HashMap<String, String>();
         HeaderMap.put("User-Agent", "HN-Salary iOS/5.7.10.3799 (12.1.1; iPhone10,2) 2208x1242 [App Store]");
-        HeaderMap.put("cookie", "XDevice=cbea71d8638e0cf4eb1352e34828093e; XToken=669a133d-1f6e-4b3b-9cfc-89c6c461b6a9; SESSION=669a133d-1f6e-4b3b-9cfc-89c6c461b6a9; gaOpenId=GA201909261721261038397092; _UNAME=%E4%B8%80%E9%9B%B6%E4%BA%8C");
+        HeaderMap.put("cookie", COOKIE);
         setHeader(connection, HeaderMap);
 
         //设置请求方式
@@ -157,6 +157,6 @@ public class Request {
     }
 
     public static void main(String[] args){
-        Request.requestGet("https://www.bjycjf.com/api2/goods/business?page=1&size=10");
+//        Request.requestGet("https://www.bjycjf.com/api2/goods/business?page=1&size=10");
     }
 }
