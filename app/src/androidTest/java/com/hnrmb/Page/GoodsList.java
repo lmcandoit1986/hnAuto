@@ -129,6 +129,14 @@ public class GoodsList {
     }
 
     /**
+     * 列表点击商品跳转到商品详情
+     * @param text
+     */
+    public static void actionItemOnCurrentShow(String text){
+        Operate.click(new UiObjectNew().findObjectNew(Config.TYPE_TEXT,text));
+    }
+
+    /**
      * 下拉刷新
      */
     public static void actionLoadAgain(){
@@ -180,6 +188,13 @@ public class GoodsList {
      */
     public static void actionScrollToListBottom() {
         Operate.flingForwardUtilExpectUI(objectList(),20,Config.TYPE_TEXT,"美好生活 云成相伴");
+    }
+
+    /**
+     * 滑动列表到指定位置
+     */
+    public static void actionScrollToListExpectObject(String Value) {
+        Operate.flingForwardUtilExpectUI(objectList(),20,Config.TYPE_TEXT,Value);
     }
 
     /**

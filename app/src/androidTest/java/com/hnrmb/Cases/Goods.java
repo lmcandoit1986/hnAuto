@@ -1,9 +1,14 @@
 package com.hnrmb.Cases;
 
+import androidx.test.uiautomator.UiObject;
+
 import com.alibaba.fastjson.JSONObject;
+import com.hnrmb.Config.Config;
 import com.hnrmb.Page.GoodsDetail;
 import com.hnrmb.Page.GoodsList;
 import com.hnrmb.Utils.CaseInfo;
+import com.hnrmb.Utils.Operate;
+import com.hnrmb.Utils.UiObjectNew;
 
 import org.junit.Test;
 
@@ -12,6 +17,7 @@ public class Goods extends BaseCase{
     @Test
     public void loadAgain(){
         CaseInfo.setCaseDesc("下拉刷新列表功能");
+        GoodsList.actionItem("3种规格产品");
         GoodsList.actionLoadAgain();
     }
 
@@ -31,6 +37,7 @@ public class Goods extends BaseCase{
     @Test
     public void checkListBottom(){
         CaseInfo.setCaseDesc("验证列表滑动到底部");
+//        GoodsList.actionScrollToListBottom1();
         GoodsList.actionScrollToListBottom();
         GoodsList.assertNoMore();
     }
@@ -61,10 +68,11 @@ public class Goods extends BaseCase{
     }
 
     @Test
-    public void checkGoodsDetailOnStock(){
+    public void checkGoodsDetailNoStock(){
         CaseInfo.setCaseDesc("验证售罄商品详情页面");
         JSONObject jsonObject = GoodsList.getGoodsOffSale();
-        GoodsList.actionItem(jsonObject.getString("name"));
+        GoodsList.actionScrollToListExpectObject(jsonObject.getString("name"));
+        GoodsList.actionItemOnCurrentShow(jsonObject.getString("name"));
         GoodsDetail.assertOffSale();
     }
 
@@ -72,7 +80,8 @@ public class Goods extends BaseCase{
     public void checkGoodsDetailNameAndDesc(){
         CaseInfo.setCaseDesc("验证商品信息:名称，描述");
         JSONObject jsonObject = GoodsList.getGoodsOnSale();
-        GoodsList.actionItem(jsonObject.getString("name"));
+        GoodsList.actionScrollToListExpectObject(jsonObject.getString("name"));
+        GoodsList.actionItemOnCurrentShow(jsonObject.getString("name"));
         GoodsDetail.assertName(jsonObject.getInteger("id"));
         GoodsDetail.assertDesc(jsonObject.getInteger("id"));
     }
@@ -81,7 +90,8 @@ public class Goods extends BaseCase{
     public void checkGoodsDetailPriceOne(){
         CaseInfo.setCaseDesc("验证商品信息:价格一致");
         JSONObject jsonObject = GoodsList.getGoodsMinIsEqualMax();
-        GoodsList.actionItem(jsonObject.getString("name"));
+        GoodsList.actionScrollToListExpectObject(jsonObject.getString("name"));
+        GoodsList.actionItemOnCurrentShow(jsonObject.getString("name"));
         GoodsDetail.assertPrice(jsonObject.getInteger("id"));
 
     }
@@ -90,7 +100,8 @@ public class Goods extends BaseCase{
     public void checkGoodsDetailPriceTwo(){
         CaseInfo.setCaseDesc("验证商品信息:有价格区间");
         JSONObject jsonObject = GoodsList.getGoodsMinIsNotEqualMax();
-        GoodsList.actionItem(jsonObject.getString("name"));
+        GoodsList.actionScrollToListExpectObject(jsonObject.getString("name"));
+        GoodsList.actionItemOnCurrentShow(jsonObject.getString("name"));
         GoodsDetail.assertPrice(jsonObject.getInteger("id"));
 
     }

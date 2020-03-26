@@ -91,7 +91,10 @@ public class Operate {
         }
         
         try {
-            if(item.isClickable()) item.click();
+            if(item.isClickable()) {
+                item.click();
+                return;
+            }
             item.click();
         } catch (UiObjectNotFoundException e) {
             e.printStackTrace();
@@ -219,12 +222,11 @@ public class Operate {
             while (i<MaxSwipes){
                 i++;
                 LogInfo.i("page:"+i);
-                list.flingForward();
-                if(i%3==0){
-                    if (new UiObjectNew().findObjectNew(ExpectObType,ExpectObValue,false).exists()){
-                        return;
-                    }
+                if (new UiObjectNew().findObjectNew(ExpectObType,ExpectObValue,false).exists()) {
+                    return;
                 }
+                list.flingForward();
+
 
             }
 
@@ -263,6 +265,20 @@ public class Operate {
 
         try {
             list.flingToEnd(MaxSwipes);
+        } catch (UiObjectNotFoundException e) {
+            e.printStackTrace();
+            FailedCase.interruptProcess("UiObjectNotFoundException",DataInfo.getDayFormatForIMG());
+        }
+    }
+
+    /**
+     * 滑动列表到底部。适合没有翻页加载的场景
+     * @param list
+     */
+    public static void scrollIntoView(UiScrollable list,UiObject object){
+
+        try {
+            assert list.scrollIntoView(object) == true;
         } catch (UiObjectNotFoundException e) {
             e.printStackTrace();
             FailedCase.interruptProcess("UiObjectNotFoundException",DataInfo.getDayFormatForIMG());

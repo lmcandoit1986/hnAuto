@@ -49,7 +49,7 @@ public class UiObjectNew {
         if (item.waitForExists(deviceInfo.getTIMEOUT())){
             return item;
         }else {
-            FailedCase.interruptProcess(String.format("elemet is not exists in time:%d",deviceInfo.getTIMEOUT()),DataInfo.getDayFormatForIMG());
+            FailedCase.interruptProcess(String.format("elemet is not exists in time:%d,Value:%s",deviceInfo.getTIMEOUT(),Value),DataInfo.getDayFormatForIMG());
             return null;
         }
     }
@@ -150,10 +150,10 @@ public class UiObjectNew {
          * 定位元素，从列表中找到指定文本的元素对象
          */
         UiScrollable list =findListViewObject(ListViewType,ListViewValue);
-        
+        list.setMaxSearchSwipes(20);
         UiObject target=null;
         try {
-            target = list.getChildByText(new UiSelector().className("android.widget.TextView"),text);
+            target = list.getChildByText(new UiSelector().className("android.widget.TextView"),text,true);
         } catch (UiObjectNotFoundException e) {
             e.printStackTrace();
             FailedCase.interruptProcess(String.format("UiObjectNotFoundException with value:%s",text));

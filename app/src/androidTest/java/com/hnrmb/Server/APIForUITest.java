@@ -34,12 +34,12 @@ public class APIForUITest {
          *  }
          */
 
-        String Url = "";
+        String Url = "https://www.bjycjf.com/api2/goods/business?page="+pageNum+"&size=10";
         // 业务参数
-        JSONObject body = new JSONObject();
-        body.put("key","vaule");
-
-        return Request.requestPost(Url,body.toString());
+        // JSONObject body = new JSONObject();
+        // body.put("key","vaule");
+        // return Request.requestPost(Url,body.toString());
+        return Request.requestGet(Url);
     }
 
     /**
@@ -86,25 +86,28 @@ public class APIForUITest {
          *     }
          *   }
          */
-        String Url = "";
+        String Url = "https://www.bjycjf.com/api2/goods/detail/"+id;
         // 业务参数
-        JSONObject body = new JSONObject();
-        body.put("key","vaule");
+//        JSONObject body = new JSONObject();
+//        body.put("key","vaule");
 
-        return Request.requestPost(Url,body.toString());
+//        return Request.requestPost(Url,body.toString());
+        return Request.requestGet(Url);
     }
+
 
     /**
      * banner 请求接口
      * @return
      */
     public static JSONObject GoodsBanner(){
-        String Url = "";
+        String Url = "https://www.bjycjf.com/api2/goods/operation";
         // 业务参数
-        JSONObject body = new JSONObject();
-        body.put("key","vaule");
-
-        return Request.requestPost(Url,body.toString());
+//        JSONObject body = new JSONObject();
+//        body.put("key","vaule");
+//
+//        return Request.requestPost(Url,body.toString());
+        return Request.requestGet(Url);
     }
 
 }

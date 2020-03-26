@@ -22,7 +22,9 @@ public class BaseTests {
         deviceInfo.setTIMEOUT(3000); // 设置全局隐式等待时间
         configurator = Configurator.getInstance();
         configurator.setWaitForIdleTimeout(1000);
-        configurator.setWaitForSelectorTimeout(3000);
+        configurator.setWaitForSelectorTimeout(5000);
+//        configurator.setScrollAcknowledgmentTimeout(100);//滚动延时
+//        configurator.setActionAcknowledgmentTimeout(5000);
         DeviceStatus.wakeUp(deviceInfo.getMydevice());
     }
 
