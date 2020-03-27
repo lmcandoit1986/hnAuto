@@ -112,7 +112,7 @@ public class UiObjectNew {
         if (item.waitForExists(deviceInfo.getTIMEOUT())){
             return item;
         }else {
-            FailedCase.interruptProcess(String.format("elemet is not exists in time:%d",deviceInfo.getTIMEOUT()),DataInfo.getDayFormatForIMG());
+            FailedCase.interruptProcess(String.format("elemet is not exists in time:%d,value:%s",deviceInfo.getTIMEOUT(),Value),DataInfo.getDayFormatForIMG());
             return null;
         }
     }
@@ -162,7 +162,7 @@ public class UiObjectNew {
         if (target.waitForExists(deviceInfo.getTIMEOUT())){
             return target;
         }else {
-            FailedCase.interruptProcess(String.format("elemet is not exists in time:%d",deviceInfo.getTIMEOUT()),DataInfo.getDayFormatForIMG());
+            FailedCase.interruptProcess(String.format("elemet is not exists in time:%d,value:%s",deviceInfo.getTIMEOUT(),text),DataInfo.getDayFormatForIMG());
             return null;
         }
     }
@@ -191,7 +191,7 @@ public class UiObjectNew {
         if (target.waitForExists(deviceInfo.getTIMEOUT())){
             return target;
         }else {
-            FailedCase.interruptProcess(String.format("elemet is not exists in time:%d",deviceInfo.getTIMEOUT()),DataInfo.getDayFormatForIMG());
+            FailedCase.interruptProcess(String.format("elemet is not exists in time:%d,value:%s",deviceInfo.getTIMEOUT(),text),DataInfo.getDayFormatForIMG());
             return null;
         }
     }

@@ -1,12 +1,15 @@
 package com.hnrmb.Page;
 
 import androidx.test.uiautomator.UiObject;
+import androidx.test.uiautomator.UiObjectNotFoundException;
 import androidx.test.uiautomator.UiScrollable;
+import androidx.test.uiautomator.UiSelector;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.hnrmb.Config.Config;
 import com.hnrmb.Server.APIForUITest;
+import com.hnrmb.Utils.DataInfo;
 import com.hnrmb.Utils.DeviceInfo;
 import com.hnrmb.Utils.FailedCase;
 import com.hnrmb.Utils.LogInfo;
@@ -27,7 +30,10 @@ public class GoodsList {
     public static final String BANNER_1_ID = "com.hnrmb.salary:id/sdv_life_img_one"; // 双列 Banner 1位置
     public static final String BANNER_2_ID = "com.hnrmb.salary:id/sdv_life_img_two"; // 双列 Banner 2位置
     public static final String NAME_ID = "com.hnrmb.salary:id/tv_name";
-//    "com.hnrmb.salary:id/tv_cost"
+    public static final String PRICE_ID = "com.hnrmb.salary:id/tv_cost";
+    public static final String NO_MORE_TEXT = "美好生活 云成相伴";
+    public static final String BANNER_CHANGE_ICON_ID = "com.hnrmb.salary:id/banner_indicatorId";
+    public static final String BANNER_ID = "com.hnrmb.salary:id/banner";
 
     /**
      * 定位列表中的商品，通过文本定位
@@ -43,6 +49,15 @@ public class GoodsList {
         return new UiObjectNew().findObjectNew(Config.TYPE_TEXT,"我的");
     }
 
+    private static UiObject objectItemBannerChangeIcon(int instance){
+        try {
+            return new UiObjectNew().findObjectNew(Config.TYPE_ID,BANNER_CHANGE_ICON_ID).getChild(new UiSelector().className("android.widget.ImageView").index(instance));
+        } catch (UiObjectNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     // 获取商品列表对象
     private static UiScrollable objectList(){
         return new UiObjectNew().findListViewObject(Config.TYPE_ID,LIST_VIEW_ID);
@@ -50,7 +65,7 @@ public class GoodsList {
 
     // 获取列表底部没有更多的对象
     private static UiObject objectNoMore(){
-        return new UiObjectNew().findObjectNew(Config.TYPE_TEXT,"美好生活 云成相伴");
+        return new UiObjectNew().findObjectNew(Config.TYPE_TEXT,NO_MORE_TEXT);
     }
 
     // 获取商品列表中的在售的商品信息
@@ -194,6 +209,21 @@ public class GoodsList {
     }
 
     /**
+     * banner
+     */
+    public static JSONObject getBannerListJsonData(int id){
+        JSONObject all = APIForUITest.GoodsBanner();
+        JSONArray ja = all.getJSONObject("data").getJSONArray("bannerAds");
+        for (int i=0;i<ja.size();i++){
+            JSONObject item = ja.getJSONObject(i);
+            if (item.getInteger("id")==id){
+                return item;
+            }
+        }
+        return null;
+    }
+
+    /**
      * 验证列表已无更多数据
      */
     public static void assertNoMore(){
@@ -204,7 +234,7 @@ public class GoodsList {
      * 滑动列表到底部
      */
     public static void actionScrollToListBottom() {
-        Operate.flingForwardUtilExpectUI(objectList(),20,Config.TYPE_TEXT,"美好生活 云成相伴");
+        Operate.flingForwardUtilExpectUI(objectList(),20,Config.TYPE_TEXT,NO_MORE_TEXT);
     }
 
     /**
@@ -245,5 +275,34 @@ public class GoodsList {
         }else if (item.getString("value").startsWith("https")){
             Webview.assertIsWeb();
         }
+    }
+
+    /**
+     * 轮播banner跳转
+     */
+    public static void actionBanner(){
+        Operate.click(new UiObjectNew().findObjectNew(Config.TYPE_ID,BANNER_ID));
+    }
+
+    /**
+     * 轮播banner跳转
+     */
+    public static void actionToExpectBanner(int instance){
+        Operate.click(objectItemBannerChangeIcon(instance));
+    }
+
+    /**
+     * 验证商品价格
+     */
+    public static void assertPrice(JSONObject item){
+        String min = String.valueOf(item.get("minPrice"));
+        String max = String.valueOf(item.get("maxPrice"));
+        String Price = null;
+        if (min.equals(max) ){
+            Price = String.format("¥ %s",min);
+        }else{
+            Price = String.format("¥ %s - %s",min,max);
+        }
+        new UiObjectNew().findObjectNew(Config.TYPE_TEXT,Price);
     }
 }

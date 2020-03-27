@@ -38,7 +38,6 @@ public class Goods extends BaseCase{
     @Test
     public void checkListBottom(){
         CaseInfo.setCaseDesc("验证列表滑动到底部");
-//        GoodsList.actionScrollToListBottom1();
         GoodsList.actionScrollToListBottom();
         GoodsList.assertNoMore();
     }
@@ -52,7 +51,6 @@ public class Goods extends BaseCase{
     public void banner_2_1_TrunCheck(){
         CaseInfo.setCaseDesc("双列banner第一个位置跳转检测");
         JSONObject JS = GoodsList.getBannerJsonData(1);
-        LogInfo.i(JS.toString());
         GoodsList.actionBanner2_1();
         GoodsList.assertBannerTurn(JS);
     }
@@ -63,6 +61,12 @@ public class Goods extends BaseCase{
         JSONObject JS = GoodsList.getBannerJsonData(2);
         GoodsList.actionBanner2_2();
         GoodsList.assertBannerTurn(JS);
+    }
+
+    //@Test
+    public void bannerTrunCheck() {
+        CaseInfo.setCaseDesc("双列banner第二个位置跳转检测");
+        // 暂不能有效控制跳转位置，无法判断是点击跳转的第几个Banner
     }
 
     @Test
@@ -109,6 +113,24 @@ public class Goods extends BaseCase{
         GoodsList.actionScrollToListExpectObject(jsonObject.getString("name"));
         GoodsList.actionItemOnCurrentShow(jsonObject.getString("name"));
         GoodsDetail.assertPrice(jsonObject.getInteger("id"));
+
+    }
+
+    @Test
+    public void checkGoodsListPriceOne(){
+        CaseInfo.setCaseDesc("验证列表商品信息:价格一致");
+        JSONObject jsonObject = GoodsList.getGoodsMinIsEqualMax();
+        GoodsList.actionScrollToListExpectObject(jsonObject.getString("name"));
+        GoodsList.assertPrice(jsonObject);
+
+    }
+
+    @Test
+    public void checkGoodsListPriceTwo(){
+        CaseInfo.setCaseDesc("验证列表商品信息:有价格区间");
+        JSONObject jsonObject = GoodsList.getGoodsMinIsNotEqualMax();
+        GoodsList.actionScrollToListExpectObject(jsonObject.getString("name"));
+        GoodsList.assertPrice(jsonObject);
 
     }
 
