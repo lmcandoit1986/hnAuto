@@ -5,6 +5,8 @@ import com.hnrmb.Config.Config;
 import com.hnrmb.Data.Unlock;
 import com.hnrmb.Page.Main;
 import com.hnrmb.Utils.AppLaunch;
+import com.hnrmb.Utils.CaseInfo;
+import com.hnrmb.Utils.DataInfo;
 import com.hnrmb.Utils.LogInfo;
 import com.hnrmb.Utils.Operate;
 import com.hnrmb.Utils.TimeAll;
@@ -20,6 +22,7 @@ public class BaseCase extends BaseTests {
     public String Activity = ".module.login.launch.LaunchAct"; // 启动activity
 
     public final String CLOSE_UPDATE_ID= "com.hnrmb.salary:id/linear_close";//升级弹框关闭按钮
+    public long START_TIME;
 
     @Before
     public void SetUp(){
@@ -33,11 +36,13 @@ public class BaseCase extends BaseTests {
         // 注册监控
         // WatcherList.Update(DInfo.getMydevice());
         // 跳转到好物页面
+        START_TIME = DataInfo.getTime();
         Main.actionIntoIV(8);
     }
 
     @After
     public void Teardown(){
+        CaseInfo.caseUseTime(String.valueOf(DataInfo.getTime()-START_TIME));
         new AppLaunch().quitApp(deviceInfo.getMydevice(),PackageName);
     }
 }

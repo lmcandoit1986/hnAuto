@@ -18,7 +18,6 @@ public class Goods extends BaseCase{
     @Test
     public void loadAgain(){
         CaseInfo.setCaseDesc("下拉刷新列表功能");
-        GoodsList.actionItem("3种规格产品");
         GoodsList.actionLoadAgain();
     }
 
