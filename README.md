@@ -21,6 +21,9 @@
 
 ## 进度（好物）
 
+### 执行结果 
+1. http://152.136.202.79:9092/web/result/v2/detail?jenkinsId=10002&platform=Android
+
 ### 计划
 分三大模块来实现：
 1. 好物 商品列表页面
