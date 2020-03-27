@@ -23,6 +23,10 @@ public class Pic {
         return this.PIC_SAVE_PATH;
     }
 
+    /**
+     * adb 命令截图，绕过6.0+系统权限的问题
+     * @param PicName
+     */
     public void screenShotWithADB(String PicName){
         LogInfo.i(String.format("take pic use adb,Name:%s",PicName));
         try {
