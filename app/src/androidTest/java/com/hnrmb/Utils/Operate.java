@@ -16,6 +16,18 @@ import com.hnrmb.Config.Config;
 
 public class Operate {
 
+    public static void input(UiObject edit,String value){
+        if (edit.exists()){
+            try {
+                edit.clearTextField();
+                edit.setText(value);
+            } catch (UiObjectNotFoundException e) {
+                e.printStackTrace();
+                FailedCase.interruptProcess("UiObjectNotFoundException",DataInfo.getDayFormatForIMG());
+            }
+        }
+    }
+
     public static void click(UiObject item){
         /**
          * 点击操作
@@ -28,6 +40,9 @@ public class Operate {
                 item.click();
                 return;
             }
+            /**
+             * 很多元素属性 不可点击或enable，但是父类的是可点击的，所以这个判断可以绕过目前
+             */
             item.click();
         } catch (UiObjectNotFoundException e) {
             e.printStackTrace();
@@ -222,7 +237,7 @@ public class Operate {
             while (i<MaxSwipes){
                 i++;
                 LogInfo.i("page:"+i);
-                if (new UiObjectNew().findObjectNew(ExpectObType,ExpectObValue,false).exists()) {
+                if (UiObjectNew.getInstance(Solo.getInstance()).findObjectNew(ExpectObType,ExpectObValue,false).exists()) {
                     return;
                 }
                 list.flingForward();

@@ -23,16 +23,19 @@ import java.io.IOException;
 
 public class AppLaunch {
 
-    public AppLaunch(){
+    public Solo solo;
+
+    public AppLaunch(Solo soloObj){
+        solo = soloObj;
     }
 
-    public Boolean startApp(UiDevice MDevice, String PackageName, String StartActivityName){
+    public Boolean startApp(String PackageName, String StartActivityName){
         LogInfo.i(String.format("Start App:%s",PackageName));
         /**
          * 优先使用
          */
         try {
-            MDevice.executeShellCommand("am start "+PackageName+"/"+StartActivityName);
+            solo.getMydevice().executeShellCommand("am start "+PackageName+"/"+StartActivityName);
             Thread.sleep(6000);
         } catch (IOException e) {
             e.printStackTrace();
@@ -40,7 +43,7 @@ public class AppLaunch {
             e.printStackTrace();
         }
 
-        if (MDevice.getCurrentPackageName().equals(PackageName)){
+        if (solo.getMydevice().getCurrentPackageName().equals(PackageName)){
             return true;
         }
         return false;
@@ -49,9 +52,9 @@ public class AppLaunch {
 
     }
 
-    public void quitApp(UiDevice MDevice, String PackageName){
+    public void quitApp(String PackageName){
         try {
-            MDevice.executeShellCommand("am force-stop "+PackageName);
+            solo.getMydevice().executeShellCommand("am force-stop "+PackageName);
             Thread.sleep(5000);
         } catch (IOException e) {
             e.printStackTrace();
@@ -61,11 +64,11 @@ public class AppLaunch {
 
     }
 
-    private void startIntent(Context context, UiDevice MDevice, String PackageName){
+    private void startIntent(String PackageName){
         LogInfo.i("执行 Intent 命令启动 App");
-        final Intent intent = context.getPackageManager().getLaunchIntentForPackage(PackageName);
+        final Intent intent = solo.getMyContext().getPackageManager().getLaunchIntentForPackage(PackageName);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        context.startActivity(intent);
+        solo.getMyContext().startActivity(intent);
 
         try {
             Thread.sleep(2000);
@@ -74,11 +77,11 @@ public class AppLaunch {
         }
     }
 
-    public void initToastListener(Instrumentation instrumentation) {
+    public void initToastListener() {
         /**
          * 设置监听获取toast等信息
          */
-        instrumentation.getUiAutomation().setOnAccessibilityEventListener(new UiAutomation.OnAccessibilityEventListener() {
+        solo.getInstrumentation().getUiAutomation().setOnAccessibilityEventListener(new UiAutomation.OnAccessibilityEventListener() {
             @Override
             public void onAccessibilityEvent(AccessibilityEvent event) {
                 if (event.getEventType()!= AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED) {
@@ -107,13 +110,13 @@ public class AppLaunch {
     }
 
 
-    public String getCode(UiDevice MDevice){
+    public String getCode(){
         /**
          * 直接遍历通知栏获取内容
          */
         String res=null;
-        MDevice.openNotification();
-        UiObject tar = MDevice.findObject(new UiSelector().textContains("验证码"));
+        solo.getMydevice().openNotification();
+        UiObject tar = solo.getMydevice().findObject(new UiSelector().textContains("验证码"));
         tar.waitForExists(5000);
         try {
             res = tar.getText();
@@ -123,7 +126,7 @@ public class AppLaunch {
         }
 
         //…客户，您的验证码为：176710，有效期2分钟。买健康险，就上平安健康APP！【平安健康险】
-        MDevice.pressBack();
+        solo.getMydevice().pressBack();
         if(!res.equals(null)){
             return res.split("：")[1].split("，")[0];
         }

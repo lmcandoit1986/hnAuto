@@ -4,8 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 
 public class APIForUITest {
 
-    public static final String COOKIE = "XDevice=cbea71d8638e0cf4eb1352e34828093e; XToken=669a133d-1f6e-4b3b-9cfc-89c6c461b6a9; SESSION=669a133d-1f6e-4b3b-9cfc-89c6c461b6a9; gaOpenId=GA201909261721261038397092; _UNAME=%E4%B8%80%E9%9B%B6%E4%BA%8C";
-
+    public static final String COOKIE = "XDevice=cbea71d8638e0cf4eb1352e34828093e; XToken=0d072df9-fe03-4f42-b4ef-7a88dbd0ed9c; SESSION=0d072df9-fe03-4f42-b4ef-7a88dbd0ed9c; gaOpenId=GA201909261721261038397092; _ga=GA1.2.719164965.1586850445; _gid=GA1.2.1993669029.1586850445; _UNAME=%E4%B8%80%E9%9B%B6%E4%BA%8C";
+    //"XDevice=cbea71d8638e0cf4eb1352e34828093e; XToken=f5537a6c-633a-4e5c-86b3-246ab2223ea9; SESSION=f5537a6c-633a-4e5c-86b3-246ab2223ea9; _UNAME=%E4%B8%80%E9%9B%B6%E4%BA%8C; gaOpenId=GA201909261721261038397092"
     /**
      * 列表请求
      * @param pageNum
@@ -160,5 +160,13 @@ public class APIForUITest {
 //        return Request.requestPost(Url,body.toString());
         return Request.requestGet(Url,COOKIE);
     }
+
+    /**
+     * 接口信息列表
+     */
+    // https://www.bjycjf.com/api2/financing/v3/products?page=1&size=10
+    // 理财产品列表页面
+    // GET
+
 
 }

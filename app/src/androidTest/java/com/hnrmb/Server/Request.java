@@ -156,7 +156,44 @@ public class Request {
 
     }
 
+    public static String requestGet(String Url,String COOKIE,int i){
+        HttpURLConnection connection = connect(Url);
+
+        /**
+         * 设置header字段
+         */
+        HashMap<String, String> HeaderMap = new HashMap<String, String>();
+        HeaderMap.put("User-Agent", "HN-Salary iOS/5.7.10.3799 (12.1.1; iPhone10,2) 2208x1242 [App Store]");
+        HeaderMap.put("cookie", COOKIE);
+        setHeader(connection, HeaderMap);
+
+        //设置请求方式
+        try {
+            connection.setRequestMethod("GET");
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        }
+        //连接
+        try {
+            connection.connect();
+            int responseCode = connection.getResponseCode();
+            if(responseCode == HttpURLConnection.HTTP_OK){
+                String Res = inStream(connection);
+                return Res;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+
+    }
     public static void main(String[] args){
 //        Request.requestGet("https://www.bjycjf.com/api2/goods/business?page=1&size=10");
+        String COOKIE = "XDevice=cbea71d8638e0cf4eb1352e34828093e; XToken=0d072df9-fe03-4f42-b4ef-7a88dbd0ed9c; SESSION=0d072df9-fe03-4f42-b4ef-7a88dbd0ed9c; gaOpenId=GA201909261721261038397092; _ga=GA1.2.719164965.1586850445; _gid=GA1.2.1993669029.1586850445; _UNAME=%E4%B8%80%E9%9B%B6%E4%BA%8C";
+        String res = Request.requestGet("https://www.bjycjf.com/api/v3/money/fip/10577",COOKIE,0);
+        //{"error":{"code":1000,"msg":"你得先登录才能操作，请重新登录","type":0}}
+
+        System.out.print(res);
     }
 }

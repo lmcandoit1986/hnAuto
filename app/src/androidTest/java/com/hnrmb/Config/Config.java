@@ -14,4 +14,6 @@ public class Config {
 
     public static String ToastMSG;
 
+    public static final String ENV = "rel"; // rel ,test
+
 }

@@ -8,11 +8,11 @@ import java.io.IOException;
 
 public class Pic {
 
-    private DeviceInfo deviceInfo;
+    private Solo solo;
     private volatile String PIC_SAVE_PATH ="/sdcard/hnrmb/";
 
     public Pic(){
-        deviceInfo = DeviceInfo.getInstance();
+        solo = Solo.getInstance();
     }
 
     public void setPic_save_local_path(String pic_save_local_path) {
@@ -30,7 +30,7 @@ public class Pic {
     public void screenShotWithADB(String PicName){
         LogInfo.i(String.format("take pic use adb,Name:%s",PicName));
         try {
-            deviceInfo.getMydevice().executeShellCommand(String.format("screencap %s%s.png",PIC_SAVE_PATH,PicName));
+            solo.getMydevice().executeShellCommand(String.format("screencap %s%s.png",PIC_SAVE_PATH,PicName));
         } catch (IOException e) {
             e.printStackTrace();
         }

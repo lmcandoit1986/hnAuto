@@ -1,5 +1,8 @@
 package com.hnrmb.Utils;
 
+import androidx.test.InstrumentationRegistry;
+import androidx.test.uiautomator.Configurator;
+import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 import androidx.test.uiautomator.UiScrollable;
@@ -13,10 +16,17 @@ import com.hnrmb.Config.Config;
 
 public class UiObjectNew {
 
-    private DeviceInfo deviceInfo;
+    private static UiObjectNew Instance;
+    private Solo solo;
+    private UiObjectNew(Solo so){
+        solo = so;
+    }
 
-    public UiObjectNew(){
-        deviceInfo = DeviceInfo.getInstance();
+    public static UiObjectNew getInstance(Solo so){
+        if(Instance==null){
+            Instance = new UiObjectNew(so);
+        }
+        return Instance;
     }
 
     public UiObject findObjectNew(String Type, String Value){
@@ -31,25 +41,25 @@ public class UiObjectNew {
         UiObject item = null;
         switch (Type){
             case Config.TYPE_ID:
-                item = deviceInfo.getMydevice().findObject(new UiSelector().resourceId(Value));
+                item = solo.getMydevice().findObject(new UiSelector().resourceId(Value));
                 break;
             case Config.TYPE_CLASS:
-                item = deviceInfo.getMydevice().findObject(new UiSelector().className(Value));
+                item = solo.getMydevice().findObject(new UiSelector().className(Value));
                 break;
             case Config.TYPE_TEXT:
-                item = deviceInfo.getMydevice().findObject(new UiSelector().text(Value));
+                item = solo.getMydevice().findObject(new UiSelector().text(Value));
                 break;
             case Config.TYPE_DESC:
-                item = deviceInfo.getMydevice().findObject(new UiSelector().description(Value));
+                item = solo.getMydevice().findObject(new UiSelector().description(Value));
                 break;
             default:
                 FailedCase.interruptProcess(String.format("Key Error with type:%s",Type),DataInfo.getDayFormatForIMG());
         }
         
-        if (item.waitForExists(deviceInfo.getTIMEOUT())){
+        if (item.waitForExists(solo.getTIMEOUT())){
             return item;
         }else {
-            FailedCase.interruptProcess(String.format("elemet is not exists in time:%d,Value:%s",deviceInfo.getTIMEOUT(),Value),DataInfo.getDayFormatForIMG());
+            FailedCase.interruptProcess(String.format("elemet is not exists in time:%d,Value:%s", solo.getTIMEOUT(),Value),DataInfo.getDayFormatForIMG());
             return null;
         }
     }
@@ -68,13 +78,13 @@ public class UiObjectNew {
         
         switch (Type){
             case "id":
-                return deviceInfo.getMydevice().findObject(new UiSelector().resourceId(Value));
+                return solo.getMydevice().findObject(new UiSelector().resourceId(Value));
             case "class":
-                return deviceInfo.getMydevice().findObject(new UiSelector().className(Value));
+                return solo.getMydevice().findObject(new UiSelector().className(Value));
             case "text":
-                return deviceInfo.getMydevice().findObject(new UiSelector().text(Value));
+                return solo.getMydevice().findObject(new UiSelector().text(Value));
             case "desc":
-                return deviceInfo.getMydevice().findObject(new UiSelector().description(Value));
+                return solo.getMydevice().findObject(new UiSelector().description(Value));
             default:
                 FailedCase.interruptProcess(String.format("Key Error with type:%s",Type),DataInfo.getDayFormatForIMG());
                 return null;
@@ -94,25 +104,25 @@ public class UiObjectNew {
         UiObject item = null;
         switch (Type){
             case Config.TYPE_ID:
-                item = deviceInfo.getMydevice().findObject(new UiSelector().resourceId(Value).instance(instance));
+                item = solo.getMydevice().findObject(new UiSelector().resourceId(Value).instance(instance));
                 break;
             case Config.TYPE_CLASS:
-                item = deviceInfo.getMydevice().findObject(new UiSelector().className(Value).instance(instance));
+                item = solo.getMydevice().findObject(new UiSelector().className(Value).instance(instance));
                 break;
             case Config.TYPE_TEXT:
-                item = deviceInfo.getMydevice().findObject(new UiSelector().text(Value).instance(instance));
+                item = solo.getMydevice().findObject(new UiSelector().text(Value).instance(instance));
                 break;
             case Config.TYPE_DESC:
-                item = deviceInfo.getMydevice().findObject(new UiSelector().description(Value).instance(instance));
+                item = solo.getMydevice().findObject(new UiSelector().description(Value).instance(instance));
                 break;
             default:
                 FailedCase.interruptProcess(String.format("Key Error with type:%s",Type),DataInfo.getDayFormatForIMG());
         }
         
-        if (item.waitForExists(deviceInfo.getTIMEOUT())){
+        if (item.waitForExists(solo.getTIMEOUT())){
             return item;
         }else {
-            FailedCase.interruptProcess(String.format("elemet is not exists in time:%d,value:%s",deviceInfo.getTIMEOUT(),Value),DataInfo.getDayFormatForIMG());
+            FailedCase.interruptProcess(String.format("elemet is not exists in time:%d,value:%s", solo.getTIMEOUT(),Value),DataInfo.getDayFormatForIMG());
             return null;
         }
     }
@@ -131,13 +141,13 @@ public class UiObjectNew {
         
         switch (Type){
             case "id":
-                return deviceInfo.getMydevice().findObject(new UiSelector().resourceId(Value).instance(instance));
+                return solo.getMydevice().findObject(new UiSelector().resourceId(Value).instance(instance));
             case "class":
-                return deviceInfo.getMydevice().findObject(new UiSelector().className(Value).instance(instance));
+                return solo.getMydevice().findObject(new UiSelector().className(Value).instance(instance));
             case "text":
-                return deviceInfo.getMydevice().findObject(new UiSelector().text(Value).instance(instance));
+                return solo.getMydevice().findObject(new UiSelector().text(Value).instance(instance));
             case "desc":
-                return deviceInfo.getMydevice().findObject(new UiSelector().description(Value).instance(instance));
+                return solo.getMydevice().findObject(new UiSelector().description(Value).instance(instance));
             default:
                 FailedCase.interruptProcess(String.format("Key Error with type:%s",Type),DataInfo.getDayFormatForIMG());
                 return null;
@@ -159,10 +169,10 @@ public class UiObjectNew {
             FailedCase.interruptProcess(String.format("UiObjectNotFoundException with value:%s",text));
         }
         
-        if (target.waitForExists(deviceInfo.getTIMEOUT())){
+        if (target.waitForExists(solo.getTIMEOUT())){
             return target;
         }else {
-            FailedCase.interruptProcess(String.format("elemet is not exists in time:%d,value:%s",deviceInfo.getTIMEOUT(),text),DataInfo.getDayFormatForIMG());
+            FailedCase.interruptProcess(String.format("elemet is not exists in time:%d,value:%s", solo.getTIMEOUT(),text),DataInfo.getDayFormatForIMG());
             return null;
         }
     }
@@ -188,10 +198,10 @@ public class UiObjectNew {
             FailedCase.interruptProcess(String.format("UiObjectNotFoundException with value:%s",text));
         }
 
-        if (target.waitForExists(deviceInfo.getTIMEOUT())){
+        if (target.waitForExists(solo.getTIMEOUT())){
             return target;
         }else {
-            FailedCase.interruptProcess(String.format("elemet is not exists in time:%d,value:%s",deviceInfo.getTIMEOUT(),text),DataInfo.getDayFormatForIMG());
+            FailedCase.interruptProcess(String.format("elemet is not exists in time:%d,value:%s", solo.getTIMEOUT(),text),DataInfo.getDayFormatForIMG());
             return null;
         }
     }
@@ -216,6 +226,18 @@ public class UiObjectNew {
             return null;
         }
         return list;
+    }
+
+    public void assertWebelementIsDisplay(UiObject uiObject){
+        try {
+            if(uiObject.getBounds().height()<=10){
+                FailedCase.interruptProcess("webview element is't display",DataInfo.getDayFormatForIMG());
+            }
+        } catch (UiObjectNotFoundException e) {
+            e.printStackTrace();
+            FailedCase.interruptProcess("webview element is't display",DataInfo.getDayFormatForIMG());
+
+        }
     }
 
 

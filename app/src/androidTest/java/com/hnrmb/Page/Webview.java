@@ -1,6 +1,7 @@
 package com.hnrmb.Page;
 
 import com.hnrmb.Config.Config;
+import com.hnrmb.Utils.Solo;
 import com.hnrmb.Utils.UiObjectNew;
 
 /**
@@ -12,9 +13,17 @@ import com.hnrmb.Utils.UiObjectNew;
  */
 public class Webview {
 
-    public static final String WEB_CLASS = "android.webkit.WebView";
+    public Solo solo;
+    public UiObjectNew UN;
+    public Webview(Solo so){
+        solo = so;
+        UN = UiObjectNew.getInstance(so);
+    }
 
-    public static void assertIsWeb(){
-        new UiObjectNew().findObjectNew(Config.TYPE_CLASS,WEB_CLASS);
+    public final String WEB_CLASS = "android.webkit.WebView";
+
+    public Webview assertIsWeb(){
+        UN.findObjectNew(Config.TYPE_CLASS,WEB_CLASS);
+        return this;
     }
 }

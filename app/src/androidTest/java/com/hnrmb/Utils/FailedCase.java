@@ -25,7 +25,7 @@ public class FailedCase {
          */
         Bundle bundle = new Bundle();
         bundle.putString("img",PicName);
-        new BundleNew(DeviceInfo.getInstance().getInstrumentation()).sendStatus(10,bundle);
+        new BundleNew(Solo.getInstance().getInstrumentation()).sendStatus(10,bundle);
         throw new AssertionError(MSG);
     }
 

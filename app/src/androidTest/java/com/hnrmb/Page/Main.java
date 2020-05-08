@@ -1,7 +1,11 @@
 package com.hnrmb.Page;
 
+import androidx.test.uiautomator.UiObject;
+
 import com.hnrmb.Config.Config;
 import com.hnrmb.Utils.Operate;
+import com.hnrmb.Utils.Solo;
+import com.hnrmb.Utils.TimeAll;
 import com.hnrmb.Utils.UiObjectNew;
 
 /**
@@ -13,17 +17,36 @@ import com.hnrmb.Utils.UiObjectNew;
  */
 public class Main {
 
+    public Solo solo;
+    public UiObjectNew UN;
+    public Main(Solo so){
+        solo = so;
+        UN = UiObjectNew.getInstance(solo);
+    }
+
     // com.hnrmb.salary:id/tv_update
     // com.hnrmb.salary:id/linear_close 关闭
     // com.hnrmb.salary:id/iv_toolbar_back
     // com.hnrmb.salary:id/sdv_life_img_one
     // com.hnrmb.salary:id/sdv_life_img_two
     // com.hnrmb.salary:id/xrecycler_home
-    public static final String ICON_ID = "com.hnrmb.salary:id/iv_icon";// 5列 推广入口
+    public final String ICON_ID = "com.hnrmb.salary:id/iv_icon";// 5列 推广入口
+    public final String navigation_bar_id = "com.hnrmb.salary:id/eiv_type";
+
+    private UiObject objectNavigation(int instance){
+        return UN.findObjectNew(Config.TYPE_ID,navigation_bar_id,instance);
+    }
+
+    public My actionIntoMy(){
+        TimeAll.sleepTread(3000);
+        Operate.click(objectNavigation(2));
+        return new My(solo);
+    }
 
 
-    public static void actionIntoIV(int instance){
+    private void actionIntoIV(int instance){
         /**
+         * 测试环境
          * 0 余额盈
          * 1 投资圈
          * 2 理财
@@ -35,8 +58,34 @@ public class Main {
          * 8 好物
          * 9
          */
-        Operate.click(new UiObjectNew().findObjectNew(Config.TYPE_ID,ICON_ID,instance));
+        TimeAll.sleepTread(3000);
+        Operate.clickAndWaitForNewWindow(UN.findObjectNew(Config.TYPE_ID,ICON_ID,instance));
     }
+    // 好物列表
+    public GoodsList actionIntoGoodsList(){
+        int instance = (Config.ENV.equals("rel"))?6:8 ;
+        actionIntoIV(instance);
+        return new GoodsList(solo);
+    }
+    // 理财列表
+    public FIPList actionIntoFIPList(){
+        int instance = (Config.ENV.equals("rel"))?2:2 ;
+        actionIntoIV(instance);
+        return new FIPList(solo);
+    }
+    // 银行+
+    public BankList actionIntoBankList(){
+        int instance = (Config.ENV.equals("rel"))?4:4 ;
+        actionIntoIV(instance);
+        return new BankList(solo);
+    }
+    // 余额盈
+    public Balance actionIntoBalanceIncoming(){
+        int instance = (Config.ENV.equals("rel"))?0:0 ;
+        actionIntoIV(instance);
+        return new Balance(solo);
+    }
+
 
 
 
