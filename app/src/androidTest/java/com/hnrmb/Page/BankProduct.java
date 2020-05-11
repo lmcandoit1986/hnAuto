@@ -5,6 +5,7 @@ import androidx.test.uiautomator.UiObject;
 import com.hnrmb.Config.Config;
 import com.hnrmb.Utils.Operate;
 import com.hnrmb.Utils.Solo;
+import com.hnrmb.Utils.TimeAll;
 import com.hnrmb.Utils.UiObjectNew;
 /**
  * 银行+产品详情页面元素及操作封装
@@ -29,7 +30,8 @@ public class BankProduct {
     }
 
     public BankList actionBack(){
-        Operate.click(objectBack());
+        Operate.clickAndWaitForNewWindow(objectBack());
+//        TimeAll.sleepTread(2000);
         return new BankList(solo);
     }
 

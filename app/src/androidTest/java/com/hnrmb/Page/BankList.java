@@ -3,6 +3,7 @@ package com.hnrmb.Page;
 import com.hnrmb.Config.Config;
 import com.hnrmb.Utils.Operate;
 import com.hnrmb.Utils.Solo;
+import com.hnrmb.Utils.TimeAll;
 import com.hnrmb.Utils.UiObjectNew;
 /**
  * 银行+页面元素及操作封装
@@ -26,7 +27,8 @@ public class BankList {
     }
 
     public BankProduct actionIntoDetail(String PName){
-        Operate.clickAndWaitForNewWindow(UN.findObjectNew(Config.TYPE_TEXT,PName));
+//        TimeAll.sleepTread(1000);
+        Operate.clickAndWaitForNewWindow(UN.findObjectWebView(Config.TYPE_TEXT,PName));
         return new BankProduct(solo);
     }
 

@@ -57,6 +57,16 @@ public class Main {
          * 7 哆啦A梦
          * 8 好物
          * 9
+         * 线上
+         * 0 余额
+         * 1 酒店（酒店预定）
+         * 2 理财
+         * 3 投资圈
+         * 4 银行+
+         * 5 公益（扶贫公益）
+         * 6 好物
+         * 7 敬请期待
+         * 8 每日签到
          */
         TimeAll.sleepTread(3000);
         Operate.clickAndWaitForNewWindow(UN.findObjectNew(Config.TYPE_ID,ICON_ID,instance));
@@ -85,6 +95,21 @@ public class Main {
         actionIntoIV(instance);
         return new Balance(solo);
     }
+    // 酒店
+    public Hotel actionIntoHotel(){
+        int instance = (Config.ENV.equals("rel"))?1:3 ;
+        actionIntoIV(instance);
+        return new Hotel(solo);
+    }
+
+    // 公益
+    public publicWork actionIntopublicWork(){
+        int instance = (Config.ENV.equals("rel"))?5:5 ;
+        actionIntoIV(instance);
+        return new publicWork(solo);
+    }
+
+
 
 
 

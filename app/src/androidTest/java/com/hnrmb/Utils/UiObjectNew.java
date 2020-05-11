@@ -1,5 +1,7 @@
 package com.hnrmb.Utils;
 
+import android.graphics.Rect;
+
 import androidx.test.InstrumentationRegistry;
 import androidx.test.uiautomator.Configurator;
 import androidx.test.uiautomator.UiDevice;
@@ -206,6 +208,38 @@ public class UiObjectNew {
         }
     }
 
+    public UiObject findObjectWebView(String Type, String Value){
+        /**
+         * 定位元素
+         * 支持id，text，class，desc
+         * 会校验是否存在
+         * 验证超时
+         * 失败阻断用例实现
+         */
+
+        UiObject item = findObjectNew(Type,Value,false);
+
+        if (item.waitForExists(solo.getTIMEOUT())){
+            try {
+                Rect rect = item.getBounds();
+                while (true){
+                    TimeAll.sleepTread(1000);
+                    item = findObjectNew(Type,Value,false);
+                    if(rect.equals(item.getBounds())){
+                        break;
+                    }
+                    rect = item.getBounds();
+                }
+            } catch (UiObjectNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            return item;
+        }else {
+            FailedCase.interruptProcess(String.format("elemet is not exists in time:%d,Value:%s", solo.getTIMEOUT(),Value),DataInfo.getDayFormatForIMG());
+            return null;
+        }
+    }
 
     /**
      * 获取列表对象

@@ -83,10 +83,9 @@ public class SumCase extends BaseTests {
     @Test
     public void Bank_BankCheck(){
         CaseInfo.setCaseDesc("银行+列表并检查前5理财详情");
-        mainObj.actionIntoBankList().assertNomal().actionIntoDetail("享存3月").assertNomal().actionBack()
+        mainObj.actionIntoBankList().assertNomal().actionIntoDetail("月月盈1号").assertNomal(1).actionBack()
                 .actionIntoDetail("享存6月").assertNomal().actionBack()
-                .actionIntoDetail("享存1年").assertNomal().actionBack()
-                .actionIntoDetail("月月盈1号").assertNomal(1);
+                .actionIntoDetail("享存3月").assertNomal();
     }
 
     @Test
@@ -103,4 +102,15 @@ public class SumCase extends BaseTests {
         mainObj.actionIntoMy().actionIntoMyintegral().assertNomal();
     }
 
+    @Test
+    public void Hotel_CheckHotel(){
+        CaseInfo.setCaseDesc("酒店页面检查");
+        mainObj.actionIntoHotel().assertNomal();
+    }
+
+    @Test
+    public void publicWork_CheckpublicWork(){
+        CaseInfo.setCaseDesc("公益页面检查");
+        mainObj.actionIntopublicWork().assertNomal();
+    }
 }
