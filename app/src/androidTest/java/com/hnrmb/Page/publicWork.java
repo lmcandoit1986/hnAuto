@@ -3,6 +3,7 @@ package com.hnrmb.Page;
 import androidx.test.uiautomator.UiObject;
 
 import com.hnrmb.Config.Config;
+import com.hnrmb.Utils.DataInfo;
 import com.hnrmb.Utils.FailedCase;
 import com.hnrmb.Utils.Operate;
 import com.hnrmb.Utils.Solo;
@@ -37,7 +38,7 @@ public class publicWork {
     public publicWork assertNomal(){
         String title = getTitle();
         if (!title.equals("扶贫公益"))
-            FailedCase.interruptProcess(String.format("标题预期:扶贫公益,实际:%s",title));
+            FailedCase.interruptProcess(String.format("标题预期:扶贫公益,实际:%s",title), DataInfo.getDayFormatForIMG());
         return this;
     }
 

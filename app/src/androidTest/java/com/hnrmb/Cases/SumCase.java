@@ -26,13 +26,13 @@ public class SumCase extends BaseTests {
     public String PackageName = "com.hnrmb.salary"; // 包名
     public String Activity = ".module.login.launch.LaunchAct"; // 启动activity
     public long START_TIME;
-    public AppLaunch appLaunch;
+
     public Main mainObj;
 
     @Before
     public void SetUp(){
         START_TIME = DataInfo.getTime();
-        appLaunch = new AppLaunch(solo);
+//        appLaunch = new AppLaunch(solo);
         appLaunch.startApp(PackageName,Activity);
         // appLaunch.initToastListener();
         // 升级弹框关闭
@@ -71,11 +71,11 @@ public class SumCase extends BaseTests {
     public void My_MyMoneyCheck(){
         LogInfo.i(Other.getVersionCode(solo.getTargetContext())+"");
         CaseInfo.setCaseDesc("我的资产页面，金额检查");
-        mainObj.actionIntoMy().assertAllMoney("200.00")
+        mainObj.actionIntoMy().assertAllMoney("100.00")
                 .assertAllIncoming("0.00")
                 .assertNewIncoming("0.00")
                 .assertYCMonkey("0.00")
-                .assertLCMonkey("200.00")
+                .assertLCMonkey("100.00")
                 .assertYEMonkey("0.00")
                 .assertBankMonkey("0.00");
     }

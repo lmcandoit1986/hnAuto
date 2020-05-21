@@ -61,11 +61,11 @@ public class Main {
          * 0 余额
          * 1 酒店（酒店预定）
          * 2 理财
-         * 3 投资圈
+         * 3 工资宝
          * 4 银行+
-         * 5 公益（扶贫公益）
+         * 5 投资圈
          * 6 好物
-         * 7 敬请期待
+         * 7 公益
          * 8 每日签到
          */
         TimeAll.sleepTread(3000);
@@ -104,7 +104,7 @@ public class Main {
 
     // 公益
     public publicWork actionIntopublicWork(){
-        int instance = (Config.ENV.equals("rel"))?5:5 ;
+        int instance = (Config.ENV.equals("rel"))?7:5 ;
         actionIntoIV(instance);
         return new publicWork(solo);
     }
