@@ -26,7 +26,7 @@ public class Hotel {
     public final String title_id = "com.hnrmb.salary:id/tv_title";
 
     public UiObject objectTitle(){
-        return UN.findObjectNew(Config.TYPE_ID,title_id);
+        return UN.findObjectNew(Config.TYPE_TEXT,"酒店预订",title_id);
     }
 
     public String getTitle(){

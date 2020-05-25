@@ -3,6 +3,7 @@ package com.hnrmb.Page;
 import androidx.test.uiautomator.UiObject;
 
 import com.hnrmb.Config.Config;
+import com.hnrmb.Utils.Ele;
 import com.hnrmb.Utils.Operate;
 import com.hnrmb.Utils.Solo;
 import com.hnrmb.Utils.TimeAll;
@@ -26,7 +27,7 @@ public class BankProduct {
     }
 
     private UiObject objectBack(){
-        return UN.findObjectNew(Config.TYPE_ID,back_id);
+        return UN.findUiobject(new Ele[]{new Ele(Config.TYPE_ID,back_id)});
     }
 
     public BankList actionBack(){
@@ -41,7 +42,7 @@ public class BankProduct {
         /**
          * 适用中关村产品
          */
-        UN.assertWebelementIsDisplay(UN.findObjectNew(Config.TYPE_TEXT,"派息利率"));
+        UN.assertWebelementIsDisplay(UN.findUiobject(new Ele[]{new Ele(Config.TYPE_TEXT,"派息利率")}));
         return this;
     }
 
@@ -49,7 +50,7 @@ public class BankProduct {
         /**
          * 适用民生产品
          */
-        UN.assertWebelementIsDisplay(UN.findObjectNew(Config.TYPE_TEXT,"七日年化收益率"));
+        UN.assertWebelementIsDisplay(UN.findUiobject(new Ele[]{new Ele(Config.TYPE_TEXT,"七日年化收益率")}));
         return this;
     }
 

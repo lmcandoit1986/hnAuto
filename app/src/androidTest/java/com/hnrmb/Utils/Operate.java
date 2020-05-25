@@ -19,6 +19,7 @@ public class Operate {
     public static void input(UiObject edit,String value){
         if (edit.exists()){
             try {
+                LogInfo.i(String.format("input %s",value));
                 edit.clearTextField();
                 edit.setText(value);
             } catch (UiObjectNotFoundException e) {

@@ -12,6 +12,8 @@ import androidx.test.uiautomator.UiSelector;
 
 import com.hnrmb.Config.Config;
 
+import org.junit.Test;
+
 /**
  * Created by liming on 2020/3/24.
  */
@@ -31,6 +33,96 @@ public class UiObjectNew {
         return Instance;
     }
 
+    public UiObject findUiobject(Ele[] eleList){
+        return findUiobject(eleList,true);
+    }
+
+    public UiObject findUiobject(Ele[] eleList,Boolean isAssert){
+        UiSelector uiSelector = new UiSelector();
+        StringBuilder MSG = new StringBuilder();
+        for(Ele e : eleList){
+            switch (e.getType()){
+                case Config.TYPE_ID:
+                    uiSelector = uiSelector.resourceId(e.getValue());
+                    break;
+                case Config.TYPE_TEXT:
+                    uiSelector = uiSelector.text(e.getValue());
+                    break;
+                case Config.TYPE_CLASS:
+                    uiSelector = uiSelector.className(e.getValue());
+                    break;
+                case Config.TYPE_DESC:
+                    uiSelector = uiSelector.description(e.getValue());
+                    break;
+                default:
+                    FailedCase.interruptProcess(String.format("Key Error with type:%s",e.getType()),DataInfo.getDayFormatForIMG());
+            }
+            if (e.getIndex()>=0){
+                LogInfo.i("匹配index："+e.getIndex());
+                uiSelector = uiSelector.index(e.getIndex());
+            }
+
+            if (e.getInstance()>=0){
+                LogInfo.i("匹配instance："+e.getInstance());
+                uiSelector = uiSelector.instance(e.getInstance());
+            }
+            MSG.append(e.about());
+
+        }
+        UiObject item = null;
+        item =  solo.getMydevice().findObject(uiSelector);
+
+        if (item.waitForExists(solo.getTIMEOUT())){
+            return item;
+        }else {
+            if (isAssert) FailedCase.interruptProcess(String.format("elemet is not exists in time:%d,Value:%s", solo.getTIMEOUT(),MSG),DataInfo.getDayFormatForIMG());
+            return null;
+        }
+    }
+
+    public UiObject findUiobject(Ele[] eleList,int timeout){
+        UiSelector uiSelector = new UiSelector();
+        StringBuilder MSG = new StringBuilder();
+        for(Ele e : eleList){
+            switch (e.getType()){
+                case Config.TYPE_ID:
+                    uiSelector = uiSelector.resourceId(e.getValue());
+                    break;
+                case Config.TYPE_TEXT:
+                    uiSelector = uiSelector.text(e.getValue());
+                    break;
+                case Config.TYPE_CLASS:
+                    uiSelector = uiSelector.className(e.getValue());
+                    break;
+                case Config.TYPE_DESC:
+                    uiSelector = uiSelector.description(e.getValue());
+                    break;
+                default:
+                    FailedCase.interruptProcess(String.format("Key Error with type:%s",e.getType()),DataInfo.getDayFormatForIMG());
+            }
+            if (e.getIndex()>=0){
+                LogInfo.i("匹配index："+e.getIndex());
+                uiSelector = uiSelector.index(e.getIndex());
+            }
+
+            if (e.getInstance()>=0){
+                LogInfo.i("匹配instance："+e.getInstance());
+                uiSelector = uiSelector.instance(e.getInstance());
+            }
+            MSG.append(e.about());
+
+        }
+        UiObject item = null;
+        item =  solo.getMydevice().findObject(uiSelector);
+
+        if (item.waitForExists(timeout)){
+            return item;
+        }else {
+            FailedCase.interruptProcess(String.format("elemet is not exists in time:%d,Value:%s", solo.getTIMEOUT(),MSG),DataInfo.getDayFormatForIMG());
+            return null;
+        }
+    }
+
     public UiObject findObjectNew(String Type, String Value){
         /**
          * 定位元素
@@ -39,7 +131,10 @@ public class UiObjectNew {
          * 验证超时
          * 失败阻断用例实现
          */
-        
+
+        return findUiobject(new Ele[]{new Ele(Type,Value)});
+
+        /**
         UiObject item = null;
         switch (Type){
             case Config.TYPE_ID:
@@ -57,13 +152,125 @@ public class UiObjectNew {
             default:
                 FailedCase.interruptProcess(String.format("Key Error with type:%s",Type),DataInfo.getDayFormatForIMG());
         }
-        
+
         if (item.waitForExists(solo.getTIMEOUT())){
             return item;
         }else {
             FailedCase.interruptProcess(String.format("elemet is not exists in time:%d,Value:%s", solo.getTIMEOUT(),Value),DataInfo.getDayFormatForIMG());
             return null;
         }
+         */
+    }
+
+    public UiObject findObjectNew(String Type, String Value, String idValue){
+        /**
+         * 定位元素
+         * 支持id，text，class，desc
+         * 会校验是否存在
+         * 验证超时
+         * 失败阻断用例实现
+
+
+        UiObject item = null;
+        switch (Type){
+            case Config.TYPE_ID:
+                item = solo.getMydevice().findObject(new UiSelector().resourceId(Value));
+                break;
+            case Config.TYPE_CLASS:
+                item = solo.getMydevice().findObject(new UiSelector().resourceId(idValue).className(Value));
+                break;
+            case Config.TYPE_TEXT:
+                item = solo.getMydevice().findObject(new UiSelector().resourceId(idValue).text(Value));
+                break;
+            case Config.TYPE_DESC:
+                item = solo.getMydevice().findObject(new UiSelector().resourceId(idValue).description(Value));
+                break;
+            default:
+                FailedCase.interruptProcess(String.format("Key Error with type:%s",Type),DataInfo.getDayFormatForIMG());
+        }
+
+        if (item.waitForExists(solo.getTIMEOUT())){
+            return item;
+        }else {
+            FailedCase.interruptProcess(String.format("elemet is not exists in time:%d,Value:%s", solo.getTIMEOUT(),Value),DataInfo.getDayFormatForIMG());
+            return null;
+        }
+         */
+        return findUiobject(new Ele[]{new Ele(Type,Value),new Ele(Config.TYPE_ID,idValue)});
+    }
+
+    public UiObject findObjectSetTimeout(String Type, String Value, int timeout){
+        /**
+         * 定位元素
+         * 支持id，text，class，desc
+         * 会校验是否存在
+         * 验证超时
+         * 失败阻断用例实现
+
+
+        UiObject item = null;
+        switch (Type){
+            case Config.TYPE_ID:
+                item = solo.getMydevice().findObject(new UiSelector().resourceId(Value));
+                break;
+            case Config.TYPE_CLASS:
+                item = solo.getMydevice().findObject(new UiSelector().className(Value));
+                break;
+            case Config.TYPE_TEXT:
+                item = solo.getMydevice().findObject(new UiSelector().text(Value));
+                break;
+            case Config.TYPE_DESC:
+                item = solo.getMydevice().findObject(new UiSelector().description(Value));
+                break;
+            default:
+                FailedCase.interruptProcess(String.format("Key Error with type:%s",Type),DataInfo.getDayFormatForIMG());
+        }
+
+        if (item.waitForExists(timeout)){
+            return item;
+        }else {
+            FailedCase.interruptProcess(String.format("elemet is not exists in time:%d,Value:%s", solo.getTIMEOUT(),Value),DataInfo.getDayFormatForIMG());
+            return null;
+        }
+        */
+        return findUiobject(new Ele[]{new Ele(Type,Value)},timeout);
+    }
+
+    public UiObject findObjectByClass(String Type, String Value, String ClassName){
+        /**
+         * 定位元素
+         * 支持id，text，class，desc
+         * 会校验是否存在
+         * 验证超时
+         * 失败阻断用例实现
+
+
+        UiObject item = null;
+        switch (Type){
+            case Config.TYPE_ID:
+                item = solo.getMydevice().findObject(new UiSelector().className(ClassName).resourceId(Value));
+                break;
+            case Config.TYPE_CLASS:
+                item = solo.getMydevice().findObject(new UiSelector().className(Value));
+                break;
+            case Config.TYPE_TEXT:
+                item = solo.getMydevice().findObject(new UiSelector().className(ClassName).text(Value));
+                break;
+            case Config.TYPE_DESC:
+                item = solo.getMydevice().findObject(new UiSelector().className(ClassName).description(Value));
+                break;
+            default:
+                FailedCase.interruptProcess(String.format("Key Error with type:%s",Type),DataInfo.getDayFormatForIMG());
+        }
+
+        if (item.waitForExists(solo.getTIMEOUT())){
+            return item;
+        }else {
+            FailedCase.interruptProcess(String.format("elemet is not exists in time:%d,Value:%s,Class:%s", solo.getTIMEOUT(),Value,ClassName),DataInfo.getDayFormatForIMG());
+            return null;
+        }
+         */
+        return findUiobject(new Ele[]{new Ele(Type,Value),new Ele(Config.TYPE_CLASS,ClassName)});
     }
 
     public UiObject findObjectNew(String Type, String Value, Boolean isAssertExists){
@@ -75,7 +282,7 @@ public class UiObjectNew {
          * isAssertExists 为false时不对用例产生阻断
          */
         if (isAssertExists){
-            return findObjectNew(Type,Value);
+            return findUiobject(new Ele[]{new Ele(Type,Value)});
         }
         
         switch (Type){
@@ -101,7 +308,7 @@ public class UiObjectNew {
          * 会校验是否存在
          * 验证超时
          * 失败阻断用例实现
-         */
+
         
         UiObject item = null;
         switch (Type){
@@ -127,6 +334,8 @@ public class UiObjectNew {
             FailedCase.interruptProcess(String.format("elemet is not exists in time:%d,value:%s", solo.getTIMEOUT(),Value),DataInfo.getDayFormatForIMG());
             return null;
         }
+        */
+        return findUiobject(new Ele[]{new Ele(Type,Value,instance)});
     }
 
     public UiObject findObjectNew(String Type, String Value,int instance, Boolean isAssertExists){
@@ -138,7 +347,7 @@ public class UiObjectNew {
          * isAssertExists 为false时不对用例产生阻断
          */
         if (isAssertExists){
-            return findObjectNew(Type,Value,instance);
+            return findUiobject(new Ele[]{new Ele(Type,Value,instance)});
         }
         
         switch (Type){
@@ -273,6 +482,8 @@ public class UiObjectNew {
 
         }
     }
+
+
 
 
 }

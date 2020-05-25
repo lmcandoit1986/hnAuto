@@ -3,6 +3,7 @@ package com.hnrmb;
 import androidx.test.runner.AndroidJUnit4;
 import androidx.test.uiautomator.Configurator;
 
+import com.hnrmb.Config.Config;
 import com.hnrmb.Utils.AppLaunch;
 import com.hnrmb.Utils.Solo;
 import com.hnrmb.Utils.DeviceStatus;
@@ -17,6 +18,7 @@ public class BaseTests {
     public static Solo solo;
     public static AppLaunch appLaunch;
 
+
     @BeforeClass
     public static void setUp(){
         solo = Solo.getInstance();
@@ -26,7 +28,7 @@ public class BaseTests {
         // configurator.setScrollAcknowledgmentTimeout(100);//滚动延时
         // configurator.setActionAcknowledgmentTimeout(5000);
         DeviceStatus.wakeUp(solo.getMydevice());
-        appLaunch.quitApp("com.hnrmb.salary");
+        if (Config.Debug) appLaunch.quitApp("com.hnrmb.salary");
     }
 
 

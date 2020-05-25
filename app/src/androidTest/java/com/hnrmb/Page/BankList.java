@@ -1,6 +1,7 @@
 package com.hnrmb.Page;
 
 import com.hnrmb.Config.Config;
+import com.hnrmb.Utils.Ele;
 import com.hnrmb.Utils.Operate;
 import com.hnrmb.Utils.Solo;
 import com.hnrmb.Utils.TimeAll;
@@ -22,13 +23,13 @@ public class BankList {
     }
 
     public BankList assertNomal(){
-        UN.findObjectNew(Config.TYPE_TEXT,"市场");
+        UN.findUiobject(new Ele[]{new Ele(Config.TYPE_TEXT,"市场")});
         return this;
     }
 
     public BankProduct actionIntoDetail(String PName){
 //        TimeAll.sleepTread(1000);
-        Operate.clickAndWaitForNewWindow(UN.findObjectWebView(Config.TYPE_TEXT,PName));
+        Operate.clickAndWaitForNewWindow(UN.findUiobject(new Ele[]{new Ele(Config.TYPE_TEXT,PName)}));
         return new BankProduct(solo);
     }
 

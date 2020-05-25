@@ -33,13 +33,18 @@ public class SumCase extends BaseTests {
     public void SetUp(){
         START_TIME = DataInfo.getTime();
 //        appLaunch = new AppLaunch(solo);
-        appLaunch.startApp(PackageName,Activity);
+        if (Config.Debug) appLaunch.startApp(PackageName,Activity);
         // appLaunch.initToastListener();
         // 升级弹框关闭
         if (!Config.ENV.equals("rel")){
             Other.closeUpdate(solo);
         }
-        mainObj = Other.unlock(solo);
+        if (Config.Debug){
+            mainObj = Other.unlock(solo);
+        }
+        else{
+            mainObj = new Main(solo);
+        }
         TimeAll.sleepTread(3000);
         WatcherList.update(solo);
         WatcherList.closeTV(solo);
@@ -48,7 +53,7 @@ public class SumCase extends BaseTests {
     @After
     public void Teardown(){
         CaseInfo.caseUseTime(String.valueOf(DataInfo.getTime()-START_TIME));
-        appLaunch.quitApp(PackageName);
+        if (Config.Debug) appLaunch.quitApp(PackageName);
     }
 
     @Test
@@ -69,15 +74,14 @@ public class SumCase extends BaseTests {
 
     @Test
     public void My_MyMoneyCheck(){
-        LogInfo.i(Other.getVersionCode(solo.getTargetContext())+"");
         CaseInfo.setCaseDesc("我的资产页面，金额检查");
-        mainObj.actionIntoMy().assertAllMoney("100.00")
+        mainObj.actionIntoMy().assertAllMoney("1,100.00")
                 .assertAllIncoming("0.00")
                 .assertNewIncoming("0.00")
                 .assertYCMonkey("0.00")
                 .assertLCMonkey("100.00")
                 .assertYEMonkey("0.00")
-                .assertBankMonkey("0.00");
+                .assertBankMonkey("1,000.00");
     }
 
     @Test
@@ -113,4 +117,5 @@ public class SumCase extends BaseTests {
         CaseInfo.setCaseDesc("公益页面检查");
         mainObj.actionIntopublicWork().assertNomal();
     }
+
 }

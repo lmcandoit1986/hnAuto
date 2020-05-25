@@ -14,7 +14,7 @@ public class Solo {
 
     private static Solo Instance;
     private UiDevice Mydevice;
-    private volatile long TIMEOUT = 10000;
+    private volatile long TIMEOUT = 30000;
     private Configurator configurator;
 
     private Solo(){

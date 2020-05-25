@@ -4,6 +4,7 @@ import androidx.test.uiautomator.UiObject;
 
 import com.hnrmb.Config.Config;
 import com.hnrmb.Utils.DataInfo;
+import com.hnrmb.Utils.Ele;
 import com.hnrmb.Utils.FailedCase;
 import com.hnrmb.Utils.Operate;
 import com.hnrmb.Utils.Solo;
@@ -32,19 +33,19 @@ public class Balance {
     private final String buy_id = "com.hnrmb.salary:id/buy_tv";
     // 返回
     private UiObject objectBack(){
-        return UN.findObjectNew(Config.TYPE_ID,back_id);
+        return UN.findUiobject(new Ele[]{new Ele(Config.TYPE_ID,back_id)});
     }
     // 总金额
     private UiObject objectAllMoney(){
-        return UN.findObjectNew(Config.TYPE_ID,all_money_id);
+        return UN.findUiobject(new Ele[]{new Ele(Config.TYPE_ID,all_money_id)});
     }
     // 最新盈利
     private UiObject objectNewIncoming(){
-        return UN.findObjectNew(Config.TYPE_ID,new_money_id);
+        return UN.findUiobject(new Ele[]{new Ele(Config.TYPE_ID,new_money_id)});
     }
     // 全部收益
     private UiObject objectAllIncoming(){
-        return UN.findObjectNew(Config.TYPE_ID,all_incoming_id);
+        return UN.findUiobject(new Ele[]{new Ele(Config.TYPE_ID,all_incoming_id)});
     }
 
     public Balance assertAllMoney(String money){

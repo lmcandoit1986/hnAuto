@@ -3,6 +3,7 @@ package com.hnrmb.Page;
 import androidx.test.uiautomator.UiObject;
 
 import com.hnrmb.Config.Config;
+import com.hnrmb.Utils.Ele;
 import com.hnrmb.Utils.Operate;
 import com.hnrmb.Utils.Solo;
 import com.hnrmb.Utils.TimeAll;
@@ -69,7 +70,8 @@ public class Main {
          * 8 每日签到
          */
         TimeAll.sleepTread(3000);
-        Operate.clickAndWaitForNewWindow(UN.findObjectNew(Config.TYPE_ID,ICON_ID,instance));
+        Operate.clickAndWaitForNewWindow(UN.findUiobject(new Ele[]{new Ele(Config.TYPE_ID,ICON_ID,instance)}));
+//        Operate.clickAndWaitForNewWindow(UN.findObjectNew(Config.TYPE_ID,ICON_ID,instance));
     }
     // 好物列表
     public GoodsList actionIntoGoodsList(){

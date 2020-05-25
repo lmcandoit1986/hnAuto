@@ -4,6 +4,7 @@ import androidx.test.uiautomator.UiObject;
 
 import com.hnrmb.Config.Config;
 import com.hnrmb.Utils.DataInfo;
+import com.hnrmb.Utils.Ele;
 import com.hnrmb.Utils.FailedCase;
 import com.hnrmb.Utils.Operate;
 import com.hnrmb.Utils.Solo;
@@ -27,7 +28,8 @@ public class publicWork {
     public final String title_id = "com.hnrmb.salary:id/head_content_tv";
 
     public UiObject objectTitle(){
-        return UN.findObjectNew(Config.TYPE_ID,title_id);
+//        return UN.findObjectNew(Config.TYPE_TEXT,"扶贫公益",title_id);
+        return UN.findUiobject(new Ele[]{new Ele(Config.TYPE_TEXT,"扶贫公益"),new Ele(Config.TYPE_ID,title_id)});
     }
 
     public String getTitle(){
@@ -36,9 +38,7 @@ public class publicWork {
 
 
     public publicWork assertNomal(){
-        String title = getTitle();
-        if (!title.equals("扶贫公益"))
-            FailedCase.interruptProcess(String.format("标题预期:扶贫公益,实际:%s",title), DataInfo.getDayFormatForIMG());
+        objectTitle();
         return this;
     }
 
