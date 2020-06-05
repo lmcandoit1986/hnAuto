@@ -15,133 +15,114 @@ import com.hnrmb.Config.Config;
  */
 
 public class Operate {
-
-    public static void input(UiObject edit,String value){
-        if (edit.exists()){
-            try {
-                LogInfo.i(String.format("input %s",value));
-                edit.clearTextField();
-                edit.setText(value);
-            } catch (UiObjectNotFoundException e) {
-                e.printStackTrace();
-                FailedCase.interruptProcess("UiObjectNotFoundException",DataInfo.getDayFormatForIMG());
-            }
+    static int timeout = 30;
+    public static void input(UiObject edit, String value) {
+        if (!assertClickable(edit, timeout))
+            FailedCase.interruptProcess("UiObject isn't clickable", DataInfo.getDayFormatForIMG());
+        try {
+            LogInfo.i(String.format("input %s", value));
+            edit.clearTextField();
+            edit.setText(value);
+        } catch (UiObjectNotFoundException e) {
+            LogInfo.e(e.toString());
+            FailedCase.interruptProcess("UiObjectNotFoundException", DataInfo.getDayFormatForIMG());
         }
+
+
     }
 
-    public static void click(UiObject item){
+    public static void click(UiObject item) {
         /**
          * 点击操作
          * 验证对象是否支持点击
          * 失败阻断用例执行
          */
-        
+        click(item,false);
+    }
+
+    public static void click(UiObject item,Boolean isAssert) {
+        /**
+         * 点击操作
+         * 验证对象是否支持点击
+         * 失败阻断用例执行
+         */
+        if (!assertClickable(item, timeout))
+            if (isAssert)
+                FailedCase.interruptProcess("UiObject isn't clickable", DataInfo.getDayFormatForIMG());
         try {
-            if(item.isClickable()){
-                item.click();
-                return;
-            }
-            /**
-             * 很多元素属性 不可点击或enable，但是父类的是可点击的，所以这个判断可以绕过目前
-             */
             item.click();
         } catch (UiObjectNotFoundException e) {
-            e.printStackTrace();
-            FailedCase.interruptProcess("UiObjectNotFoundException",DataInfo.getDayFormatForIMG());
-        }catch (NullPointerException e) {
-            e.printStackTrace();
-            FailedCase.interruptProcess("Click Failed with NullPointerException",DataInfo.getDayFormatForIMG());
+            LogInfo.e(e.toString());
+            if (isAssert) FailedCase.interruptProcess("UiObjectNotFoundException", DataInfo.getDayFormatForIMG());
+        } catch (NullPointerException e) {
+            LogInfo.e(e.toString());
+            if (isAssert) FailedCase.interruptProcess("Click Failed with NullPointerException", DataInfo.getDayFormatForIMG());
         }
     }
 
-    public static void clickAndWaitForNewWindow(UiObject item){
+    public static void clickAndWaitForNewWindow(UiObject item) {
         /**
          * 点击操作
          * 验证对象是否支持点击
          * 失败阻断用例执行
          */
-        
+
+        if (!assertClickable(item, timeout))
+            FailedCase.interruptProcess("UiObject isn't clickable", DataInfo.getDayFormatForIMG());
         try {
-            if(item.isClickable()){
-                item.clickAndWaitForNewWindow(3000);
-                return;
-            }
             item.clickAndWaitForNewWindow(3000);
         } catch (UiObjectNotFoundException e) {
-            e.printStackTrace();
-            FailedCase.interruptProcess("UiObjectNotFoundException",DataInfo.getDayFormatForIMG());
-        }catch (NullPointerException e) {
-            e.printStackTrace();
-            FailedCase.interruptProcess("Click Failed with NullPointerException",DataInfo.getDayFormatForIMG());
+            LogInfo.e(e.toString());
+            FailedCase.interruptProcess("UiObjectNotFoundException", DataInfo.getDayFormatForIMG());
+        } catch (NullPointerException e) {
+            LogInfo.e(e.toString());
+            FailedCase.interruptProcess("Click Failed with NullPointerException", DataInfo.getDayFormatForIMG());
         }
     }
 
-    public static void click(UiDevice device, UiObject object){
+    public static void click(UiDevice device, UiObject object) {
         /**
          * 点击操作，通过定位元素坐标点击，主要是覆盖元素不可点击的场景
          */
-        
         try {
             Rect rect = object.getVisibleBounds();
-            device.click(rect.centerX(),rect.centerY());//临时特殊处理，后续去掉
+            device.click(rect.centerX(), rect.centerY());//临时特殊处理，后续去掉
         } catch (UiObjectNotFoundException e) {
             e.printStackTrace();
-            FailedCase.interruptProcess("UiObjectNotFoundException",DataInfo.getDayFormatForIMG());
+            FailedCase.interruptProcess("UiObjectNotFoundException", DataInfo.getDayFormatForIMG());
         }
     }
 
-    public static void click(UiDevice device, int x,int y){
+    public static void click(UiDevice device, int x, int y) {
         /**
          * 点击操作，通过坐标完成点击
          */
-        device.click(x,y);
+        device.click(x, y);
     }
 
-    public static void click(UiObject item, Boolean EnblockCase){
-        /**
-         * 点击对象，EnblockCase=false 失败不阻断用例执行
-         */
-        if (EnblockCase) {
-            click(item);
-            return;
-        }
-        
-        try {
-            if(item.isClickable()) {
-                item.click();
-                return;
-            }
-            item.click();
-        } catch (UiObjectNotFoundException e) {
-            e.printStackTrace();
-        }catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void swipe(UiDevice device, Point[] points, int steps){
+    public static void swipe(UiDevice device, Point[] points, int steps) {
         /**
          * 手势操作，支持多点操作
          */
-        
-        device.swipe(points,steps);
+
+        device.swipe(points, steps);
     }
 
-    public static void swipe(UiDevice device,String type,int Cycle){
+    public static void swipe(UiDevice device, String type, int Cycle) {
         /**
          * 指定方向滑动，上下左右
          * 只支持屏幕上下、左右中心滑动
          */
-        
-        int PH =device.getDisplayHeight();
-        int PW =device.getDisplayWidth();
+
+        int PH = device.getDisplayHeight();
+        int PW = device.getDisplayWidth();
 
         /**
          * type参数，用于控制滑动方向，依次是up，down，left，right
          * index参数，用户控制滑动参数
          */
 
-        int height_up = PH/ 3;
+        int height_up = PH / 3;
         int height_down = PH / 2 * 2;
         int mid_height = PH / 2;
 
@@ -149,11 +130,11 @@ public class Operate {
         int width_left = PW / 3;
         int width_right = PW / 3 * 2;
 
-        LogInfo.i((String.format("swipe:%s,time:%d",type,Cycle)));
+        LogInfo.i((String.format("swipe:%s,time:%d", type, Cycle)));
 
         if (type.equals(Config.UP)) {
             for (int i = 0; i < Cycle; i++) {
-                device.swipe(mid_width, height_down/2, mid_width, height_up/2, 30);
+                device.swipe(mid_width, height_down / 2, mid_width, height_up / 2, 30);
                 TimeAll.sleepTread(1000);
             }
         } else if (type.equals(Config.DOWN)) {
@@ -172,26 +153,26 @@ public class Operate {
                 TimeAll.sleepTread(1000);
             }
         } else {
-            LogInfo.i(String.format("wrong cmd!,To:%s",type));
+            LogInfo.i(String.format("wrong cmd!,To:%s", type));
         }
     }
 
-    public static void swipe(UiDevice device,String type,int X,int Y,int Cycle){
+    public static void swipe(UiDevice device, String type, int X, int Y, int Cycle) {
         /**
          * 指定方向滑动，上下左右
          * 支持设置在哪个点开始滑动
          * 未实现
          */
-        
-        int PH =device.getDisplayHeight();
-        int PW =device.getDisplayWidth();
+
+        int PH = device.getDisplayHeight();
+        int PW = device.getDisplayWidth();
 
         /**
          * type参数，用于控制滑动方向，依次是up，down，left，right
          * index参数，用户控制滑动参数
          */
 
-        int height_up = PH/ 3;
+        int height_up = PH / 3;
         int height_down = PH / 2 * 2;
         int mid_height = PH / 2;
 
@@ -199,11 +180,11 @@ public class Operate {
         int width_left = PW / 3;
         int width_right = PW / 3 * 2;
 
-        LogInfo.i((String.format("swipe:%s,time:%d",type,Cycle)));
+        LogInfo.i((String.format("swipe:%s,time:%d", type, Cycle)));
 
         if (type.equals(Config.UP)) {
             for (int i = 0; i < Cycle; i++) {
-                device.swipe(mid_width, height_down/2, mid_width, height_up/2, 30);
+                device.swipe(mid_width, height_down / 2, mid_width, height_up / 2, 30);
                 TimeAll.sleepTread(1000);
             }
         } else if (type.equals(Config.DOWN)) {
@@ -222,23 +203,24 @@ public class Operate {
                 TimeAll.sleepTread(1000);
             }
         } else {
-            LogInfo.i(String.format("wrong cmd!,To:%s",type));
+            LogInfo.i(String.format("wrong cmd!,To:%s", type));
         }
     }
 
     /**
      * 滑动列表到底部,当出现预期的元素时停止
+     *
      * @param list
      * @param MaxSwipes 最大滑动次数（翻页）
      */
-    public static void flingForwardUtilExpectUI(UiScrollable list,int MaxSwipes,String ExpectObType,String ExpectObValue){
-        
+    public static void flingForwardUtilExpectUI(UiScrollable list, int MaxSwipes, String ExpectObType, String ExpectObValue) {
+
         try {
-            int i=0;
-            while (i<MaxSwipes){
+            int i = 0;
+            while (i < MaxSwipes) {
                 i++;
-                LogInfo.i("page:"+i);
-                if (UiObjectNew.getInstance(Solo.getInstance()).findObjectNew(ExpectObType,ExpectObValue,false).exists()) {
+                LogInfo.i("page:" + i);
+                if (UiObjectNew.getInstance(Solo.getInstance()).findObjectNew(ExpectObType, ExpectObValue, false).exists()) {
                     return;
                 }
                 list.flingForward();
@@ -248,80 +230,85 @@ public class Operate {
 
         } catch (UiObjectNotFoundException e) {
             e.printStackTrace();
-            FailedCase.interruptProcess("UiObjectNotFoundException",DataInfo.getDayFormatForIMG());
+            FailedCase.interruptProcess("UiObjectNotFoundException", DataInfo.getDayFormatForIMG());
         }
     }
 
     /**
      * 滑动列表到底部,适合有翻页加载的场景
+     *
      * @param list
      * @param MaxSwipes 最大滑动次数（翻页）
      */
-    public static void flingToListEnd(UiScrollable list,int MaxSwipes){
+    public static void flingToListEnd(UiScrollable list, int MaxSwipes) {
 
         try {
-            int i=0;
-            while (i<MaxSwipes){
+            int i = 0;
+            while (i < MaxSwipes) {
                 i++;
                 list.flingForward();
             }
 
         } catch (UiObjectNotFoundException e) {
             e.printStackTrace();
-            FailedCase.interruptProcess("UiObjectNotFoundException",DataInfo.getDayFormatForIMG());
+            FailedCase.interruptProcess("UiObjectNotFoundException", DataInfo.getDayFormatForIMG());
         }
     }
 
     /**
      * 滑动列表到底部。适合没有翻页加载的场景
+     *
      * @param list
      * @param MaxSwipes 最大滑动次数（翻页）
      */
-    public static void flingToListEndNoNextPage(UiScrollable list,int MaxSwipes){
+    public static void flingToListEndNoNextPage(UiScrollable list, int MaxSwipes) {
 
         try {
             list.flingToEnd(MaxSwipes);
         } catch (UiObjectNotFoundException e) {
             e.printStackTrace();
-            FailedCase.interruptProcess("UiObjectNotFoundException",DataInfo.getDayFormatForIMG());
+            FailedCase.interruptProcess("UiObjectNotFoundException", DataInfo.getDayFormatForIMG());
         }
     }
 
     /**
      * 滑动列表到底部。适合没有翻页加载的场景
+     *
      * @param list
      */
-    public static void scrollIntoView(UiScrollable list,UiObject object){
+    public static void scrollIntoView(UiScrollable list, UiObject object) {
 
         try {
             assert list.scrollIntoView(object) == true;
         } catch (UiObjectNotFoundException e) {
             e.printStackTrace();
-            FailedCase.interruptProcess("UiObjectNotFoundException",DataInfo.getDayFormatForIMG());
+            FailedCase.interruptProcess("UiObjectNotFoundException", DataInfo.getDayFormatForIMG());
         }
     }
 
     /**
      * 滑动列表到顶部
+     *
      * @param list
      * @param MaxSwipes 最大滑动次数（翻页）
      */
-    public static void flingToListBeginning(UiScrollable list,int MaxSwipes){
+    public static void flingToListBeginning(UiScrollable list, int MaxSwipes) {
 
         try {
             list.flingToBeginning(MaxSwipes);
         } catch (UiObjectNotFoundException e) {
             e.printStackTrace();
-            FailedCase.interruptProcess("UiObjectNotFoundException",DataInfo.getDayFormatForIMG());
+            FailedCase.interruptProcess("UiObjectNotFoundException", DataInfo.getDayFormatForIMG());
         }
     }
 
     /**
      * 获取对象的文本，无则返回null
+     *
      * @param item
      * @return
      */
-    public static String getText(UiObject item){
+    public static String getText(UiObject item) {
         String back = null;
         try {
             back = item.getText();
@@ -331,5 +318,26 @@ public class Operate {
         return back;
     }
 
+
+    public static Boolean assertClickable(UiObject item, int timeout) {
+        long start = DataInfo.getTime();
+        while (true) {
+            try {
+                if (item.isClickable() || item.isEnabled()) {
+                    return true;
+                }
+            } catch (UiObjectNotFoundException e) {
+                e.printStackTrace();
+                LogInfo.w("catch UiObjectNotFoundException in this moment");
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+                FailedCase.interruptProcess("Click Failed with NullPointerException", DataInfo.getDayFormatForIMG());
+            }
+            if (DataInfo.getTime() - start >= timeout) {
+                return false;
+            }
+            TimeAll.sleepTread(500);
+        }
+    }
 
 }

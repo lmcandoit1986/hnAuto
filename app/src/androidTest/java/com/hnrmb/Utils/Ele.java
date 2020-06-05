@@ -5,6 +5,7 @@ public class Ele {
     private String Value;
     private int Index;
     private int Instance;
+    private int Num = -99;
 
     public Ele(String Type,int Index,String Value,int Instance){
         this.Type = Type;
@@ -16,7 +17,7 @@ public class Ele {
     public Ele(String Type,String Value,int Instance){
         this.Type = Type;
         this.Value = Value;
-        this.Index = -1;
+        this.Index = Num;
         this.Instance = Instance;
     }
 
@@ -24,14 +25,21 @@ public class Ele {
         this.Type = Type;
         this.Value = Value;
         this.Index = Index;
-        this.Instance = -1;
+        this.Instance = Num;
     }
 
     public Ele(String Type,String Value){
         this.Type = Type;
         this.Value = Value;
-        this.Index = -1;
-        this.Instance = -1;
+        this.Index = Num;
+        this.Instance = Num;
+    }
+
+    public Ele(int index){
+        this.Type = "";
+        this.Value = "";
+        this.Index = index;
+        this.Instance = Num;
     }
 
     public String getType() {

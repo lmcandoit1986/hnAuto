@@ -7,7 +7,7 @@ package com.hnrmb.Utils;
 public class TimeAll {
 
     public static void sleepTread(long l){
-//        LogInfo.i("sleep "+l);
+        LogInfo.i("sleep "+l);
         try {
             Thread.sleep(l);
         } catch (InterruptedException e) {

@@ -35,15 +35,17 @@ public class GoodsBase extends BaseTests {
         appLaunch = new AppLaunch(solo);
         appLaunch.startApp(PackageName,Activity);
         appLaunch.initToastListener();
+        WatcherList.update(solo);
+        WatcherList.closeTV(solo);
+        WatcherList.cancelFinger(solo);
+        WatcherList.permissionAllow(solo);
         // 升级弹框关闭
         if (!Config.ENV.equals("rel")){
             Other.closeUpdate(solo);
         }
-        Other.unlock(solo);
-         WatcherList.update(solo);
-         WatcherList.closeTV(solo);
         // 跳转到好物页面
-        goodsList = new Main(solo).actionIntoGoodsList();
+        Main mainObj = new Login(solo).actionLoginWithPhoneAndPsw("15801689735","111qqq");
+        goodsList = mainObj.actionIntoGoodsList();
 
     }
 

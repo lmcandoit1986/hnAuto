@@ -5,6 +5,9 @@ public class Config {
     public static final String TYPE_ID = "id";
     public static final String TYPE_CLASS = "class";
     public static final String TYPE_TEXT = "text";
+    public static final String TYPE_TEXT_1 = "text_match";
+    public static final String TYPE_TEXT_3 = "text_contain";
+    public static final String TYPE_TEXT_2 = "text_startwith";
     public static final String TYPE_DESC = "desc";
 
     public static final String UP = "up";
@@ -14,7 +17,7 @@ public class Config {
 
     public static String ToastMSG;
 
-    public static final String ENV = "rel"; // rel ,test
+    public static final String ENV = "test"; // rel ,test
 
     public static final Boolean Debug = true; // true 时走app 启动等流程
 

@@ -6,6 +6,7 @@ import com.hnrmb.Config.Config;
 import com.hnrmb.Utils.DataInfo;
 import com.hnrmb.Utils.Ele;
 import com.hnrmb.Utils.FailedCase;
+import com.hnrmb.Utils.MathsObj;
 import com.hnrmb.Utils.Operate;
 import com.hnrmb.Utils.Solo;
 import com.hnrmb.Utils.UiObjectNew;
@@ -50,19 +51,19 @@ public class Balance {
 
     public Balance assertAllMoney(String money){
         String moneyreal = Operate.getText(objectAllMoney());
-        if (!money.equals(moneyreal)) FailedCase.interruptProcess(String.format("预期:%s,实际:%s",money,moneyreal), DataInfo.getDayFormatForIMG());
+        if (MathsObj.assertInt(moneyreal)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",moneyreal), DataInfo.getDayFormatForIMG());
         return this;
     }
 
     public Balance assertAllIncoming(String money){
         String moneyreal = Operate.getText(objectAllIncoming());
-        if (!money.equals(moneyreal)) FailedCase.interruptProcess(String.format("预期:%s,实际:%s",money,moneyreal), DataInfo.getDayFormatForIMG());
+        if (MathsObj.assertInt(moneyreal)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",moneyreal), DataInfo.getDayFormatForIMG());
         return this;
     }
 
     public Balance assertNewIncoming(String money){
         String moneyreal = Operate.getText(objectNewIncoming());
-        if (!money.equals(moneyreal)) FailedCase.interruptProcess(String.format("预期:%s,实际:%s",money,moneyreal), DataInfo.getDayFormatForIMG());
+        if (MathsObj.assertInt(moneyreal)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",moneyreal), DataInfo.getDayFormatForIMG());
         return this;
     }
 

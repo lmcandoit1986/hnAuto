@@ -4,7 +4,9 @@ import androidx.test.uiautomator.UiObject;
 
 import com.hnrmb.Config.Config;
 import com.hnrmb.Utils.DataInfo;
+import com.hnrmb.Utils.Ele;
 import com.hnrmb.Utils.FailedCase;
+import com.hnrmb.Utils.MathsObj;
 import com.hnrmb.Utils.Operate;
 import com.hnrmb.Utils.Solo;
 import com.hnrmb.Utils.UiObjectNew;
@@ -23,6 +25,16 @@ public class My {
     public My(Solo so){
         solo = so;
         UN = UiObjectNew.getInstance(solo);
+        // 等待接口数据返回,设置最长等待时间3分钟
+        long End = DataInfo.getTime()+ 3 * 60;
+        while (true){
+            if (UN.findUiobject(new Ele[]{new Ele(Config.TYPE_TEXT,"获取中")},1000,false)==null){
+                break;
+            }
+            if (DataInfo.getTime() >= End){
+                break;
+            }
+        }
     }
 
     private final String go_personal_id = "com.hnrmb.salary:id/img_my_head";
@@ -100,43 +112,43 @@ public class My {
 
     public My assertAllMoney(String money){
         String ExpectMoney = Operate.getText(objectAllMoney());
-        if ( !ExpectMoney.equals(money)) FailedCase.interruptProcess(String.format("金额不匹配，预期:%s,实际:%s",money,ExpectMoney), DataInfo.getDayFormatForIMG());
+        if (MathsObj.assertInt(ExpectMoney)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",ExpectMoney), DataInfo.getDayFormatForIMG());
         return this;
     }
 
     public My assertNewIncoming(String money){
         String ExpectMoney = Operate.getText(objectNewIncoming());
-        if ( !ExpectMoney.equals(money)) FailedCase.interruptProcess(String.format("金额不匹配，预期:%s,实际:%s",money,ExpectMoney), DataInfo.getDayFormatForIMG());
+        if (MathsObj.assertInt(ExpectMoney)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",ExpectMoney), DataInfo.getDayFormatForIMG());
         return this;
     }
 
     public My assertAllIncoming(String money){
         String ExpectMoney = Operate.getText(objectAllIncoming());
-        if ( !ExpectMoney.equals(money)) FailedCase.interruptProcess(String.format("金额不匹配，预期:%s,实际:%s",money,ExpectMoney), DataInfo.getDayFormatForIMG());
+        if (MathsObj.assertInt(ExpectMoney)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",ExpectMoney), DataInfo.getDayFormatForIMG());
         return this;
     }
 
     public My assertYCMonkey(String money){
         String ExpectMoney = Operate.getText(objectYCMoney());
-        if ( !ExpectMoney.equals(money)) FailedCase.interruptProcess(String.format("金额不匹配，预期:%s,实际:%s",money,ExpectMoney), DataInfo.getDayFormatForIMG());
+        if (MathsObj.assertInt(ExpectMoney)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",ExpectMoney), DataInfo.getDayFormatForIMG());
         return this;
     }
 
     public My assertYEMonkey(String money){
         String ExpectMoney = Operate.getText(objectYEMoney());
-        if ( !ExpectMoney.equals(money)) FailedCase.interruptProcess(String.format("金额不匹配，预期:%s,实际:%s",money,ExpectMoney), DataInfo.getDayFormatForIMG());
+        if (MathsObj.assertInt(ExpectMoney)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",ExpectMoney), DataInfo.getDayFormatForIMG());
         return this;
     }
 
     public My assertLCMonkey(String money){
         String ExpectMoney = Operate.getText(objectLCMoney());
-        if ( !ExpectMoney.equals(money)) FailedCase.interruptProcess(String.format("金额不匹配，预期:%s,实际:%s",money,ExpectMoney), DataInfo.getDayFormatForIMG());
+        if (MathsObj.assertInt(ExpectMoney)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",ExpectMoney), DataInfo.getDayFormatForIMG());
         return this;
     }
 
     public My assertBankMonkey(String money){
         String ExpectMoney = Operate.getText(objectBankMoney());
-        if ( !ExpectMoney.equals(money)) FailedCase.interruptProcess(String.format("金额不匹配，预期:%s,实际:%s",money,ExpectMoney), DataInfo.getDayFormatForIMG());
+        if (MathsObj.assertInt(ExpectMoney)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",ExpectMoney), DataInfo.getDayFormatForIMG());
         return this;
     }
 

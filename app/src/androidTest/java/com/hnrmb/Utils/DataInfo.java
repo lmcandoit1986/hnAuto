@@ -92,6 +92,7 @@ public class DataInfo {
 
     public static void main(String[] args){
         System.out.print(DataInfo.getTime()+"\n");
+        System.out.print((DataInfo.getTime()+5)+"\n");
         System.out.print(DataInfo.formatData(DataInfo.getDayPostponeDay(1),"yyyy-MM-dd")+"\n");
         System.out.print(DataInfo.formatData(DataInfo.getDayPostponeMonth(1),"yyyy-MM-dd")+"\n");
         System.out.print(DataInfo.formatData(DataInfo.getDayPostponeHours(1),"yyyy-MM-dd hh")+"\n");

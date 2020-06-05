@@ -7,6 +7,7 @@ import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 
 import com.hnrmb.Config.Config;
+import com.hnrmb.Utils.Ele;
 import com.hnrmb.Utils.LogInfo;
 import com.hnrmb.Utils.Operate;
 import com.hnrmb.Utils.Solo;
@@ -34,8 +35,8 @@ public class Login {
     public final String login_btn_id = "com.hnrmb.salary:id/login_btn_login";
     public static final String LOCK_ID = "com.hnrmb.salary:id/xguv_gesture";
 
-    private UiObject objectGoLogin(){
-        return UN.findObjectNew(Config.TYPE_ID,go_login_id);
+    private UiObject objectGoLogin(Boolean isAssert){
+        return UN.findUiobject(new Ele[]{new Ele(Config.TYPE_ID,go_login_id)},1000,false);
     }
 
     private UiObject objectPhoneEdit(){
@@ -51,7 +52,7 @@ public class Login {
     }
 
     public Login actionGoLogin(){
-        Operate.click(objectGoLogin());
+        Operate.click(objectGoLogin(true));
         return this;
     }
 
@@ -103,7 +104,11 @@ public class Login {
     }
 
     public Main actionLoginWithPhoneAndPsw(String Phone,String Psw){
-        return this.actionGoLogin().actionInputPhone(Phone).actionInputPsw(Psw).actionLogin().lock();
+        if (UN.findUiobject(new Ele[]{new Ele(Config.TYPE_TEXT,"切换其他账户")},1000,false)==null){
+            return this.actionGoLogin().actionInputPhone(Phone).actionInputPsw(Psw).actionLogin().lock();
+        }
+        return Other.unlock(solo);
+
     }
 
 }

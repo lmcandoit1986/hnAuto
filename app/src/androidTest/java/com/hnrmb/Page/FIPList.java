@@ -1,6 +1,8 @@
 package com.hnrmb.Page;
 
 import com.hnrmb.Config.Config;
+import com.hnrmb.Utils.DataInfo;
+import com.hnrmb.Utils.Ele;
 import com.hnrmb.Utils.Operate;
 import com.hnrmb.Utils.Solo;
 import com.hnrmb.Utils.TimeAll;
@@ -27,13 +29,13 @@ public class FIPList {
     public FIPList(Solo so) {
         solo = so;
         UN = UiObjectNew.getInstance(solo);
+
     }
 
 
 
     // 用于监控
     public FIPList assertNomal(){
-        TimeAll.sleepTread(5000);
         UN.findObjectNew(Config.TYPE_ID,name_id);
         UN.findObjectNew(Config.TYPE_ID,rate_id);
         UN.findObjectNew(Config.TYPE_ID,date_id);

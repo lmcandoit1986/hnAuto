@@ -23,7 +23,7 @@ public class BaseTests {
     public static void setUp(){
         solo = Solo.getInstance();
         solo.setWaitForIdleTimeout(2000);
-        solo.setWaitForSelectorTimeout(30000);
+        solo.setWaitForSelectorTimeout(5000);
         appLaunch = new AppLaunch(solo);
         // configurator.setScrollAcknowledgmentTimeout(100);//滚动延时
         // configurator.setActionAcknowledgmentTimeout(5000);

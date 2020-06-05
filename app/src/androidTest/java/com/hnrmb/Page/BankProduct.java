@@ -21,9 +21,11 @@ public class BankProduct {
 
     public Solo solo;
     public UiObjectNew UN;
-    public BankProduct(Solo so) {
+    public String Title;
+    public BankProduct(Solo so,String title) {
         solo = so;
         UN = UiObjectNew.getInstance(solo);
+        Title = title;
     }
 
     private UiObject objectBack(){
@@ -36,6 +38,11 @@ public class BankProduct {
         return new BankList(solo);
     }
 
+
+    public BankProduct assertTitle(){
+        UN.findUiobject(new Ele[]{new Ele(Config.TYPE_ID,"com.hnrmb.salary:id/head_content_tv"),new Ele(Config.TYPE_TEXT,this.Title)});
+        return this;
+    }
 
     // 监控用
     public BankProduct assertNomal(){

@@ -45,9 +45,10 @@ public class SumCase extends BaseTests {
         else{
             mainObj = new Main(solo);
         }
-        TimeAll.sleepTread(3000);
-        WatcherList.update(solo);
-        WatcherList.closeTV(solo);
+//        WatcherList.update(solo);
+//        WatcherList.closeTV(solo);
+//        WatcherList.cancelFinger(solo);
+//        WatcherList.permissionAllow(solo);
     }
 
     @After
@@ -87,9 +88,11 @@ public class SumCase extends BaseTests {
     @Test
     public void Bank_BankCheck(){
         CaseInfo.setCaseDesc("银行+列表并检查前5理财详情");
-        mainObj.actionIntoBankList().assertNomal().actionIntoDetail("月月盈1号").assertNomal(1).actionBack()
-                .actionIntoDetail("享存6月").assertNomal().actionBack()
-                .actionIntoDetail("享存3月").assertNomal();
+        mainObj.actionIntoBankList().assertNomal().actionINtoDetail(0).assertTitle().actionBack()
+                .actionINtoDetail(1).assertTitle().actionBack()
+                .actionINtoDetail(2).assertTitle().actionBack()
+                .actionINtoDetail(3).assertTitle().actionBack()
+                .actionINtoDetail(4).assertTitle();
     }
 
     @Test
@@ -116,6 +119,12 @@ public class SumCase extends BaseTests {
     public void publicWork_CheckpublicWork(){
         CaseInfo.setCaseDesc("公益页面检查");
         mainObj.actionIntopublicWork().assertNomal();
+    }
+
+    @Test
+    public void Pay_CheckPay(){
+        CaseInfo.setCaseDesc("工资宝页面检查");
+        mainObj.actionIntoPay().assertNomal();
     }
 
 }
