@@ -15,10 +15,12 @@ import com.hnrmb.Config.Config;
  */
 
 public class Operate {
-    static int timeout = 30;
+    static int timeout_clickable = 5;//秒
+    static int timeout_exist = 5;//毫秒
     public static void input(UiObject edit, String value) {
-        if (!assertClickable(edit, timeout))
-            FailedCase.interruptProcess("UiObject isn't clickable", DataInfo.getDayFormatForIMG());
+        assertWaitForExists(edit,timeout_exist,true);
+        if (!assertClickable(edit, timeout_clickable))
+            FailedCase.interruptProcess("UiObject isn't clickable in "+timeout_clickable, DataInfo.getDayFormatForIMG());
         try {
             LogInfo.i(String.format("input %s", value));
             edit.clearTextField();
@@ -37,7 +39,7 @@ public class Operate {
          * 验证对象是否支持点击
          * 失败阻断用例执行
          */
-        click(item,false);
+        click(item,true);
     }
 
     public static void click(UiObject item,Boolean isAssert) {
@@ -46,9 +48,80 @@ public class Operate {
          * 验证对象是否支持点击
          * 失败阻断用例执行
          */
-        if (!assertClickable(item, timeout))
+        assertWaitForExists(item,timeout_exist,isAssert);
+        if (!assertClickable(item, timeout_clickable))
             if (isAssert)
                 FailedCase.interruptProcess("UiObject isn't clickable", DataInfo.getDayFormatForIMG());
+        try {
+            item.click();
+        } catch (UiObjectNotFoundException e) {
+            LogInfo.e(e.toString());
+            if (isAssert) FailedCase.interruptProcess("UiObjectNotFoundException", DataInfo.getDayFormatForIMG());
+        } catch (NullPointerException e) {
+            LogInfo.e(e.toString());
+            if (isAssert) FailedCase.interruptProcess("Click Failed with NullPointerException", DataInfo.getDayFormatForIMG());
+        }
+    }
+
+    public static void click(UiObject item,Boolean isAssert,int timeout_clickable,int timeout_exist) {
+        /**
+         * 点击操作
+         * 验证对象是否支持点击
+         * 失败阻断用例执行
+         */
+        assertWaitForExists(item,timeout_exist,isAssert);
+        if (!assertClickable(item, timeout_clickable))
+            if (isAssert)
+                FailedCase.interruptProcess("UiObject isn't clickable", DataInfo.getDayFormatForIMG());
+        try {
+            item.click();
+        } catch (UiObjectNotFoundException e) {
+            LogInfo.e(e.toString());
+            if (isAssert) FailedCase.interruptProcess("UiObjectNotFoundException", DataInfo.getDayFormatForIMG());
+        } catch (NullPointerException e) {
+            LogInfo.e(e.toString());
+            if (isAssert) FailedCase.interruptProcess("Click Failed with NullPointerException", DataInfo.getDayFormatForIMG());
+        }
+    }
+
+    public static void justClick(UiObject item,Boolean isAssert) {
+        /**
+         * 点击操作
+         * 验证对象是否支持点击
+         * 失败阻断用例执行
+         */
+        /**
+        if (assertWaitForExists(item,timeout_exist))
+            if (isAssert)
+                FailedCase.interruptProcess("UiObject isn't exist in "+timeout_exist, DataInfo.getDayFormatForIMG());
+
+        if (!assertClickable(item, timeout_clickable))
+            if (isAssert)
+                FailedCase.interruptProcess("UiObject isn't clickable", DataInfo.getDayFormatForIMG());
+         */
+        try {
+            item.click();
+        } catch (UiObjectNotFoundException e) {
+            LogInfo.e(e.toString());
+            if (isAssert) FailedCase.interruptProcess("UiObjectNotFoundException", DataInfo.getDayFormatForIMG());
+        } catch (NullPointerException e) {
+            LogInfo.e(e.toString());
+            if (isAssert) FailedCase.interruptProcess("Click Failed with NullPointerException", DataInfo.getDayFormatForIMG());
+        }
+    }
+
+    public static void justClick(UiObject item,Boolean isAssert,int timeout_exist) {
+        /**
+         * 点击操作
+         * 验证对象是否支持点击
+         * 失败阻断用例执行
+         */
+        assertWaitForExists(item,timeout_exist,isAssert);
+        /**
+         if (!assertClickable(item, timeout_clickable))
+         if (isAssert)
+         FailedCase.interruptProcess("UiObject isn't clickable", DataInfo.getDayFormatForIMG());
+         */
         try {
             item.click();
         } catch (UiObjectNotFoundException e) {
@@ -66,8 +139,28 @@ public class Operate {
          * 验证对象是否支持点击
          * 失败阻断用例执行
          */
+        assertWaitForExists(item,timeout_exist,true);
+        if (!assertClickable(item, timeout_clickable))
+            FailedCase.interruptProcess("UiObject isn't clickable", DataInfo.getDayFormatForIMG());
+        try {
+            item.clickAndWaitForNewWindow(3000);
+        } catch (UiObjectNotFoundException e) {
+            LogInfo.e(e.toString());
+            FailedCase.interruptProcess("UiObjectNotFoundException", DataInfo.getDayFormatForIMG());
+        } catch (NullPointerException e) {
+            LogInfo.e(e.toString());
+            FailedCase.interruptProcess("Click Failed with NullPointerException", DataInfo.getDayFormatForIMG());
+        }
+    }
 
-        if (!assertClickable(item, timeout))
+    public static void clickAndWaitForNewWindow(UiObject item,int timeout_exist,int timeout_clickable) {
+        /**
+         * 点击操作
+         * 验证对象是否支持点击
+         * 失败阻断用例执行
+         */
+        assertWaitForExists(item,timeout_exist,true);
+        if (!assertClickable(item, timeout_clickable))
             FailedCase.interruptProcess("UiObject isn't clickable", DataInfo.getDayFormatForIMG());
         try {
             item.clickAndWaitForNewWindow(3000);
@@ -220,7 +313,7 @@ public class Operate {
             while (i < MaxSwipes) {
                 i++;
                 LogInfo.i("page:" + i);
-                if (UiObjectNew.getInstance(Solo.getInstance()).findObjectNew(ExpectObType, ExpectObValue, false).exists()) {
+                if (UiObjectNew.getInstance(Solo.getInstance()).findObjectNew(ExpectObType, ExpectObValue).exists()) {
                     return;
                 }
                 list.flingForward();
@@ -324,6 +417,7 @@ public class Operate {
         while (true) {
             try {
                 if (item.isClickable() || item.isEnabled()) {
+                    LogInfo.i("uiobject is clickable or enabled");
                     return true;
                 }
             } catch (UiObjectNotFoundException e) {
@@ -338,6 +432,19 @@ public class Operate {
             }
             TimeAll.sleepTread(500);
         }
+    }
+
+    public static Boolean assertWaitForExists(UiObject item,int timeout){
+        return assertWaitForExists(item,timeout,true);
+    }
+
+    public static Boolean assertWaitForExists(UiObject item,int timeout,Boolean isAssert){
+        LogInfo.i("assert uiobject is exists");
+        if (item.waitForExists(timeout*1000)) {LogInfo.i("uiobject is exist");return true;}
+        LogInfo.i("uiobject is exist");
+        if(isAssert)FailedCase.interruptProcess("UiObject isn't exist in "+timeout_exist, DataInfo.getDayFormatForIMG());
+        return false;
+
     }
 
 }

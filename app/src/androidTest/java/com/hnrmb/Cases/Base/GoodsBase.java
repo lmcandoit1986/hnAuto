@@ -44,8 +44,7 @@ public class GoodsBase extends BaseTests {
             Other.closeUpdate(solo);
         }
         // 跳转到好物页面
-        Main mainObj = new Login(solo).actionLoginWithPhoneAndPsw("15801689735","111qqq");
-        goodsList = mainObj.actionIntoGoodsList();
+        goodsList = new Login(solo).actionLoginWithPhoneAndPsw("15801689735","111qqq").actionIntoGoodsList();
 
     }
 

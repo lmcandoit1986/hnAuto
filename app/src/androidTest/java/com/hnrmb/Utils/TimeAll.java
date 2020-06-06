@@ -6,7 +6,7 @@ package com.hnrmb.Utils;
 
 public class TimeAll {
 
-    public static void sleepTread(long l){
+    public static void sleepTread(int l){
         LogInfo.i("sleep "+l);
         try {
             Thread.sleep(l);

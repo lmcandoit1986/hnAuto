@@ -35,8 +35,8 @@ public class Login {
     public final String login_btn_id = "com.hnrmb.salary:id/login_btn_login";
     public static final String LOCK_ID = "com.hnrmb.salary:id/xguv_gesture";
 
-    private UiObject objectGoLogin(Boolean isAssert){
-        return UN.findUiobject(new Ele[]{new Ele(Config.TYPE_ID,go_login_id)},1000,false);
+    private UiObject objectGoLogin(){
+        return UN.findUiobject(new Ele[]{new Ele(Config.TYPE_ID,go_login_id)});
     }
 
     private UiObject objectPhoneEdit(){
@@ -52,7 +52,7 @@ public class Login {
     }
 
     public Login actionGoLogin(){
-        Operate.click(objectGoLogin(true));
+        Operate.click(objectGoLogin(),true);
         return this;
     }
 
@@ -104,7 +104,7 @@ public class Login {
     }
 
     public Main actionLoginWithPhoneAndPsw(String Phone,String Psw){
-        if (UN.findUiobject(new Ele[]{new Ele(Config.TYPE_TEXT,"切换其他账户")},1000,false)==null){
+        if (Operate.assertWaitForExists(UN.findUiobject(new Ele[]{new Ele(Config.TYPE_TEXT,"切换其他账户")}),5)){
             return this.actionGoLogin().actionInputPhone(Phone).actionInputPsw(Psw).actionLogin().lock();
         }
         return Other.unlock(solo);

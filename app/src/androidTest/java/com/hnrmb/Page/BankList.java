@@ -27,8 +27,9 @@ public class BankList {
         solo = so;
         UN = UiObjectNew.getInstance(solo);
         long End = DataInfo.getTime()+ 3 * 60;
+        UiObject banner = UN.findUiobject(new Ele[]{new Ele(Config.TYPE_TEXT,"banner.png")});
         while (true){
-            if (UN.findUiobject(new Ele[]{new Ele(Config.TYPE_TEXT,"banner.png")},1000,false)!=null){
+            if (Operate.assertWaitForExists(banner,15)){
                 break;
             }
             if (DataInfo.getTime() >= End){
@@ -50,7 +51,7 @@ public class BankList {
     }
 
     public BankProduct actionINtoDetail(int instance){
-        UiObject item = UN.findUiobject(new Ele[]{new Ele(Config.TYPE_TEXT_1,0,".*银行$",instance)},new Ele[]{new Ele(2)},true);
+        UiObject item = UN.findUiobject(new Ele[]{new Ele(Config.TYPE_TEXT_1,0,".*银行$",instance)},new Ele[]{new Ele(2)});
         String title = Operate.getText(item);
         Operate.clickAndWaitForNewWindow(item);
         return new BankProduct(solo,title);

@@ -23,6 +23,7 @@ public class Main {
 
     public Solo solo;
     public UiObjectNew UN;
+
     public Main(Solo so){
         solo = so;
         UN = UiObjectNew.getInstance(solo);
@@ -76,7 +77,7 @@ public class Main {
         while (true){
             Operate.clickAndWaitForNewWindow(UN.findUiobject(new Ele[]{new Ele(Config.TYPE_ID,ICON_ID,instance)}));
             TimeAll.sleepTread(1000);
-            if(UN.findUiobject(new Ele[]{new Ele(Config.TYPE_TEXT,"投资圈")},100,false)==null){
+            if(UN.findUiobject(new Ele[]{new Ele(Config.TYPE_TEXT,"投资圈")})==null){
                 break;
             }
         }
@@ -108,11 +109,11 @@ public class Main {
          * 7 公益
          * 1 每日签到
          */
-        TimeAll.sleepTread(3000);
+//        TimeAll.sleepTread(3000);
         while (true){
-            Operate.clickAndWaitForNewWindow(UN.findUiobject(new Ele[]{new Ele(Config.TYPE_ID,"com.hnrmb.salary:id/tv_name"),new Ele(Config.TYPE_TEXT,instance)},new Ele[]{new Ele(Config.TYPE_ID,"com.hnrmb.salary:id/iv_icon")},true));
+            Operate.clickAndWaitForNewWindow(UN.findUiobject(new Ele[]{new Ele(Config.TYPE_ID,"com.hnrmb.salary:id/tv_name"),new Ele(Config.TYPE_TEXT,instance)},new Ele[]{new Ele(Config.TYPE_ID,"com.hnrmb.salary:id/iv_icon")}),10,5);
             TimeAll.sleepTread(1000);
-            if(!UN.findUiobject(new Ele[]{new Ele(Config.TYPE_TEXT,"投资圈")},100,false).waitForExists(500)){
+            if(!UN.findUiobject(new Ele[]{new Ele(Config.TYPE_TEXT,"投资圈")}).waitForExists(500)){
                 break;
             }
             LogInfo.i("contiune");

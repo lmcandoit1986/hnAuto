@@ -26,9 +26,10 @@ public class My {
         solo = so;
         UN = UiObjectNew.getInstance(solo);
         // 等待接口数据返回,设置最长等待时间3分钟
-        long End = DataInfo.getTime()+ 3 * 60;
+        long End = DataInfo.getTime()+ 60;
+        UiObject item = UN.findUiobject(new Ele[]{new Ele(Config.TYPE_TEXT,"获取中")});
         while (true){
-            if (UN.findUiobject(new Ele[]{new Ele(Config.TYPE_TEXT,"获取中")},1000,false)==null){
+            if (!Operate.assertWaitForExists(item,0,false)){
                 break;
             }
             if (DataInfo.getTime() >= End){

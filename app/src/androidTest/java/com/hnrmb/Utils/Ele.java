@@ -75,6 +75,6 @@ public class Ele {
     }
 
     public String about(){
-        return String.format("Detail Type:%s,Value:%s,index:%d,instance:%d",getType(),getValue(),getIndex(),getInstance());
+        return String.format("Type:%s,Value:%s,index:%d,instance:%d ,",getType(),getValue(),getIndex(),getInstance());
     }
 }

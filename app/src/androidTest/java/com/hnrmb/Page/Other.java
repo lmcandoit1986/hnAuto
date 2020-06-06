@@ -30,7 +30,7 @@ public class Other {
 
     public static void closeUpdate(Solo solo){
         // 升级弹框关闭
-        Operate.click(UiObjectNew.getInstance(solo).findObjectNew(Config.TYPE_ID,CLOSE_UPDATE_ID,false),false);
+        Operate.click(UiObjectNew.getInstance(solo).findObjectNew(Config.TYPE_ID,CLOSE_UPDATE_ID),false);
         // 不中断测试
     }
 

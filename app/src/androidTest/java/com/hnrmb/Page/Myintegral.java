@@ -32,7 +32,7 @@ public class Myintegral {
             return this;
         }
         solo.setWaitForSelectorTimeout(3000);
-        Operate.click(UN.findObjectNew(Config.TYPE_TEXT,"签到",false),false);
+        Operate.click(UN.findObjectNew(Config.TYPE_TEXT,"签到"),false,0,0);
         solo.setWaitForSelectorTimeout(10000);
         return this;
     }

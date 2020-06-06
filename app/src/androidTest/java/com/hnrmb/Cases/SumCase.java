@@ -46,9 +46,9 @@ public class SumCase extends BaseTests {
             mainObj = new Main(solo);
         }
 //        WatcherList.update(solo);
-//        WatcherList.closeTV(solo);
-//        WatcherList.cancelFinger(solo);
-//        WatcherList.permissionAllow(solo);
+        WatcherList.closeTV(solo);
+        WatcherList.cancelFinger(solo);
+        WatcherList.permissionAllow(solo);
     }
 
     @After

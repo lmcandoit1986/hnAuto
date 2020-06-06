@@ -18,7 +18,7 @@ public class ResultFIP {
     }
 
     public ResultFIP assertIsResultPage(){
-        UN.findObjectSetTimeout(Config.TYPE_TEXT,"结果详情",1000*60);
+        Operate.assertWaitForExists(UN.findObjectNew(Config.TYPE_TEXT,"结果详情"),5);
         return this;
     }
 
