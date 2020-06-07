@@ -5,6 +5,7 @@ import com.hnrmb.Cases.Base.GoodsBase;
 import com.hnrmb.Config.Config;
 import com.hnrmb.Page.FIPList;
 import com.hnrmb.Page.GoodsList;
+import com.hnrmb.Page.Login;
 import com.hnrmb.Page.Main;
 import com.hnrmb.Page.Other;
 import com.hnrmb.Utils.AppLaunch;
@@ -39,16 +40,18 @@ public class SumCase extends BaseTests {
         if (!Config.ENV.equals("rel")){
             Other.closeUpdate(solo);
         }
+//        WatcherList.closeTV(solo);
+//        WatcherList.cancelFinger(solo);
+//        WatcherList.permissionAllow(solo);
+        WatcherList.allException(solo);
         if (Config.Debug){
-            mainObj = Other.unlock(solo);
+//            mainObj = Other.unlock(solo);
+            mainObj = new Login(solo).actionLoginWithPhoneAndPsw("15011043581","Lm918273");
         }
         else{
             mainObj = new Main(solo);
         }
-//        WatcherList.update(solo);
-        WatcherList.closeTV(solo);
-        WatcherList.cancelFinger(solo);
-        WatcherList.permissionAllow(solo);
+
     }
 
     @After

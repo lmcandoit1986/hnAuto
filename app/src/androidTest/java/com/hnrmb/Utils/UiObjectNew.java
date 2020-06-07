@@ -11,6 +11,7 @@ import androidx.test.uiautomator.UiScrollable;
 import androidx.test.uiautomator.UiSelector;
 
 import com.hnrmb.Config.Config;
+import com.hnrmb.Utils.UE.EleN;
 
 import org.junit.Test;
 
@@ -31,6 +32,64 @@ public class UiObjectNew {
             Instance = new UiObjectNew(so);
         }
         return Instance;
+    }
+
+    public UiSelector getUiSelector(EleN[] eleNS){
+        UiSelector uiSelector = new UiSelector();
+        StringBuilder MSG = new StringBuilder();
+        for (EleN e :eleNS){
+            if (e.getClassName() != null){
+                MSG.append("class:"+e.getClassName()+" ");
+                uiSelector = uiSelector.className(e.getClassName());
+            }
+
+            if (e.getId() != null){
+                MSG.append("id:"+e.getId()+" ");
+                uiSelector = uiSelector.resourceId(e.getId());
+            }
+
+            if (e.getText() != null){
+                MSG.append("text:"+e.getText()+" ");
+                uiSelector = uiSelector.text(e.getText());
+            }
+
+            if (e.getIndex() != -99){
+                MSG.append("index:"+e.getIndex()+" ");
+                uiSelector = uiSelector.index(e.getIndex());
+            }
+
+            if (e.getInstance() != -99){
+                MSG.append("instance:"+e.getInstance()+" ");
+                uiSelector = uiSelector.instance(e.getInstance());
+            }
+
+            if (e.getDesc() != null){
+                MSG.append("desc:"+e.getDesc()+" ");
+                uiSelector = uiSelector.description(e.getDesc());
+            }
+
+            if (e.getTextContain() != null){
+                MSG.append("textcontain:"+e.getTextContain()+" ");
+                uiSelector = uiSelector.textContains(e.getTextContain());
+            }
+
+            if (e.getTextMatch() != null){
+                MSG.append("textmatch:"+e.getTextMatch()+" ");
+                uiSelector = uiSelector.textMatches(e.getTextMatch());
+            }
+
+            if (e.getTextStartWith() != null){
+                MSG.append("classStart:"+e.getTextStartWith()+" ");
+                uiSelector = uiSelector.textStartsWith(e.getTextStartWith());
+            }
+        }
+        LogInfo.i("uiSelector:"+MSG.toString());
+        return uiSelector;
+    }
+
+    public UiObject findUiobject(EleN[] eleNS){
+        UiSelector uiSelector = getUiSelector(eleNS);
+        return solo.getMydevice().findObject(uiSelector);
     }
 
     public UiSelector getUiSelector(Ele[] eleList){
@@ -81,17 +140,13 @@ public class UiObjectNew {
     }
 
     public UiObject findUiobject(Ele[] eleList){
-        StringBuilder MSG = new StringBuilder();
         UiSelector uiSelector = getUiSelector(eleList);
-        UiObject item = null;
-        item =  solo.getMydevice().findObject(uiSelector);
-        return item;
+        return  solo.getMydevice().findObject(uiSelector);
     }
 
     public UiObject findUiobject(Ele[] childeleList,Ele[] targetChildEle){
         UiSelector uiSelector = getUiSelector(childeleList);
-        UiObject item = null;
-        item =  solo.getMydevice().findObject(uiSelector);
+        UiObject item =  solo.getMydevice().findObject(uiSelector);
 
         UiSelector uiSelectorbrother = getUiSelector(targetChildEle);
         UiObject brother = null;
@@ -145,32 +200,6 @@ public class UiObjectNew {
          * 会校验是否存在
          * 验证超时
          * 失败阻断用例实现
-
-        
-        UiObject item = null;
-        switch (Type){
-            case Config.TYPE_ID:
-                item = solo.getMydevice().findObject(new UiSelector().resourceId(Value).instance(instance));
-                break;
-            case Config.TYPE_CLASS:
-                item = solo.getMydevice().findObject(new UiSelector().className(Value).instance(instance));
-                break;
-            case Config.TYPE_TEXT:
-                item = solo.getMydevice().findObject(new UiSelector().text(Value).instance(instance));
-                break;
-            case Config.TYPE_DESC:
-                item = solo.getMydevice().findObject(new UiSelector().description(Value).instance(instance));
-                break;
-            default:
-                FailedCase.interruptProcess(String.format("Key Error with type:%s",Type),DataInfo.getDayFormatForIMG());
-        }
-        
-        if (item.waitForExists(solo.getTIMEOUT())){
-            return item;
-        }else {
-            FailedCase.interruptProcess(String.format("elemet is not exists in time:%d,value:%s", solo.getTIMEOUT(),Value),DataInfo.getDayFormatForIMG());
-            return null;
-        }
         */
         return findUiobject(new Ele[]{new Ele(Type,Value,instance)});
     }

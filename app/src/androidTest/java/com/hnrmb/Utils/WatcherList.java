@@ -12,6 +12,31 @@ import com.hnrmb.Config.Config;
 
 public class WatcherList {
 
+    public static void allException(final Solo solo){
+        final UiObjectNew UN = UiObjectNew.getInstance(solo);
+        UiDevice uiDevice = solo.getMydevice();
+        Ele[] EleList = new Ele[5];
+        EleList[0]=new Ele(Config.TYPE_ID,"com.hnrmb.salary:id/linear_close");
+        EleList[2]=new Ele(Config.TYPE_ID,"com.hnrmb.salary:id/iv_close");
+        EleList[3]=new Ele(Config.TYPE_ID,"com.android.packageinstaller:id/permission_allow_button");
+        EleList[1]=new Ele(Config.TYPE_ID,"com.hnrmb.salary:id/warn_cancel");
+        EleList[4]=new Ele(Config.TYPE_ID,"com.hnrmb.salary:id/btn_single_confirm");
+        for (final Ele item : EleList){
+            uiDevice.registerWatcher(item.getValue(), new UiWatcher() {
+                @Override
+                public boolean checkForCondition(){
+                    UiObject uiObject = UN.findUiobject(new Ele[]{item});
+                    if (uiObject.exists()){
+                        Operate.justClick(uiObject,false);
+                        return true;
+                    }
+                    return false;
+                }
+            });
+        }
+
+    }
+
     public static void update(final Solo solo){
         /**
          * 处理升级弹框

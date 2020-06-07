@@ -9,6 +9,8 @@ import com.hnrmb.Utils.FailedCase;
 import com.hnrmb.Utils.MathsObj;
 import com.hnrmb.Utils.Operate;
 import com.hnrmb.Utils.Solo;
+import com.hnrmb.Utils.UE.EleId;
+import com.hnrmb.Utils.UE.EleN;
 import com.hnrmb.Utils.UiObjectNew;
 
 /**
@@ -53,7 +55,7 @@ public class My {
 
     // 签到入口
     private UiObject objectSign(){
-        return UN.findObjectNew(Config.TYPE_ID,sign_id);
+        return UN.findUiobject(new EleN[]{new EleId(sign_id)});
     }
     // 切换到个人中心
     private UiObject objectGoPersonal(){

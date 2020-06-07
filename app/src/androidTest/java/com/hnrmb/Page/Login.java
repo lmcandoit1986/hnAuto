@@ -104,7 +104,7 @@ public class Login {
     }
 
     public Main actionLoginWithPhoneAndPsw(String Phone,String Psw){
-        if (Operate.assertWaitForExists(UN.findUiobject(new Ele[]{new Ele(Config.TYPE_TEXT,"切换其他账户")}),5)){
+        if (!Operate.assertWaitForExists(UN.findUiobject(new Ele[]{new Ele(Config.TYPE_TEXT,"切换其他账户")}),5,false)){
             return this.actionGoLogin().actionInputPhone(Phone).actionInputPsw(Psw).actionLogin().lock();
         }
         return Other.unlock(solo);
