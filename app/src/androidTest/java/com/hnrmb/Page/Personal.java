@@ -5,6 +5,8 @@ import androidx.test.uiautomator.UiObject;
 import com.hnrmb.Config.Config;
 import com.hnrmb.Utils.Operate;
 import com.hnrmb.Utils.Solo;
+import com.hnrmb.Utils.UE.EleId;
+import com.hnrmb.Utils.UE.EleN;
 import com.hnrmb.Utils.UiObjectNew;
 /**
  * 个人中心页面元素及操作封装
@@ -75,9 +77,10 @@ public class Personal {
     }
 
     // 点击退出登录按钮
-    public Logout actionGoLogout(){
+    public Login Logout(){
         Operate.click(objectLogout());
-        return new Logout(solo);
+        Operate.click(UN.findUiobject(new EleN[]{new EleId("com.hnrmb.salary:id/warn_confirm")}));
+        return new Login(solo);
     }
 
 }

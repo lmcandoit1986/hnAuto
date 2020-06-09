@@ -7,9 +7,9 @@ public class MathsObj {
         try {
             Float.parseFloat(IntStr);
         }catch (NumberFormatException e){
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     public static void main(String[] args){

@@ -1,5 +1,6 @@
 package com.hnrmb.Page;
 
+import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
 
@@ -12,6 +13,9 @@ import com.hnrmb.Utils.LogInfo;
 import com.hnrmb.Utils.Operate;
 import com.hnrmb.Utils.Solo;
 import com.hnrmb.Utils.TimeAll;
+import com.hnrmb.Utils.UE.EleId;
+import com.hnrmb.Utils.UE.EleN;
+import com.hnrmb.Utils.UE.EleText;
 import com.hnrmb.Utils.UiObjectNew;
 /**
  * 登录流程涉及页面元素及操作封装
@@ -33,7 +37,8 @@ public class Login {
     public final String input_phone_id = "com.hnrmb.salary:id/cet_login_name";
     public final String input_psw_id = "com.hnrmb.salary:id/cet_login_pwd";
     public final String login_btn_id = "com.hnrmb.salary:id/login_btn_login";
-    public static final String LOCK_ID = "com.hnrmb.salary:id/xguv_gesture";
+    public final String LOCK_ID = "com.hnrmb.salary:id/xguv_gesture";
+    public final String CHANGE_ANOTHER_USER = "com.hnrmb.salary:id/tv_login_gesture_otherlogin";
 
     private UiObject objectGoLogin(){
         return UN.findUiobject(new Ele[]{new Ele(Config.TYPE_ID,go_login_id)});
@@ -51,6 +56,10 @@ public class Login {
         return UN.findObjectNew(Config.TYPE_ID,login_btn_id);
     }
 
+    private UiObject objectChangeUser(){
+        return UN.findUiobject(new EleN[]{new EleId(CHANGE_ANOTHER_USER)});
+    }
+
     public Login actionGoLogin(){
         Operate.click(objectGoLogin(),true);
         return this;
@@ -58,6 +67,11 @@ public class Login {
 
     public Login actionInputPhone(String Phone){
         Operate.input(objectPhoneEdit(),Phone);
+        return this;
+    }
+
+    public Login actionChangeUser(){
+        Operate.clickAndWaitForNewWindow(objectChangeUser());
         return this;
     }
 
@@ -95,8 +109,14 @@ public class Login {
             Point[] points = {p1,p2,p3};
 
             Operate.swipe(solo.getMydevice(),points,30);
-            TimeAll.sleepTread(1000);
-            Operate.swipe(solo.getMydevice(),points,30);
+            TimeAll.sleepTread(1500);
+            if (Operate.assertWaitForExists(UN.findUiobject(new EleN[]{new EleText("再次绘制手势密码")}),15,false)){
+                Operate.swipe(solo.getMydevice(),points,30);
+            }else{
+                LogInfo.e("绘制图案解锁失败");
+                Operate.swipe(solo.getMydevice(),points,30);
+            }
+
         } catch (UiObjectNotFoundException e) {
             e.printStackTrace();
         }
@@ -108,6 +128,24 @@ public class Login {
             return this.actionGoLogin().actionInputPhone(Phone).actionInputPsw(Psw).actionLogin().lock();
         }
         return Other.unlock(solo);
+
+    }
+
+    public Main actionReloginWithPhoneAndPsw(String Phone,String Psw){
+        // 有登录账户的场景
+        if(Operate.assertWaitForExists(UN.findUiobject(new Ele[]{new Ele(Config.TYPE_TEXT,"切换其他账户")}),3,false)){
+            if(!Operate.assertWaitForExists(UN.findUiobject(new EleN[]{new EleText(Phone.replaceAll(Phone.substring(3,Phone.length()-4),"****"))}),1,false)) {
+               return this.actionChangeUser().actionInputPhone(Phone).actionInputPsw(Psw).actionLogin().lock();
+            }
+            return Other.unlock(solo);
+
+        }
+        // 无账号登录的场景
+        if (Operate.assertWaitForExists(objectGoLogin(),3,false)){
+           return this.actionGoLogin().actionInputPhone(Phone).actionInputPsw(Psw).actionLogin().lock();
+        }
+        // 有账号登录且在主页面的场景
+        return new Main(solo).actionIntoMy().actionGoPersonal().Logout().actionGoLogin().actionInputPhone(Phone).actionInputPsw(Psw).actionLogin().lock();
 
     }
 

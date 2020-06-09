@@ -18,4 +18,5 @@ public class Logout {
         UN = UiObjectNew.getInstance(solo);
     }
 
+
 }

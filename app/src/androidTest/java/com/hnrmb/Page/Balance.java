@@ -51,19 +51,19 @@ public class Balance {
 
     public Balance assertAllMoney(String money){
         String moneyreal = Operate.getText(objectAllMoney());
-        if (MathsObj.assertInt(moneyreal)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",moneyreal), DataInfo.getDayFormatForIMG());
+        if (!MathsObj.assertInt(moneyreal)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",moneyreal), DataInfo.getDayFormatForIMG());
         return this;
     }
 
     public Balance assertAllIncoming(String money){
         String moneyreal = Operate.getText(objectAllIncoming());
-        if (MathsObj.assertInt(moneyreal)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",moneyreal), DataInfo.getDayFormatForIMG());
+        if (!MathsObj.assertInt(moneyreal)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",moneyreal), DataInfo.getDayFormatForIMG());
         return this;
     }
 
     public Balance assertNewIncoming(String money){
         String moneyreal = Operate.getText(objectNewIncoming());
-        if (MathsObj.assertInt(moneyreal)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",moneyreal), DataInfo.getDayFormatForIMG());
+        if (!MathsObj.assertInt(moneyreal)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",moneyreal), DataInfo.getDayFormatForIMG());
         return this;
     }
 

@@ -111,7 +111,7 @@ public class Main {
          */
 //        TimeAll.sleepTread(3000);
         while (true){
-            Operate.clickAndWaitForNewWindow(UN.findUiobject(new Ele[]{new Ele(Config.TYPE_ID,"com.hnrmb.salary:id/tv_name"),new Ele(Config.TYPE_TEXT,instance)},new Ele[]{new Ele(Config.TYPE_ID,"com.hnrmb.salary:id/iv_icon")}),10,5);
+            Operate.clickAndWaitForNewWindow(UN.findUiobject(new Ele[]{new Ele(Config.TYPE_ID,"com.hnrmb.salary:id/tv_name"),new Ele(Config.TYPE_TEXT,instance)},new Ele[]{new Ele(Config.TYPE_ID,"com.hnrmb.salary:id/iv_icon")}),30,5);
             TimeAll.sleepTread(1000);
             if(!UN.findUiobject(new Ele[]{new Ele(Config.TYPE_TEXT,"投资圈")}).waitForExists(500)){
                 break;

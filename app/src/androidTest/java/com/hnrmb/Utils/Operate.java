@@ -5,6 +5,7 @@ import android.graphics.Rect;
 
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
+import androidx.test.uiautomator.UiObject2;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 import androidx.test.uiautomator.UiScrollable;
 
@@ -16,7 +17,7 @@ import com.hnrmb.Config.Config;
 
 public class Operate {
     static int timeout_clickable = 5;//秒
-    static int timeout_exist = 5;//毫秒
+    static int timeout_exist = 5;//秒
     public static void input(UiObject edit, String value) {
         assertWaitForExists(edit,timeout_exist,true);
         if (!assertClickable(edit, timeout_clickable))
@@ -57,6 +58,24 @@ public class Operate {
         } catch (UiObjectNotFoundException e) {
             LogInfo.e(e.toString());
             if (isAssert) FailedCase.interruptProcess("UiObjectNotFoundException", DataInfo.getDayFormatForIMG());
+        } catch (NullPointerException e) {
+            LogInfo.e(e.toString());
+            if (isAssert) FailedCase.interruptProcess("Click Failed with NullPointerException", DataInfo.getDayFormatForIMG());
+        }
+    }
+
+    public static void click(UiObject2 item, Boolean isAssert) {
+        /**
+         * 点击操作
+         * 验证对象是否支持点击
+         * 失败阻断用例执行
+         */
+        assertWaitForExists(item,timeout_exist,isAssert);
+        if (!assertClickable(item, timeout_clickable))
+            if (isAssert)
+                FailedCase.interruptProcess("UiObject isn't clickable", DataInfo.getDayFormatForIMG());
+        try {
+            item.click();
         } catch (NullPointerException e) {
             LogInfo.e(e.toString());
             if (isAssert) FailedCase.interruptProcess("Click Failed with NullPointerException", DataInfo.getDayFormatForIMG());
@@ -403,11 +422,19 @@ public class Operate {
      */
     public static String getText(UiObject item) {
         String back = null;
+        assertWaitForExists(item,5);
         try {
             back = item.getText();
         } catch (UiObjectNotFoundException e) {
             e.printStackTrace();
         }
+        return back;
+    }
+
+    public static String getText(UiObject2 item) {
+        String back = null;
+        assertWaitForExists(item,5);
+        back = item.getText();
         return back;
     }
 
@@ -430,13 +457,31 @@ public class Operate {
             if (DataInfo.getTime() - start >= timeout) {
                 return false;
             }
-            TimeAll.sleepTread(500);
+        }
+    }
+
+    public static Boolean assertClickable(UiObject2 item, int timeout) {
+        long start = DataInfo.getTime();
+        while (true) {
+            try {
+                if (item.isClickable() || item.isEnabled()) {
+                    LogInfo.i("uiobject is clickable or enabled");
+                    return true;
+                }
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+                FailedCase.interruptProcess("Click Failed with NullPointerException", DataInfo.getDayFormatForIMG());
+            }
+            if (DataInfo.getTime() - start >= timeout) {
+                return false;
+            }
         }
     }
 
     public static Boolean assertWaitForExists(UiObject item,int timeout){
         return assertWaitForExists(item,timeout,true);
     }
+
 
     public static Boolean assertWaitForExists(UiObject item,int timeout,Boolean isAssert){
         LogInfo.i("assert uiobject is exists");
@@ -446,5 +491,26 @@ public class Operate {
         return false;
 
     }
+
+    public static Boolean assertWaitForExists(UiObject2 item,int timeout){
+        return assertWaitForExists(item,timeout,true);
+    }
+
+
+    public static Boolean assertWaitForExists(UiObject2 item,int timeout,Boolean isAssert){
+        LogInfo.i("assert uiobject is exists");
+        long end = DataInfo.getTime()+timeout;
+        while (true){
+            if(item!=null){
+                return true;
+            }
+            if(DataInfo.getTime() >end){
+                if(isAssert) FailedCase.interruptProcess(timeout+"s 内，未定位到元素");
+                return false;
+            }
+        }
+    }
+
+    
 
 }

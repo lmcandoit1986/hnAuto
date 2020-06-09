@@ -25,14 +25,14 @@ public class Myintegral {
     public Myintegral assertNomal(){
         UN.findObjectNew(Config.TYPE_TEXT,"我的积分");
         // 顺带如果没有签到则签到
-        LogInfo.i(solo.getModule());
-        if (solo.getModule().trim().equals("Redmi Note 8 Pro")){
-            Operate.click(solo.getMydevice(),500,910);
-            TimeAll.sleepTread(1500);
-            return this;
-        }
+//        LogInfo.i(solo.getModule());
+//        if (solo.getModule().trim().equals("Redmi Note 8 Pro")){
+//            Operate.click(solo.getMydevice(),500,910);
+//            TimeAll.sleepTread(1500);
+//            return this;
+//        }
         solo.setWaitForSelectorTimeout(3000);
-        Operate.click(UN.findObjectNew(Config.TYPE_TEXT,"签到并抽奖"),false,5,0);
+        Operate.click(UN.findObjectNew(Config.TYPE_TEXT_2,"签到"),false,5,0);
         solo.setWaitForSelectorTimeout(10000);
         return this;
     }

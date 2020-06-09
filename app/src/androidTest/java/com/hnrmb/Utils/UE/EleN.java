@@ -1,5 +1,7 @@
 package com.hnrmb.Utils.UE;
 
+import com.hnrmb.Utils.Ele;
+
 public class EleN {
     private String className=null;
     private String text=null;

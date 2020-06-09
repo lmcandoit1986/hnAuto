@@ -19,7 +19,7 @@ public class Config {
 
     public static final String ENV = "rel"; // rel ,test
 
-    public static final Boolean Debug = true; // true 时走app 启动等流程
+    public static final Boolean Debug = false; // true 时走app 启动等流程
 
     public static final int TEXT_MTACH = 0;
     public static final int TEXT_CONTAIN = 1;

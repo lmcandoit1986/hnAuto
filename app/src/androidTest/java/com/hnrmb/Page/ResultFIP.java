@@ -18,7 +18,7 @@ public class ResultFIP {
     }
 
     public ResultFIP assertIsResultPage(){
-        Operate.assertWaitForExists(UN.findObjectNew(Config.TYPE_TEXT,"结果详情"),5);
+        Operate.assertWaitForExists(UN.findObjectNew(Config.TYPE_TEXT,"结果详情"),30);
         return this;
     }
 
@@ -26,5 +26,6 @@ public class ResultFIP {
         Operate.clickAndWaitForNewWindow(UN.findObjectNew(Config.TYPE_ID,"com.hnrmb.salary:id/head_right_lay"));
         return new MyFIP(solo);
     }
+
 
 }

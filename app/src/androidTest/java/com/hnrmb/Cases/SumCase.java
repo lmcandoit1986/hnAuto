@@ -33,16 +33,11 @@ public class SumCase extends BaseTests {
     @Before
     public void SetUp(){
         START_TIME = DataInfo.getTime();
-//        appLaunch = new AppLaunch(solo);
         if (Config.Debug) appLaunch.startApp(PackageName,Activity);
-        // appLaunch.initToastListener();
         // 升级弹框关闭
         if (!Config.ENV.equals("rel")){
             Other.closeUpdate(solo);
-        }
-//        WatcherList.closeTV(solo);
-//        WatcherList.cancelFinger(solo);
-//        WatcherList.permissionAllow(solo);
+        };
         WatcherList.allException(solo);
         if (Config.Debug){
 //            mainObj = Other.unlock(solo);

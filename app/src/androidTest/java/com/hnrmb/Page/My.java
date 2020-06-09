@@ -115,43 +115,43 @@ public class My {
 
     public My assertAllMoney(String money){
         String ExpectMoney = Operate.getText(objectAllMoney());
-        if (MathsObj.assertInt(ExpectMoney)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",ExpectMoney), DataInfo.getDayFormatForIMG());
+        if (!MathsObj.assertInt(ExpectMoney)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",ExpectMoney), DataInfo.getDayFormatForIMG());
         return this;
     }
 
     public My assertNewIncoming(String money){
         String ExpectMoney = Operate.getText(objectNewIncoming());
-        if (MathsObj.assertInt(ExpectMoney)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",ExpectMoney), DataInfo.getDayFormatForIMG());
+        if (!MathsObj.assertInt(ExpectMoney)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",ExpectMoney), DataInfo.getDayFormatForIMG());
         return this;
     }
 
     public My assertAllIncoming(String money){
         String ExpectMoney = Operate.getText(objectAllIncoming());
-        if (MathsObj.assertInt(ExpectMoney)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",ExpectMoney), DataInfo.getDayFormatForIMG());
+        if (!MathsObj.assertInt(ExpectMoney)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",ExpectMoney), DataInfo.getDayFormatForIMG());
         return this;
     }
 
     public My assertYCMonkey(String money){
         String ExpectMoney = Operate.getText(objectYCMoney());
-        if (MathsObj.assertInt(ExpectMoney)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",ExpectMoney), DataInfo.getDayFormatForIMG());
+        if (!MathsObj.assertInt(ExpectMoney)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",ExpectMoney), DataInfo.getDayFormatForIMG());
         return this;
     }
 
     public My assertYEMonkey(String money){
         String ExpectMoney = Operate.getText(objectYEMoney());
-        if (MathsObj.assertInt(ExpectMoney)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",ExpectMoney), DataInfo.getDayFormatForIMG());
+        if (!MathsObj.assertInt(ExpectMoney)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",ExpectMoney), DataInfo.getDayFormatForIMG());
         return this;
     }
 
     public My assertLCMonkey(String money){
         String ExpectMoney = Operate.getText(objectLCMoney());
-        if (MathsObj.assertInt(ExpectMoney)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",ExpectMoney), DataInfo.getDayFormatForIMG());
+        if (!MathsObj.assertInt(ExpectMoney)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",ExpectMoney), DataInfo.getDayFormatForIMG());
         return this;
     }
 
     public My assertBankMonkey(String money){
         String ExpectMoney = Operate.getText(objectBankMoney());
-        if (MathsObj.assertInt(ExpectMoney)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",ExpectMoney), DataInfo.getDayFormatForIMG());
+        if (!MathsObj.assertInt(ExpectMoney)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",ExpectMoney), DataInfo.getDayFormatForIMG());
         return this;
     }
 

@@ -99,7 +99,7 @@ public class AppLaunch {
                     Config.ToastMSG = (String) event.getText().get(0);
                 }else{
                     LogInfo.i(event.getText().get(0).toString());
-                    String smstext = event.getText().get(0).toString();
+//                    String smstext = event.getText().get(0).toString();
                     // 具体提取业务逻辑实现
 //                    if(smstext.contains("中国平安: 尊敬的客户，您的验证码为")){
 //                        ConfigGlobal.Code = smstext.split("：")[1].split("，")[0];

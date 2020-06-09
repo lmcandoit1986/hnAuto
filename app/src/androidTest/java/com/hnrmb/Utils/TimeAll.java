@@ -25,12 +25,18 @@ public class TimeAll {
     }
 
     public static void main(String[] args){
-        Ele e = new Ele("id","123");
+        //定义的字符串
+        String s = "15801689735";
+//        通过length方法获取字符串长度
+        for (int i = 0;i < s.length();i++){
+            //charAt是获取字符串第i个字符
+            System.out.println(s.charAt(i));
+        }
 
-        Ele[] elist = new Ele[1];
-        elist[0] = e;
+        String a = s.replaceAll(s.substring(7,s.length()),"");
+        System.out.println(a);
 
-        findUiobject(elist);
+        System.out.println(s.substring(3,s.length()-4));
 
     }
 

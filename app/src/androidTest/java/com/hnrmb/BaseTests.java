@@ -1,10 +1,14 @@
 package com.hnrmb;
 
+import android.os.Bundle;
+
 import androidx.test.runner.AndroidJUnit4;
 import androidx.test.uiautomator.Configurator;
 
 import com.hnrmb.Config.Config;
 import com.hnrmb.Utils.AppLaunch;
+import com.hnrmb.Utils.BundleNew;
+import com.hnrmb.Utils.LogInfo;
 import com.hnrmb.Utils.Solo;
 import com.hnrmb.Utils.DeviceStatus;
 
@@ -29,6 +33,10 @@ public class BaseTests {
         // configurator.setActionAcknowledgmentTimeout(5000);
         DeviceStatus.wakeUp(solo.getMydevice());
         if (Config.Debug) appLaunch.quitApp("com.hnrmb.salary");
+        Bundle bundle = new Bundle();
+        bundle.putString("device",solo.getModule());
+        new BundleNew(Solo.getInstance().getInstrumentation()).sendStatus(99,bundle);
+        LogInfo.i(solo.getModule());
     }
 
 

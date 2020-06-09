@@ -1,5 +1,7 @@
 package com.hnrmb.Page;
 
+import androidx.test.uiautomator.UiObject;
+
 import com.hnrmb.Config.Config;
 import com.hnrmb.Utils.DataInfo;
 import com.hnrmb.Utils.Ele;
@@ -32,6 +34,15 @@ public class FIPList {
 
     }
 
+    public UiObject objectFIPInList(String FIPName){
+        return UN.findObjectInListView(Config.TYPE_ID,list_id,Config.TYPE_ID,name_id,FIPName);
+    }
+
+    public FIPDetail actionIntoFIPDetail(String FIPName){
+        Operate.click(objectFIPInList(FIPName));
+        return new FIPDetail(solo,FIPName);
+    }
+
 
 
     // 用于监控
@@ -44,8 +55,10 @@ public class FIPList {
     }
 
     public FIPDetail actionIntoFIPDetail(int instance){
-        Operate.clickAndWaitForNewWindow(UN.findObjectNew(Config.TYPE_ID,name_id,instance));
-        return new FIPDetail(solo);
+        UiObject fip  = UN.findObjectNew(Config.TYPE_ID,name_id,instance);
+        String fipName = Operate.getText(fip);
+        Operate.clickAndWaitForNewWindow(fip);
+        return new FIPDetail(solo,fipName);
     }
 
 
