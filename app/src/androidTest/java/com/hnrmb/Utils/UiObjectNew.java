@@ -92,7 +92,7 @@ public class UiObjectNew {
                 uiSelector = uiSelector.textStartsWith(e.getTextStartWith());
             }
         }
-        LogInfo.i("uiSelector:"+MSG.toString());
+//        LogInfo.i("uiSelector:"+MSG.toString());
         return uiSelector;
     }
 
@@ -103,7 +103,25 @@ public class UiObjectNew {
      */
     public UiObject findUiobject(EleN[] eleNS){
         UiSelector uiSelector = getUiSelector(eleNS);
-        return solo.getMydevice().findObject(uiSelector);
+        return findUiobject(uiSelector);
+    }
+
+    public UiObject findUiobject(UiSelector selector){
+        LogInfo.i("定位元素，Uiselector:"+selector.toString());
+        return solo.getMydevice().findObject(selector);
+    }
+
+    public UiObject findUiobject(UiSelector selector,UiSelector brotherSelector){
+        LogInfo.i("定位元素，定位 Uiselector:"+selector.toString()+"，兄弟元素 Uiselector"+brotherSelector.toString());
+        UiObject uiObject= solo.getMydevice().findObject(selector);
+        try {
+            UiObject brother = uiObject.getFromParent(brotherSelector);
+            return brother;
+        } catch (UiObjectNotFoundException e) {
+            e.printStackTrace();
+            FailedCase.interruptProcess("未能通过同级父类查找到目标元素");
+            return null;
+        }
     }
 
     /**
@@ -112,7 +130,7 @@ public class UiObjectNew {
      * @return
      */
     public UiSelector getUiSelector(Ele[] eleList){
-        LogInfo.i("begin set uiSelector");
+//        LogInfo.i("begin set uiSelector");
         UiSelector uiSelector = new UiSelector();
         StringBuilder MSG = new StringBuilder();
         for(Ele e : eleList){
@@ -144,17 +162,17 @@ public class UiObjectNew {
                     FailedCase.interruptProcess(String.format("Key Error with type:%s",e.getType()),DataInfo.getDayFormatForIMG());
             }
             if (e.getIndex()!=-99){
-                LogInfo.i("匹配index："+e.getIndex());
+//                LogInfo.i("匹配index："+e.getIndex());
                 uiSelector = uiSelector.index(e.getIndex());
             }
 
             if (e.getInstance()!=-99){
-                LogInfo.i("匹配instance："+e.getInstance());
+//                LogInfo.i("匹配instance："+e.getInstance());
                 uiSelector = uiSelector.instance(e.getInstance());
             }
             MSG.append(e.about());
         }
-        LogInfo.i("uiSelector:"+MSG.toString());
+//        LogInfo.i("uiSelector:"+MSG.toString());
         return uiSelector;
     }
 
@@ -165,7 +183,7 @@ public class UiObjectNew {
      */
     public UiObject findUiobject(Ele[] eleList){
         UiSelector uiSelector = getUiSelector(eleList);
-        return  solo.getMydevice().findObject(uiSelector);
+        return  findUiobject(uiSelector);
     }
 
     /**
@@ -174,6 +192,7 @@ public class UiObjectNew {
      * @return
      */
     public UiObject2 findUiobject2(BySelector bySelector){
+        LogInfo.i("定位元素，BySelector:"+bySelector.toString());
         return solo.getMydevice().findObject(bySelector);
     }
 
@@ -185,7 +204,7 @@ public class UiObjectNew {
      * @return
      */
     public UiObject2 findUiobject2ByParent(BySelector child,int toParent,BySelector target){
-        UiObject2 childObj = solo.getMydevice().findObject(child);
+        UiObject2 childObj = findUiobject2(child);
         UiObject2 parent =null;
         for(int i=0;i<toParent;i++){
             parent = childObj.getParent();
@@ -203,7 +222,7 @@ public class UiObjectNew {
      */
     public UiObject findUiobject(Ele[] childeleList,Ele[] targetChildEle){
         UiSelector uiSelector = getUiSelector(childeleList);
-        UiObject item =  solo.getMydevice().findObject(uiSelector);
+        UiObject item =  findUiobject(uiSelector);
 
         UiSelector uiSelectorbrother = getUiSelector(targetChildEle);
         UiObject brother = null;
@@ -224,7 +243,7 @@ public class UiObjectNew {
      */
     public UiObject findUiobject(EleN[] childeleList,EleN[] targetChildEle){
         UiSelector uiSelector = getUiSelector(childeleList);
-        UiObject item =  solo.getMydevice().findObject(uiSelector);
+        UiObject item =  findUiobject(uiSelector);
 
         UiSelector uiSelectorbrother = getUiSelector(targetChildEle);
         UiObject brother = null;
@@ -323,7 +342,7 @@ public class UiObjectNew {
          * isAssertExists 为false时不对用例产生阻断
          */
         UiSelector uiSelector = getUiSelector(eles);
-        return solo.getMydevice().findObject(uiSelector);
+        return findUiobject(uiSelector);
 
     }
 
@@ -411,6 +430,26 @@ public class UiObjectNew {
         return null;
     }
 
+    public UiObject findUiobjectInList(UiSelector listobj,UiSelector targetobj){
+        UiScrollable list =findListViewObject(listobj);
+        try {
+            UiObject target=null;
+            target = findUiobject(targetobj);
+            if (target.waitForExists(5)){
+                return target;
+            }
+            for(int i=0;i<10;i++){
+                list.scrollForward(20);
+                if (target.waitForExists(0)){
+                    return target;
+                }
+            }
+        } catch (UiObjectNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public UiObject findObjectWebView(String Type, String Value){
         /**
          * 定位元素
@@ -466,6 +505,11 @@ public class UiObjectNew {
 
     public UiScrollable findListViewObject(EleN[] eleN){
         UiScrollable list = new UiScrollable(getUiSelector(eleN));
+        return list;
+    }
+
+    public UiScrollable findListViewObject(UiSelector eleN){
+        UiScrollable list = new UiScrollable(eleN);
         return list;
     }
 

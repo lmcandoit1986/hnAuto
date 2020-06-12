@@ -8,6 +8,7 @@ import com.hnrmb.Config.Config;
 import com.hnrmb.Utils.Ele;
 import com.hnrmb.Utils.LogInfo;
 import com.hnrmb.Utils.Operate;
+import com.hnrmb.Utils.Selector;
 import com.hnrmb.Utils.Solo;
 import com.hnrmb.Utils.TimeAll;
 import com.hnrmb.Utils.UiObjectNew;
@@ -38,9 +39,14 @@ public class Main {
     // com.hnrmb.salary:id/xrecycler_home
     public final String ICON_ID = "com.hnrmb.salary:id/iv_icon";// 5列 推广入口
     public final String navigation_bar_id = "com.hnrmb.salary:id/eiv_type";
+    public final String tv_name_id = "com.hnrmb.salary:id/tv_name";
 
     private UiObject objectNavigation(int instance){
-        return UN.findObjectNew(Config.TYPE_ID,navigation_bar_id,instance);
+        return UN.findUiobject(Selector.resourceId(navigation_bar_id,instance));
+    }
+
+    private UiObject objectTV(String Name){
+        return UN.findUiobject(Selector.text(Name).resourceId(tv_name_id),Selector.resourceId(ICON_ID));
     }
 
     public My actionIntoMy(){
@@ -111,9 +117,12 @@ public class Main {
          */
 //        TimeAll.sleepTread(3000);
         while (true){
-            Operate.clickAndWaitForNewWindow(UN.findUiobject(new Ele[]{new Ele(Config.TYPE_ID,"com.hnrmb.salary:id/tv_name"),new Ele(Config.TYPE_TEXT,instance)},new Ele[]{new Ele(Config.TYPE_ID,"com.hnrmb.salary:id/iv_icon")}),30,5);
+            LogInfo.i("点击 "+instance);
+//            Operate.clickAndWaitForNewWindow(UN.findUiobject(new Ele[]{new Ele(Config.TYPE_ID,"com.hnrmb.salary:id/tv_name"),new Ele(Config.TYPE_TEXT,instance)},new Ele[]{new Ele(Config.TYPE_ID,"com.hnrmb.salary:id/iv_icon")}),30,5);
+            Operate.clickAndWaitForNewWindow(objectTV(instance),30,5);
+
             TimeAll.sleepTread(1000);
-            if(!UN.findUiobject(new Ele[]{new Ele(Config.TYPE_TEXT,"投资圈")}).waitForExists(500)){
+            if(!UN.findUiobject(Selector.text("投资圈")).waitForExists(500)){
                 break;
             }
             LogInfo.i("contiune");

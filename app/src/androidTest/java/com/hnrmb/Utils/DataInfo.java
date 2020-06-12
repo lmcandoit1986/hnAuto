@@ -30,6 +30,12 @@ public class DataInfo {
         return new Date().getTime()/1000;
     }
 
+    /**
+     * 将日期格式化
+     * @param date
+     * @param FormatString
+     * @return
+     */
     public static String formatData(Date date,String FormatString){
         return new SimpleDateFormat(FormatString).format(date);
     }

@@ -42,6 +42,5 @@ public class BaseTests {
 
     @AfterClass
     public static void tearDown(){
-
     }
 }
