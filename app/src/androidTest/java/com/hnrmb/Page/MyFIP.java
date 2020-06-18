@@ -13,6 +13,7 @@ import com.hnrmb.Utils.FailedCase;
 import com.hnrmb.Utils.LogInfo;
 import com.hnrmb.Utils.MathsObj;
 import com.hnrmb.Utils.Operate;
+import com.hnrmb.Utils.Selector;
 import com.hnrmb.Utils.Solo;
 import com.hnrmb.Utils.TimeAll;
 import com.hnrmb.Utils.UE.EleClass;
@@ -21,8 +22,15 @@ import com.hnrmb.Utils.UE.EleN;
 import com.hnrmb.Utils.UE.EleText;
 import com.hnrmb.Utils.UiObjectNew;
 
+import java.text.DecimalFormat;
 import java.util.List;
-
+/**
+ * 我的理财页面元素及操作封装
+ * 规范：
+ * 1、元素定位，以object开头
+ * 2、操作，以action开头
+ * 3、验证，以assert开头
+ */
 public class MyFIP {
     public Solo solo;
     public UiObjectNew UN;
@@ -52,6 +60,7 @@ public class MyFIP {
     private final String day_list_id ="com.hnrmb.salary:id/tv_three_data";// 持有资产列表-理财期限
     private final String list_class = "android.widget.ListView";// 列表
     private final String history_list_id = "com.hnrmb.salary:id/tv_to_history";// 历史资产入口
+    private final String detail = "持有资产(元)";
 
     private UiObject objectAmount(){return UN.findUiobject(new EleN[]{new EleId(amount_id)});}
     private UiObject objectPreIncoming(){return UN.findUiobject(new EleN[]{new EleId(pre_incoming)});}
@@ -60,9 +69,9 @@ public class MyFIP {
     private UiObject objectHistory(){return UN.findUiobject(new EleN[]{new EleId(history_list_id)});}
     private UiObject objectFipByName(String Name){return UN.findUiobjectInList(new EleN[]{new EleClass(list_class)},new EleN[]{new EleId(fip_name_id),new EleText(Name)});}
     private UiObject objectFipByInstance(int Name){return UN.findUiobjectInList(new EleN[]{new EleClass(list_class)},new EleN[]{new EleId(fip_name_id,Name)});}
-    private UiObject2 objectFipAmountByFipName(String Name){return UN.findUiobject2ByParent(By.text(Name).res(fip_name_id),2,By.res(amount_list_id)); }
-    private UiObject2 objectPreIncomingByFipName(String Name){return UN.findUiobject2ByParent(By.text(Name).res(fip_name_id),2,By.res(pre_incoming_list_id)); }
-    private UiObject2 objectTagByFipName(String Name){return UN.findUiobject2ByParent(By.text(Name).res(fip_name_id),2,By.res(tag)); }
+    private UiObject2 objectFipAmountByFipName(String Name){return UN.findUiobject2ByParent(By.text(Name).res(fip_name_id),By.res(amount_list_id)); }
+    private UiObject2 objectPreIncomingByFipName(String Name){return UN.findUiobject2ByParent(By.text(Name).res(fip_name_id),By.res(pre_incoming_list_id)); }
+    private UiObject objectTagByFipName(String Name){return UN.findUiobject(Selector.text(Name).resourceId(fip_name_id),Selector.resourceId(tag)); }
     private UiObject2 objectDayByFipName(String Name){return UN.findUiobject2ByParent(By.text(Name).res(fip_name_id),2,By.res(day_list_id)); }
 
     public MyFIP assertAmount(){
@@ -92,12 +101,39 @@ public class MyFIP {
     public FIPTradeDetail actionIntoFIPTradeDetail(String FIPName){
         LogInfo.i("进入理财交易详情-"+FIPName);
         Operate.click(objectFipByName(FIPName));
-        return new FIPTradeDetail(solo);
+        return new FIPTradeDetail(solo,FIPName);
     }
 
-    public MyFIP actionIntoHistoryList(){
+    public FIPHistoryOrder actionIntoHistoryList(){
         LogInfo.i("进入历史资产列表");
         Operate.click(objectHistory());
+        return new FIPHistoryOrder(solo);
+    }
+
+    public MyFIP assertMyFIPDetail(){
+        Operate.click(UN.findUiobject(Selector.text(detail)));
+        Operate.assertWaitForExists(UN.findUiobject(Selector.text("持有资产中包含理财持有资产(不含待付款)和理财账户余额")),5);
+        Operate.click(UN.findUiobject(Selector.text("知道了").resourceId("com.hnrmb.salary:id/btn_single_confirm")));
+        return this;
+    }
+
+    public MyFIP assertTag(String FIP,String tag){
+        String rel = Operate.getText(objectTagByFipName(FIP));
+        if(!rel.equals(tag)) FailedCase.interruptProcess("标签不符合预期，预期："+tag+ ",实际:"+rel,DataInfo.getDayFormatForIMG());
+        return this;
+    }
+
+    public MyFIP assertDay(String FIP,String tag){
+        String rel = Operate.getText(objectDayByFipName(FIP));
+        if(!rel.equals(tag)) FailedCase.interruptProcess("理财期限不符合预期，预期："+tag+ ",实际:"+rel,DataInfo.getDayFormatForIMG());
+        return this;
+    }
+
+    public MyFIP assertMoney(String FIP, int day, double rate){
+        String amount_s = Operate.getText(objectFipAmountByFipName(FIP)).replace(",","");
+        String profit_s = Operate.getText(objectPreIncomingByFipName(FIP)).replace(",","");
+        float amount = Float.parseFloat(amount_s);
+        if (!String.format("%.2f", amount*rate/100*day/365).equals(profit_s)) FailedCase.interruptProcess("预期收益:"+String.format("%.2f", amount*rate/100*day/365)+",实际:"+profit_s,DataInfo.getDayFormatForIMG());
         return this;
     }
 

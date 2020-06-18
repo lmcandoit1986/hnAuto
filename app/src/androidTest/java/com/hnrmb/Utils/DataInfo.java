@@ -96,6 +96,10 @@ public class DataInfo {
 
     }
 
+    public static < E > void findUiobject(E eleList){
+        System.out.print(eleList.getClass().getName());
+    }
+
     public static void main(String[] args){
         System.out.print(DataInfo.getTime()+"\n");
         System.out.print((DataInfo.getTime()+5)+"\n");
@@ -104,5 +108,8 @@ public class DataInfo {
         System.out.print(DataInfo.formatData(DataInfo.getDayPostponeHours(1),"yyyy-MM-dd hh")+"\n");
         System.out.print(DataInfo.getDayFormatForLog()+"\n");
         System.out.print(DataInfo.getDayFormatForIMG()+"\n");
+        findUiobject(1);
+        findUiobject("1");
+        findUiobject(new Ele("a","2"));
     }
 }

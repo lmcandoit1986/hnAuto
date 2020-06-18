@@ -11,6 +11,8 @@ import androidx.test.uiautomator.UiScrollable;
 
 import com.hnrmb.Config.Config;
 
+import java.security.acl.LastOwnerException;
+
 /**
  * Created by liming on 2020/3/24.
  */
@@ -435,6 +437,7 @@ public class Operate {
         String back = null;
         assertWaitForExists(item,5);
         back = item.getText();
+        LogInfo.i("getText() = "+back);
         return back;
     }
 
@@ -486,7 +489,7 @@ public class Operate {
     public static Boolean assertWaitForExists(UiObject item,int timeout,Boolean isAssert){
         LogInfo.i("assert uiobject is exists");
         if (item.waitForExists(timeout*1000)) {LogInfo.i("uiobject is exist");return true;}
-        LogInfo.i("uiobject is exist");
+        LogInfo.i("uiobject is not exist");
         if(isAssert)FailedCase.interruptProcess("UiObject isn't exist in "+timeout_exist, DataInfo.getDayFormatForIMG());
         return false;
 
@@ -501,10 +504,12 @@ public class Operate {
         LogInfo.i("assert uiobject is exists");
         long end = DataInfo.getTime()+timeout;
         while (true){
-            if(item!=null){
+            if(item!=null && item.isEnabled()){
+                LogInfo.i("uiobject is exists");
                 return true;
             }
             if(DataInfo.getTime() >end){
+                LogInfo.i("uiobject is not exists");
                 if(isAssert) FailedCase.interruptProcess(timeout+"s 内，未定位到元素");
                 return false;
             }

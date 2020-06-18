@@ -5,6 +5,7 @@ import androidx.test.uiautomator.UiObjectNotFoundException;
 import androidx.test.uiautomator.UiSelector;
 
 import com.hnrmb.Config.Config;
+import com.hnrmb.Data.User;
 import com.hnrmb.Utils.Ele;
 import com.hnrmb.Utils.LogInfo;
 import com.hnrmb.Utils.Operate;
@@ -25,10 +26,14 @@ public class Main {
     public Solo solo;
     public UiObjectNew UN;
 
+    public Main(Solo so,String UserName,String Psw){
+        solo = so;
+        UN = UiObjectNew.getInstance(solo);
+    }
+
     public Main(Solo so){
         solo = so;
         UN = UiObjectNew.getInstance(solo);
-
     }
 
     // com.hnrmb.salary:id/tv_update

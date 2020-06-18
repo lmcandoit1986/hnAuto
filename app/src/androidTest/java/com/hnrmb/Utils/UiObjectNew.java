@@ -186,6 +186,14 @@ public class UiObjectNew {
         return  findUiobject(uiSelector);
     }
 
+    public < E > UiObject findUiobject(E eleList){
+        if (eleList.toString().equals("")){
+            eleList.getClass().getName();
+        }
+        UiSelector uiSelector = Selector.className("");
+        return  findUiobject(uiSelector);
+    }
+
     /**
      * 定位对象，返回Uiobject2对象
      * @param bySelector 直接传入筛选条件 BySelector 对象
@@ -211,6 +219,26 @@ public class UiObjectNew {
             childObj = parent;
         }
         return parent.findObject(target);
+
+    }
+
+    /**
+     * 定位对象，返回Uiobject2对象
+     * @param child 可以准确定位的元素的筛选条件对象 BySelector
+     * @param target 子对象的定位筛选条件BySelector对象
+     * @return
+     */
+    public UiObject2 findUiobject2ByParent(BySelector child,BySelector target){
+        UiObject2 childObj = findUiobject2(child);
+        UiObject2 parent =null;
+        for(int i=0;i<3;i++){
+            parent = childObj.getParent();
+            if(Operate.assertWaitForExists(parent.findObject(target),0,false)){
+                return parent.findObject(target);
+            }
+            childObj = parent;
+        }
+        return null;
 
     }
 

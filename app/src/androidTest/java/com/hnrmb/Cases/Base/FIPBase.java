@@ -2,9 +2,11 @@ package com.hnrmb.Cases.Base;
 
 import com.hnrmb.BaseTests;
 import com.hnrmb.Config.Config;
+import com.hnrmb.Data.User;
 import com.hnrmb.Page.FIPList;
 import com.hnrmb.Page.GoodsList;
 import com.hnrmb.Page.Login;
+import com.hnrmb.Page.Main;
 import com.hnrmb.Page.Other;
 import com.hnrmb.Utils.AppLaunch;
 import com.hnrmb.Utils.CaseInfo;
@@ -21,21 +23,21 @@ public class FIPBase extends BaseTests {
     public final String CLOSE_UPDATE_ID= "com.hnrmb.salary:id/linear_close";//升级弹框关闭按钮
     public long START_TIME;
     public AppLaunch appLaunch;
-    public FIPList fipList;
+    public Main main;
 
     @Before
     public void SetUp(){
         START_TIME = DataInfo.getTime();
         appLaunch = new AppLaunch(solo);
         if (Config.Debug) appLaunch.startApp(PackageName,Activity);
-        appLaunch.initToastListener();
+//        appLaunch.initToastListener();
         WatcherList.allException(solo);
         // 升级弹框关闭
         if (!Config.ENV.equals("rel")){
             Other.closeUpdate(solo);
         }
         // 跳转到好物页面
-        if (Config.Debug) fipList = new Login(solo).actionReloginWithPhoneAndPsw("15801689735","111qqq").actionIntoFIPList();
+        if (Config.Debug) main = new Login(solo).actionReloginWithPhoneAndPsw(User.User_FIP,User.Psw_Login_FIP);
 
     }
 

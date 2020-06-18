@@ -8,6 +8,7 @@ import com.hnrmb.Utils.Ele;
 import com.hnrmb.Utils.FailedCase;
 import com.hnrmb.Utils.MathsObj;
 import com.hnrmb.Utils.Operate;
+import com.hnrmb.Utils.Selector;
 import com.hnrmb.Utils.Solo;
 import com.hnrmb.Utils.UE.EleId;
 import com.hnrmb.Utils.UE.EleN;
@@ -52,6 +53,7 @@ public class My {
     private final String hide_id = "com.hnrmb.salary:id/hide_show_img";
     private final String incoming_msg_id = "com.hnrmb.salary:id/tv_latest_get";
     private final String sign_id = "com.hnrmb.salary:id/xdlct_signin";
+    private final String tv_title_id = "com.hnrmb.salary:id/tv_lcb_title";
 
     // 签到入口
     private UiObject objectSign(){
@@ -101,11 +103,18 @@ public class My {
     private UiObject objectIncomingMsg(){
         return UN.findObjectNew(Config.TYPE_ID,incoming_msg_id);
     }
+    private UiObject objectTV(String Name){
+        return UN.findUiobject(Selector.resourceId(tv_title_id).text(Name));
+    }
 
 
     public Personal actionGoPersonal(){
         Operate.click(objectGoPersonal());
         return new Personal(solo);
+    }
+    public MyFIP actionIntoMyFIP(){
+        Operate.click(objectTV("理财"));
+        return new MyFIP(solo);
     }
 
     public Myintegral actionIntoMyintegral(){

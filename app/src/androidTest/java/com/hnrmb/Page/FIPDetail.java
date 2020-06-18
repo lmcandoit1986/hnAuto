@@ -6,6 +6,7 @@ import com.hnrmb.Config.Config;
 import com.hnrmb.Utils.DataInfo;
 import com.hnrmb.Utils.FailedCase;
 import com.hnrmb.Utils.Operate;
+import com.hnrmb.Utils.Selector;
 import com.hnrmb.Utils.Solo;
 import com.hnrmb.Utils.TimeAll;
 import com.hnrmb.Utils.UE.EleId;
@@ -45,7 +46,11 @@ public class FIPDetail {
     }
 
     private UiObject objectProfit(){
-        return UN.findUiobject(new EleN[]{new EleText(" %")},new EleN[]{new EleIndex(0)});
+        UiObject item = UN.findUiobject(Selector.text(" %"));
+        if (Operate.assertWaitForExists(item,1,false)){
+            return UN.findUiobject(Selector.text(" %"),Selector.index(0));
+        }
+        return UN.findUiobject(Selector.textMatch(".* %"));
     }
 
     private UiObject objectTitle(){
@@ -109,6 +114,7 @@ public class FIPDetail {
     //判断年化收益率
     public FIPDetail assertProfit(String profit){
         String rel = Operate.getText(objectProfit());
+        if (rel.contains("%")) rel = rel.replace(" %","");
         if(!rel.equals(profit)) FailedCase.interruptProcess(String.format("收益率不匹配，预期：%s,实际:%s",profit,rel), DataInfo.getDayFormatForIMG());
         return this;
     }

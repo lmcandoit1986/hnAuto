@@ -14,8 +14,12 @@ import com.hnrmb.Config.Config;
 import com.hnrmb.Data.Unlock;
 import com.hnrmb.Utils.LogInfo;
 import com.hnrmb.Utils.Operate;
+import com.hnrmb.Utils.Selector;
 import com.hnrmb.Utils.Solo;
 import com.hnrmb.Utils.UiObjectNew;
+
+import java.lang.ref.PhantomReference;
+
 /**
  * 主页面元素及操作封装
  * 规范：
@@ -34,7 +38,7 @@ public class Other {
         // 不中断测试
     }
 
-    public static Main unlock(Solo solo){
+    public static Main unlock(Solo solo,String User,String Psw){
         // 解锁-固定点，适用固定屏幕尺寸
 //        Operate.swipe(solo.getMydevice(), Unlock.getLockTrail(solo.getPhoneWidth(), solo.getPhoneHeight()),30);
 
@@ -65,7 +69,12 @@ public class Other {
         } catch (UiObjectNotFoundException e) {
             e.printStackTrace();
         }
-        return new Main(solo);
+
+        if(Operate.assertWaitForExists(UiObjectNew.getInstance(solo).findUiobject(Selector.text("你得先登录才能操作，请重新登录")),3,false)){
+            Operate.click(UiObjectNew.getInstance(solo).findUiobject(Selector.resourceId("com.hnrmb.salary:id/btn_single_confirm")));
+            new Login(solo).actionReloginWithPhoneAndPsw(User,Psw);
+        }
+        return new Main(solo,User,Psw);
     }
 
     /**
