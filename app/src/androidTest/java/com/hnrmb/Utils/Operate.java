@@ -490,7 +490,7 @@ public class Operate {
         LogInfo.i("assert uiobject is exists");
         if (item.waitForExists(timeout*1000)) {LogInfo.i("uiobject is exist");return true;}
         LogInfo.i("uiobject is not exist");
-        if(isAssert)FailedCase.interruptProcess("UiObject isn't exist in "+timeout_exist, DataInfo.getDayFormatForIMG());
+        if(isAssert)FailedCase.interruptProcess("UiObject isn't exist in "+timeout, DataInfo.getDayFormatForIMG());
         return false;
 
     }

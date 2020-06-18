@@ -55,8 +55,8 @@ public class Main {
     }
 
     public My actionIntoMy(){
-        TimeAll.sleepTread(3000);
-        Operate.click(objectNavigation(2));
+//        TimeAll.sleepTread(3000);
+        Operate.click(objectNavigation(2),true,5,10);
         return new My(solo);
     }
 
