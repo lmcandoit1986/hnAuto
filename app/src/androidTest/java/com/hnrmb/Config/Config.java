@@ -25,4 +25,6 @@ public class Config {
     public static final int TEXT_CONTAIN = 1;
     public static final int TEXT_STARTWITH = 2;
 
+    public static int use_except = 0;
+
 }

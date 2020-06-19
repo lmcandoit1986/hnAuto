@@ -3,6 +3,7 @@ package com.hnrmb.Cases;
 import com.hnrmb.BaseTests;
 import com.hnrmb.Cases.Base.GoodsBase;
 import com.hnrmb.Config.Config;
+import com.hnrmb.Data.User;
 import com.hnrmb.Page.FIPList;
 import com.hnrmb.Page.GoodsList;
 import com.hnrmb.Page.Login;
@@ -41,7 +42,7 @@ public class SumCase extends BaseTests {
         WatcherList.allException(solo);
         if (Config.Debug){
 //            mainObj = Other.unlock(solo);
-            mainObj = new Login(solo).actionLoginWithPhoneAndPsw("15011043581","Lm918273");
+            mainObj = new Login(solo).actionLoginWithPhoneAndPsw(User.rel_User,User.rel_Login_Psw);
         }
         else{
             mainObj = new Main(solo);

@@ -53,9 +53,9 @@ public class WatcherList {
         createUiWatcher(solo,UN,"Touch1",Selector.text("是否启用指纹解锁"),Selector.resourceId("com.hnrmb.salary:id/warn_cancel").text("取消"));
         createUiWatcher(solo,UN,"touch2",Selector.text("您还可以在\"设置－账户安全－指纹解锁\"中开启指纹解锁"),Selector.resourceId("com.hnrmb.salary:id/btn_single_confirm").text("确定"));
         createUiWatcher(solo,UN,"tv",Selector.resourceId("com.hnrmb.salary:id/iv_close"),Selector.resourceId("com.hnrmb.salary:id/iv_close"));
-        createUiWatcherIsAssert(solo,UN,"e1",Selector.textContains("服务"),Selector.resourceId("com.hnrmb.salary:id/btn_single_confirm").text("确定"));
-        createUiWatcherIsAssert(solo,UN,"e2",Selector.textContains("异常"),Selector.resourceId("com.hnrmb.salary:id/btn_single_confirm").text("确定"));
-        createUiWatcherIsAssert(solo,UN,"e3",Selector.textContains("错误"),Selector.resourceId("com.hnrmb.salary:id/btn_single_confirm").text("确定"));
+        createUiWatcherIsAssert(solo,UN,"e1",Selector.textContains("服务").resourceId("com.hnrmb.salary:id/dialog_content_info"),Selector.resourceId("com.hnrmb.salary:id/btn_single_confirm").text("确定"));
+        createUiWatcherIsAssert(solo,UN,"e2",Selector.textContains("异常").resourceId("com.hnrmb.salary:id/dialog_content_info"),Selector.resourceId("com.hnrmb.salary:id/btn_single_confirm").text("确定"));
+        createUiWatcherIsAssert(solo,UN,"e3",Selector.textContains("系统错误").resourceId("com.hnrmb.salary:id/dialog_content_info"),Selector.resourceId("com.hnrmb.salary:id/btn_single_confirm").text("确定"));
         /**
         for (final UiSelector item : list){
             uiDevice.registerWatcher(WatcherName.pop(), new UiWatcher() {
@@ -115,14 +115,17 @@ public class WatcherList {
                     } catch (UiObjectNotFoundException e1) {
                         e1.printStackTrace();
                     }
-                    String PicName = DataInfo.getDayFormatForIMG();
-                    new Pic().screenShotWithADB(PicName);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("img",PicName);
-                    new BundleNew(Solo.getInstance().getInstrumentation()).sendStatus(10,bundle);
-                    Bundle bundle1 = new Bundle();
-                    bundle1.putString("stack","出现一个异常："+e);
-                    new BundleNew(Solo.getInstance().getInstrumentation()).sendStatus(11,bundle);
+                    if (Config.use_except == 0){
+                        String PicName = DataInfo.getDayFormatForIMG();
+                        new Pic().screenShotWithADB(PicName);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("img",PicName);
+                        new BundleNew(Solo.getInstance().getInstrumentation()).sendStatus(10,bundle);
+                        Bundle bundle1 = new Bundle();
+                        bundle1.putString("stack","出现一个异常："+e);
+                        new BundleNew(Solo.getInstance().getInstrumentation()).sendStatus(11,bundle);
+                        Config.use_except +=1;
+                    }
                     Operate.justClick(UN.findUiobject(clickob),false);
                     return true;
                 }

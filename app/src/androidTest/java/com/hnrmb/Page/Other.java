@@ -70,7 +70,7 @@ public class Other {
             e.printStackTrace();
         }
 
-        if(Operate.assertWaitForExists(UiObjectNew.getInstance(solo).findUiobject(Selector.text("你得先登录才能操作，请重新登录")),3,false)){
+        if(Operate.assertWaitForExists(UiObjectNew.getInstance(solo).findUiobject(Selector.text("你得先登录才能操作，请重新登录")),2,false)){
             Operate.click(UiObjectNew.getInstance(solo).findUiobject(Selector.resourceId("com.hnrmb.salary:id/btn_single_confirm")));
             new Login(solo).actionReloginWithPhoneAndPsw(User,Psw);
         }

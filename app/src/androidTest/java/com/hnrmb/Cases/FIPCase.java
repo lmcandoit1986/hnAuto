@@ -85,7 +85,7 @@ public class FIPCase extends FIPBase {
     @Test
     public void FIP_1_MyFIPAccountDealList(){
         CaseInfo.setCaseDesc("验证我的理财账户交易明细页面跳转");
-        main.actionIntoMy().actionIntoMyFIP().actionIntCiticAcount().actionDeal().assertTitle().actionBack().assertTitle();
+        main.actionIntoMy().actionIntoMyFIP().actionIntCiticAcount().actionDeal().assertTitle().assertCurrentDayHaveOut().actionBack().assertTitle();
 
     }
 
@@ -116,7 +116,7 @@ public class FIPCase extends FIPBase {
     }
 
     @Test
-    public void FIP_2_MyFIPHistoryOrderList(){
+    public void FIP_1_MyFIPHistoryOrderList(){
         CaseInfo.setCaseDesc("验证理财历史持有列表及跳转");
         main.actionIntoMy().actionIntoMyFIP().actionIntoHistoryList().assertTag().assertTitle().actionIntoTradeDetail().assertFIPName().actionIntoFIPDetail().assertNomal();
     }

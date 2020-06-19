@@ -43,7 +43,7 @@ public class Login {
     public final String input_psw_id = "com.hnrmb.salary:id/cet_login_pwd";
     public final String login_btn_id = "com.hnrmb.salary:id/login_btn_login";
     public final String LOCK_ID = "com.hnrmb.salary:id/xguv_gesture";
-    public final String CHANGE_ANOTHER_USER = "com.hnrmb.salary:id/tv_login_gesture_otherlogin";
+    public final String CHANGE_ANOTHER_USER = "com.hnrmb.salary:id/tv_login_pwd";
     public final String phoneSuggestion = "android:id/autofill_dataset_picker";
     public final String phoneSuggestion_1 = "com.miui.contentcatcher:id/auto_fill_data_name";
 
@@ -141,7 +141,7 @@ public class Login {
 
     public Main actionLoginWithPhoneAndPsw(String Phone,String Psw){
 //        LoginAPI.del_login_log(Phone);
-        if (!Operate.assertWaitForExists(UN.findUiobject(new Ele[]{new Ele(Config.TYPE_TEXT,"切换其他账户")}),5,false)){
+        if (!Operate.assertWaitForExists(UN.findUiobject(new Ele[]{new Ele(Config.TYPE_TEXT,"使用密码登录")}),5,false)){
             return this.actionGoLogin().actionInputPhone(Phone).actionInputPsw(Psw).actionLogin().actionPhoneCode(Phone).lock();
         }
         return Other.unlock(solo,Phone,Psw);
@@ -150,7 +150,7 @@ public class Login {
 
     public Main actionReloginWithPhoneAndPsw(String Phone,String Psw){
         // 有登录账户的场景
-        if(Operate.assertWaitForExists(UN.findUiobject(new Ele[]{new Ele(Config.TYPE_TEXT,"切换其他账户")}),3,false)){
+        if(Operate.assertWaitForExists(UN.findUiobject(new Ele[]{new Ele(Config.TYPE_TEXT,"使用密码登录")}),3,false)){
             if(!Operate.assertWaitForExists(UN.findUiobject(new EleN[]{new EleText(Phone.replaceAll(Phone.substring(3,Phone.length()-4),"****"))}),1,false)) {
 //                LoginAPI.del_login_log(Phone);
                return this.actionChangeUser().actionInputPhone(Phone).actionInputPsw(Psw).actionLogin().actionPhoneCode(Phone).lock();
