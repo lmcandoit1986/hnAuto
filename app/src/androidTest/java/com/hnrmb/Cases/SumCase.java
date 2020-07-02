@@ -41,7 +41,7 @@ public class SumCase extends BaseTests {
         };
         WatcherList.allException(solo);
         if (Config.Debug){
-//            mainObj = Other.unlock(solo);
+//            mainObj = Other.unlock(solo,User.User_FIP,User.Psw_Login_FIP);
             mainObj = new Login(solo).actionLoginWithPhoneAndPsw(User.rel_User,User.rel_Login_Psw);
         }
         else{
@@ -78,10 +78,15 @@ public class SumCase extends BaseTests {
         mainObj.actionIntoMy().assertAllMoney("1,100.00")
                 .assertAllIncoming("0.00")
                 .assertNewIncoming("0.00")
-                .assertYCMonkey("0.00")
-                .assertLCMonkey("100.00")
-                .assertYEMonkey("0.00")
-                .assertBankMonkey("1,000.00");
+                .assertGZBForApp6()
+                .assertHQForApp6()
+                .assertHQForApp6()
+                .assertLCForApp6()
+                .assertYEForApp6();
+//                .assertYCMonkey("0.00")
+//                .assertLCMonkey("100.00")
+//                .assertYEMonkey("0.00")
+//                .assertBankMonkey("1,000.00");
     }
 
     @Test

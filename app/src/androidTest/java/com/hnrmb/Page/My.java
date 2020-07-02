@@ -44,7 +44,7 @@ public class My {
     private final String go_personal_id = "com.hnrmb.salary:id/img_my_head";
     private final String all_money_id = "com.hnrmb.salary:id/tv_total_asset";
     private final String new_incoming_id = "com.hnrmb.salary:id/tv_latest_get_amount";
-    private final String all_incoming_id = "com.hnrmb.salary:id/tv_latest_get_amount";
+    private final String all_incoming_id = "com.hnrmb.salary:id/tv_all_get_amount";
     private final String yc_money_id = "com.hnrmb.salary:id/tv_ebank_amount";
     private final String lc_money_id = "com.hnrmb.salary:id/tv_lcb_amount";
     private final String ye_money_id = "com.hnrmb.salary:id/tv_fund_amount";
@@ -54,6 +54,8 @@ public class My {
     private final String incoming_msg_id = "com.hnrmb.salary:id/tv_latest_get";
     private final String sign_id = "com.hnrmb.salary:id/xdlct_signin";
     private final String tv_title_id = "com.hnrmb.salary:id/tv_lcb_title";
+    private final String money_list_1_id = "com.hnrmb.salary:id/tv_first_amount"; // 6.0 app 升级
+    private final String money_list_2_id = "com.hnrmb.salary:id/tv_second_amount"; // 6.0 app 升级
 
     // 签到入口
     private UiObject objectSign(){
@@ -91,6 +93,14 @@ public class My {
     private UiObject objectBankMoney(){
         return UN.findObjectNew(Config.TYPE_ID,bank_money_id);
     }
+
+    //6.0 我的UI大改
+    private UiObject objectYE(){return UN.findUiobject(Selector.resourceId(money_list_1_id));}
+    private UiObject objectGZB(){return UN.findUiobject(Selector.resourceId(money_list_2_id));}
+    private UiObject objectHQ(){return UN.findUiobject(Selector.resourceId(money_list_1_id,1));}
+    private UiObject objectYH(){return UN.findUiobject(Selector.resourceId(money_list_2_id,1));}
+    private UiObject objectLC(){return UN.findUiobject(Selector.resourceId(money_list_1_id,2));}
+
     // 消息中心
     private UiObject objectMessage(){
         return UN.findObjectNew(Config.TYPE_ID,message_id);
@@ -103,8 +113,9 @@ public class My {
     private UiObject objectIncomingMsg(){
         return UN.findObjectNew(Config.TYPE_ID,incoming_msg_id);
     }
-    private UiObject objectTV(String Name){
-        return UN.findUiobject(Selector.resourceId(tv_title_id).text(Name));
+    private UiObject objectTV(int num,String Name){
+        if(num==1) return UN.findUiobject(Selector.resourceId("com.hnrmb.salary:id/tv_first_name").text(Name));
+        return UN.findUiobject(Selector.resourceId("com.hnrmb.salary:id/tv_second_name").text(Name));
     }
 
 
@@ -113,7 +124,7 @@ public class My {
         return new Personal(solo);
     }
     public MyFIP actionIntoMyFIP(){
-        Operate.click(objectTV("理财"));
+        Operate.click(objectTV(1,"理财"),true,5,30);
         return new MyFIP(solo);
     }
 
@@ -160,6 +171,36 @@ public class My {
 
     public My assertBankMonkey(String money){
         String ExpectMoney = Operate.getText(objectBankMoney());
+        if (!MathsObj.assertInt(ExpectMoney)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",ExpectMoney), DataInfo.getDayFormatForIMG());
+        return this;
+    }
+
+    public My assertYEForApp6(){
+        String ExpectMoney = Operate.getText(objectYE());
+        if (!MathsObj.assertInt(ExpectMoney)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",ExpectMoney), DataInfo.getDayFormatForIMG());
+        return this;
+    }
+
+    public My assertGZBForApp6(){
+        String ExpectMoney = Operate.getText(objectGZB());
+        if (!MathsObj.assertInt(ExpectMoney)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",ExpectMoney), DataInfo.getDayFormatForIMG());
+        return this;
+    }
+
+    public My assertHQForApp6(){
+        String ExpectMoney = Operate.getText(objectHQ());
+        if (!MathsObj.assertInt(ExpectMoney)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",ExpectMoney), DataInfo.getDayFormatForIMG());
+        return this;
+    }
+
+    public My assertYHForApp6(){
+        String ExpectMoney = Operate.getText(objectYH());
+        if (!MathsObj.assertInt(ExpectMoney)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",ExpectMoney), DataInfo.getDayFormatForIMG());
+        return this;
+    }
+
+    public My assertLCForApp6(){
+        String ExpectMoney = Operate.getText(objectLC());
         if (!MathsObj.assertInt(ExpectMoney)) FailedCase.interruptProcess(String.format("预期金额不符合格式%s",ExpectMoney), DataInfo.getDayFormatForIMG());
         return this;
     }

@@ -26,13 +26,13 @@ public class FIPCase extends FIPBase {
     @Test
     public void FIP_1_buySuccess(){
         CaseInfo.setCaseDesc("正常购买流程-成功");
-        main.actionIntoFIPList().actionIntoFIPDetail(FIP_can_buy_name).actionBuy().actionSetMoney("10").actionSure().actionPsw(User.Psw_Trade_FIP).assertIsResultPage().actionFinish();
+        main.actionIntoFIPList().actionIntoFIPDetail(FIP_can_buy_name).actionBuy().actionSetMoney("10").actionSure().actionPsw(User.Psw_Trade_FIP).assertIsResultPage();
     }
 
     @Test
     public void FIP_1_buySuccessNoAcceptService(){
         CaseInfo.setCaseDesc("正常购买流程-成功-手动同意条款");
-        main.actionIntoFIPList().actionIntoFIPDetail(FIP_can_buy_name).actionBuy().actionSetMoney("10").accept().actionSure().acceptAlert().actionPsw(User.Psw_Trade_FIP).assertIsResultPage().actionFinish();
+        main.actionIntoFIPList().actionIntoFIPDetail(FIP_can_buy_name).actionBuy().actionSetMoney("10").accept().actionSure().acceptAlert().actionPsw(User.Psw_Trade_FIP).assertIsResultPage();
     }
 
     @Test

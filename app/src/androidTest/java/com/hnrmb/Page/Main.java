@@ -56,7 +56,7 @@ public class Main {
 
     public My actionIntoMy(){
 //        TimeAll.sleepTread(3000);
-        Operate.click(objectNavigation(2),true,5,10);
+        Operate.click(objectNavigation(2),true,5,30);
         return new My(solo);
     }
 
@@ -86,7 +86,7 @@ public class Main {
          */
         TimeAll.sleepTread(3000);
         while (true){
-            Operate.clickAndWaitForNewWindow(UN.findUiobject(new Ele[]{new Ele(Config.TYPE_ID,ICON_ID,instance)}));
+            Operate.clickAndWaitForNewWindow(UN.findUiobject(new Ele[]{new Ele(Config.TYPE_ID,ICON_ID,instance)}),5,30);
             TimeAll.sleepTread(1000);
             if(UN.findUiobject(new Ele[]{new Ele(Config.TYPE_TEXT,"投资圈")})==null){
                 break;

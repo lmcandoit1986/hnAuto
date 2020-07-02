@@ -112,7 +112,7 @@ public class MyFIP {
 
     public MyFIP assertMyFIPDetail(){
         Operate.click(UN.findUiobject(Selector.text(detail)));
-        Operate.assertWaitForExists(UN.findUiobject(Selector.text("持有资产中包含理财持有资产(不含待付款)和理财账户余额")),5);
+        Operate.assertWaitForExists(UN.findUiobject(Selector.text("持有资产中不包含“待付款”状态的产品金额")),5);
         Operate.click(UN.findUiobject(Selector.text("知道了").resourceId("com.hnrmb.salary:id/btn_single_confirm")));
         return this;
     }
