@@ -54,14 +54,14 @@ public class WatcherList {
         createUiWatcher(solo,UN,"touch2",Selector.text("您还可以在\"我的－个人设置－账户安全－指纹解锁\"中开启指纹解锁"),Selector.resourceId("com.hnrmb.salary:id/btn_single_confirm").text("确定"));
         createUiWatcher(solo,UN,"tv",Selector.resourceId("com.hnrmb.salary:id/iv_close"),Selector.resourceId("com.hnrmb.salary:id/iv_close"));
         createUiWatcher(solo,UN,"road",Selector.resourceId("com.hnrmb.salary:id/iv_next"),Selector.resourceId("com.hnrmb.salary:id/iv_next"));
-
-        createUiWatcherIsAssert(solo,UN,"e1",Selector.textContains("服务").resourceId("com.hnrmb.salary:id/dialog_content_info"),Selector.resourceId("com.hnrmb.salary:id/btn_single_confirm"));
-        createUiWatcherIsAssert(solo,UN,"e2",Selector.textContains("异常").resourceId("com.hnrmb.salary:id/dialog_content_info"),Selector.resourceId("com.hnrmb.salary:id/btn_single_confirm"));
-        createUiWatcherIsAssert(solo,UN,"e3",Selector.textContains("错误").resourceId("com.hnrmb.salary:id/tv_content"),Selector.resourceId("com.hnrmb.salary:id/btn_single_confirm"));
-        createUiWatcherIsAssert(solo,UN,"e5",Selector.textContains("服务").resourceId("com.hnrmb.salary:id/tv_content"),Selector.resourceId("com.hnrmb.salary:id/btn_single_confirm"));
-        createUiWatcherIsAssert(solo,UN,"e5",Selector.textContains("异常").resourceId("com.hnrmb.salary:id/tv_content"),Selector.resourceId("com.hnrmb.salary:id/btn_single_confirm"));
-        createUiWatcherIsAssert(solo,UN,"e4",Selector.textContains("错误").resourceId("com.hnrmb.salary:id/dialog_content_info"),Selector.resourceId("com.hnrmb.salary:id/btn_single_confirm"));
-
+        if(!Config.ENV.equals("rel")){
+            createUiWatcherIsAssert(solo,UN,"e1",Selector.textContains("服务").resourceId("com.hnrmb.salary:id/dialog_content_info"),Selector.resourceId("com.hnrmb.salary:id/btn_single_confirm"));
+            createUiWatcherIsAssert(solo,UN,"e2",Selector.textContains("异常").resourceId("com.hnrmb.salary:id/dialog_content_info"),Selector.resourceId("com.hnrmb.salary:id/btn_single_confirm"));
+            createUiWatcherIsAssert(solo,UN,"e3",Selector.textContains("错误").resourceId("com.hnrmb.salary:id/tv_content"),Selector.resourceId("com.hnrmb.salary:id/btn_single_confirm"));
+            createUiWatcherIsAssert(solo,UN,"e5",Selector.textContains("服务").resourceId("com.hnrmb.salary:id/tv_content"),Selector.resourceId("com.hnrmb.salary:id/btn_single_confirm"));
+            createUiWatcherIsAssert(solo,UN,"e5",Selector.textContains("异常").resourceId("com.hnrmb.salary:id/tv_content"),Selector.resourceId("com.hnrmb.salary:id/btn_single_confirm"));
+            createUiWatcherIsAssert(solo,UN,"e4",Selector.textContains("错误").resourceId("com.hnrmb.salary:id/dialog_content_info"),Selector.resourceId("com.hnrmb.salary:id/btn_single_confirm"));
+        }
         /**
         for (final UiSelector item : list){
             uiDevice.registerWatcher(WatcherName.pop(), new UiWatcher() {

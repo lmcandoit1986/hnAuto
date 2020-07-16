@@ -18,7 +18,7 @@ public class PassWord {
 
     public PassWord actionPsw(String psw){
         for(int i=0;i<psw.length();i++){
-            Operate.click(UN.findUiobject(new EleN[]{new EleText(1,String.valueOf(psw.charAt(i)))}));
+            Operate.click(UN.findUiobject(new EleN[]{new EleText(String.valueOf(psw.charAt(i)))}));
         }
         return this;
     }

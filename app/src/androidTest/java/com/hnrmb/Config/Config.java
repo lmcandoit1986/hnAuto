@@ -17,7 +17,7 @@ public class Config {
 
     public static String ToastMSG;
 
-    public static final String ENV = "test"; // rel ,test
+    public static final String ENV = "rel"; // rel ,test
 
     public static final Boolean Debug = true; // true 时走app 启动等流程
 

@@ -45,6 +45,23 @@ public class Operate {
         click(item,true);
     }
 
+    public static void clickTop(UiObject item,Boolean isAssert){
+
+        assertWaitForExists(item,timeout_exist,isAssert);
+        if (!assertClickable(item, timeout_clickable))
+            if (isAssert)
+                FailedCase.interruptProcess("UiObject isn't clickable", DataInfo.getDayFormatForIMG());
+        try {
+            item.clickTopLeft();
+        } catch (UiObjectNotFoundException e) {
+            LogInfo.e(e.toString());
+            if (isAssert) FailedCase.interruptProcess("UiObjectNotFoundException", DataInfo.getDayFormatForIMG());
+        } catch (NullPointerException e) {
+            LogInfo.e(e.toString());
+            if (isAssert) FailedCase.interruptProcess("Click Failed with NullPointerException", DataInfo.getDayFormatForIMG());
+        }
+    }
+
     public static void click(UiObject item,Boolean isAssert) {
         /**
          * 点击操作

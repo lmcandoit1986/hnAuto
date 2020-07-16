@@ -16,7 +16,7 @@ public class User {
      * 线上环境
      */
     public static final String rel_User = "15011043581";
-    public static final String rel_Login_Psw = "Lm918273";
-    public static final String rel_Trade_PSW = "258369";
+    public static final String rel_Login_Psw = "";
+    public static final String rel_Trade_PSW = "";
 
 }
