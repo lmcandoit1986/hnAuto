@@ -1,11 +1,8 @@
 package com.hnrmb.Page;
 
 import androidx.test.uiautomator.UiObject;
-import androidx.test.uiautomator.UiObjectNotFoundException;
-import androidx.test.uiautomator.UiSelector;
 
 import com.hnrmb.Config.Config;
-import com.hnrmb.Data.User;
 import com.hnrmb.Utils.Ele;
 import com.hnrmb.Utils.LogInfo;
 import com.hnrmb.Utils.Operate;
@@ -153,10 +150,10 @@ public class Main {
         return new BankList(solo);
     }
     // 余额盈
-    public Balance actionIntoBalanceIncoming(){
+    public FundPage actionIntoBalanceIncoming(){
         int instance = (Config.ENV.equals("rel"))?2:0 ;
         actionIntoIV("余额盈");
-        return new Balance(solo);
+        return new FundPage(solo);
     }
     // 酒店
     public Hotel actionIntoHotel(){
@@ -173,10 +170,10 @@ public class Main {
     }
 
     // 工资宝
-    public Pay actionIntoPay(){
+    public RybPage actionIntoPay(){
         int instance = (Config.ENV.equals("rel"))?0:5 ;
         actionIntoIV("工资宝");
-        return new Pay(solo);
+        return new RybPage(solo);
     }
 
 

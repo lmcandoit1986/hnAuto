@@ -24,7 +24,7 @@ public class PassWord {
     }
 
     public PassWord assertResultTitle(){
-        Operate.assertWaitForExists(UN.findUiobject(Selector.resourceId("com.hnrmb.salary:id/head_content_tv").text("结果详情")),30);
+        Operate.assertWaitForExists(UN.findUiobject(Selector.resourceId("com.hnrmb.salary:id/head_content_tv").text("结果详情")),60);
         return this;
     }
 }

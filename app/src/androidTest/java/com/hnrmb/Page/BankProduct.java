@@ -41,7 +41,7 @@ public class BankProduct {
 
     public BankProduct assertTitle(){
         UiObject title = UN.findUiobject(new Ele[]{new Ele(Config.TYPE_ID,"com.hnrmb.salary:id/head_content_tv"),new Ele(Config.TYPE_TEXT,this.Title)});
-        Operate.assertWaitForExists(title,15);
+        Operate.assertWaitForExists(title,60);
         return this;
     }
 

@@ -14,8 +14,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class GZB extends BaseTests {
-
+public class Fund extends BaseTests {
     public String PackageName = "com.hnrmb.salary"; // 包名
     public String Activity = ".module.login.launch.LaunchAct"; // 启动activity
     public long START_TIME;
@@ -47,23 +46,26 @@ public class GZB extends BaseTests {
     }
 
     @Test
-    public void RYB_1_BuyMoreThanHave(){
-        CaseInfo.setCaseDesc("如意宝购买超可用金额");
-        mainObj.actionIntoPay().assertNomal().actionBuy().actionSetMoney("100").actionSureWithExcept().assertBuyMoreThanHave();
+    public void Fund_1_BuyMoreThanHave(){
+        CaseInfo.setCaseDesc("余额盈购买超可用金额");
+        mainObj.actionIntoBalanceIncoming().actionBuy().actionSetMoney("1000").actionSureWithExcept().assertBuyMoreThanHave();
     }
 
     @Test
-    public void RYB_2_ReedemVirtualAccounts(){
-        CaseInfo.setCaseDesc("如意宝赎回到电子账户-成功");
-        mainObj.actionIntoPay().assertNomal().actionRedeem().actionSetMoney("10").actionChangeBank().actionSureSuccess().actionPsw(User.rel_Trade_PSW).assertResultTitle();
+    public void Fund_2_BuySuccess(){
+        CaseInfo.setCaseDesc("余额盈购买成功");
+        mainObj.actionIntoBalanceIncoming().actionBuy().actionSetMoney("2").actionSureSuccess().actionPsw(User.rel_Trade_PSW).assertResultTitleNative();
     }
 
     @Test
-    public void RYB_2_ReedemBindCard(){
-        CaseInfo.setCaseDesc("如意宝实时赎回到绑卡-成功");
-        mainObj.actionIntoPay().assertNomal().actionRedeem().actionSetMoney("1").actionSureSuccess().actionPsw(User.rel_Trade_PSW).assertResultTitle();
+    public void Fund_3_ReedemVirtualAccounts(){
+        CaseInfo.setCaseDesc("余额盈实时赎回到账户-成功");
+        mainObj.actionIntoBalanceIncoming().actionRedeem().actionSetMoney("1").actionSureSuccess(true).actionPsw(User.rel_Trade_PSW).assertResultTitleNative();
+    }
+
+    @Test
+    public void Fund_4_ReedemBindCard(){
+        CaseInfo.setCaseDesc("余额盈普通赎回到账户-成功");
+        mainObj.actionIntoBalanceIncoming().actionRedeem().actionSetMoney("1").actionSureSuccess(false).actionPsw(User.rel_Trade_PSW).assertResultTitleNative();
     }
 }
-
-
-

@@ -215,6 +215,7 @@ public class Operate {
         /**
          * 点击操作，通过定位元素坐标点击，主要是覆盖元素不可点击的场景
          */
+        assertWaitForExists(object,timeout_exist,true);
         try {
             Rect rect = object.getVisibleBounds();
             device.click(rect.centerX(), rect.centerY());//临时特殊处理，后续去掉
