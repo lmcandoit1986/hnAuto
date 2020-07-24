@@ -40,11 +40,11 @@ public class Main {
     // com.hnrmb.salary:id/sdv_life_img_two
     // com.hnrmb.salary:id/xrecycler_home
     public final String ICON_ID = "com.hnrmb.salary:id/iv_icon";// 5列 推广入口
-    public final String navigation_bar_id = "com.hnrmb.salary:id/eiv_type";
+    public final String navigation_bar_id = "com.hnrmb.salary:id/icon";
     public final String tv_name_id = "com.hnrmb.salary:id/tv_name";
 
-    private UiObject objectNavigation(int instance){
-        return UN.findUiobject(Selector.resourceId(navigation_bar_id,instance));
+    private UiObject objectNavigation(String Name){
+        return UN.findUiobject(Selector.resourceId(navigation_bar_id),Selector.text(Name));
     }
 
     private UiObject objectTV(String Name){
@@ -52,8 +52,7 @@ public class Main {
     }
 
     public My actionIntoMy(){
-//        TimeAll.sleepTread(3000);
-        Operate.click(objectNavigation(2),true,5,30);
+        Operate.click(objectNavigation("我的"),true,5,30);
         return new My(solo);
     }
 

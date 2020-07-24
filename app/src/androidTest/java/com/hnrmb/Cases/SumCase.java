@@ -1,5 +1,7 @@
 package com.hnrmb.Cases;
 
+import android.os.Bundle;
+
 import com.hnrmb.BaseTests;
 import com.hnrmb.Cases.Base.GoodsBase;
 import com.hnrmb.Config.Config;
@@ -10,6 +12,7 @@ import com.hnrmb.Page.Login;
 import com.hnrmb.Page.Main;
 import com.hnrmb.Page.Other;
 import com.hnrmb.Utils.AppLaunch;
+import com.hnrmb.Utils.BundleNew;
 import com.hnrmb.Utils.CaseInfo;
 import com.hnrmb.Utils.DataInfo;
 import com.hnrmb.Utils.LogInfo;
@@ -28,7 +31,7 @@ public class SumCase extends BaseTests {
     public String PackageName = "com.hnrmb.salary"; // 包名
     public String Activity = ".module.login.launch.LaunchAct"; // 启动activity
     public long START_TIME;
-
+    public BundleNew bundleNew;
     public Main mainObj;
 
     @Before
@@ -47,11 +50,18 @@ public class SumCase extends BaseTests {
         else{
             mainObj = new Main(solo);
         }
+        Bundle bundle = new Bundle();
+        bundle.putString("PT","FPS");
+        bundleNew = new BundleNew(solo.getInstrumentation());
+        bundleNew.sendStatus(5,bundle);
 
     }
 
     @After
     public void Teardown(){
+        Bundle bundle = new Bundle();
+        bundle.putString("PT","FPS");
+        bundleNew.sendStatus(6,bundle);
         CaseInfo.caseUseTime(String.valueOf(DataInfo.getTime()-START_TIME));
         if (Config.Debug) appLaunch.quitApp(PackageName);
     }
@@ -83,10 +93,12 @@ public class SumCase extends BaseTests {
                 .assertHQForApp6()
                 .assertLCForApp6()
                 .assertYEForApp6();
-//                .assertYCMonkey("0.00")
-//                .assertLCMonkey("100.00")
-//                .assertYEMonkey("0.00")
-//                .assertBankMonkey("1,000.00");
+                /**
+                .assertYCMonkey("0.00")
+                .assertLCMonkey("100.00")
+                .assertYEMonkey("0.00")
+                .assertBankMonkey("1,000.00");
+                 **/
     }
 
     @Test

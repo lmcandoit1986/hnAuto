@@ -29,7 +29,7 @@ public class BankList {
         long End = DataInfo.getTime()+ 3 * 60;
         UiObject banner = UN.findUiobject(new Ele[]{new Ele(Config.TYPE_TEXT,"banner.png")});
         while (true){
-            if (Operate.assertWaitForExists(banner,15)){
+            if (Operate.assertWaitForExists(banner,5,false)){
                 break;
             }
             if (DataInfo.getTime() >= End){

@@ -3,6 +3,7 @@ package com.hnrmb.Page;
 import com.hnrmb.Config.Config;
 import com.hnrmb.Utils.LogInfo;
 import com.hnrmb.Utils.Operate;
+import com.hnrmb.Utils.Selector;
 import com.hnrmb.Utils.Solo;
 import com.hnrmb.Utils.TimeAll;
 import com.hnrmb.Utils.UiObjectNew;
@@ -32,7 +33,8 @@ public class Myintegral {
 //            return this;
 //        }
         solo.setWaitForSelectorTimeout(3000);
-        Operate.click(UN.findObjectNew(Config.TYPE_TEXT_2,"签到"),false,5,0);
+        Operate.click(UN.findUiobject(Selector.textStartWith("签到")),false,5,0);
+        TimeAll.sleepTread(3);
         solo.setWaitForSelectorTimeout(10000);
         return this;
     }
