@@ -27,7 +27,7 @@ public class RybPage {
     }
 
     public ReedemRyb actionRedeem(){
-        Operate.click(UN.findUiobject(Selector.className("android.widget.Button").text("赎回")),true,15,15);
+        Operate.click(UN.findUiobject(Selector.className("android.view.View").text("赎回")),true,30,30);
         return new ReedemRyb(solo);
     }
 }

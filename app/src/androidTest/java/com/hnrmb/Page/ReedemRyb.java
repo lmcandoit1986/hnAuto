@@ -1,5 +1,7 @@
 package com.hnrmb.Page;
 
+import androidx.test.uiautomator.By;
+
 import com.hnrmb.Utils.Operate;
 import com.hnrmb.Utils.Selector;
 import com.hnrmb.Utils.Solo;
@@ -18,7 +20,7 @@ public class ReedemRyb {
         // 交通银行（6313）
         // 电子账户
         // 绑定卡
-        Operate.click(UN.findUiobject(Selector.text("交通银行（6313）")));
+        Operate.click(UN.findUiobject(Selector.text("交通银行(6313)")));
         Operate.click(UN.findUiobject(Selector.text("电子账户")));
         return this;
     }
@@ -33,6 +35,7 @@ public class ReedemRyb {
     }
 
     public ReedemRyb actionSetMoney(String Money){
+        Operate.click(UN.findUiobject2(By.text("赎回金额")).getParent(),true);
         // 注意前2位不能一样，例如不能买11，可以121
         for(int i=0;i<Money.length();i++){
             Operate.click(UN.findUiobject(Selector.text(String.valueOf(Money.charAt(i)))));

@@ -17,6 +17,6 @@ public class User {
      */
     public static final String rel_User = "15011043581";
     public static final String rel_Login_Psw = "";
-    public static final String rel_Trade_PSW = "";
+    public static final String rel_Trade_PSW = "258369";
 
 }

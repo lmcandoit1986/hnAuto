@@ -1,5 +1,7 @@
 package com.hnrmb.Page;
 
+import androidx.test.uiautomator.By;
+import androidx.test.uiautomator.BySelector;
 import androidx.test.uiautomator.UiObject;
 
 import com.hnrmb.Utils.DataInfo;
@@ -46,6 +48,17 @@ public class BuyRyb {
         return this;
     }
 
+    public BuyRyb actionSetMoney(int forResource, String Money){
+        if (forResource == 1){
+            Operate.click(UN.findUiobject2(By.text("赎回金额")).getParent(),true);
+        }
+        // 注意前2位不能一样，例如不能买11，可以121
+        for(int i=0;i<Money.length();i++){
+            Operate.click(UN.findUiobject(Selector.text(String.valueOf(Money.charAt(i)))));
+        }
+        return this;
+    }
+
     public PassWord actionSureSuccess(){
         Operate.click(UN.findUiobject(Selector.className("android.widget.Button").text("确认购买")));
         return new PassWord(solo);
@@ -57,7 +70,7 @@ public class BuyRyb {
     }
 
     public BuyRyb assertBuyMoreThanHave(){
-        Operate.assertWaitForExists(UN.findUiobject(Selector.text("您可用余额不足，请充值后继续购买")),3);
+        Operate.assertWaitForExists(UN.findUiobject(Selector.text("您可用金额不足，请充值后继续购买")),3);
         return this;
     }
 }

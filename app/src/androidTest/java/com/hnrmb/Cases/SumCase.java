@@ -107,8 +107,8 @@ public class SumCase extends BaseTests {
         mainObj.actionIntoBankList().assertNomal().actionINtoDetail(0).assertTitle().actionBack()
                 .actionINtoDetail(1).assertTitle().actionBack()
                 .actionINtoDetail(2).assertTitle().actionBack()
-                .actionINtoDetail(3).assertTitle().actionBack()
-                .actionINtoDetail(4).assertTitle();
+                .actionINtoDetail(3).assertTitle().actionBack();
+//                .actionINtoDetail(4).assertTitle();
     }
 
     @Test
